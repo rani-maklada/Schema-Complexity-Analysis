@@ -1,0 +1,1190 @@
+Table "account_logs" {
+  "id" BIGINT [not null]
+  "user_id" BIGINT [not null]
+  "item_id" BIGINT
+  "item_type" NVARCHAR(255)
+  "action" NVARCHAR(255)
+  "message" NVARCHAR(255)
+  "link" NVARCHAR(255)
+  "ip_address" NVARCHAR(255)
+  "user_agent" NVARCHAR(255)
+  "metadata" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  user_id [name: "account_logs_user_id_index"]
+}
+}
+
+Table "activities" {
+  "id" BIGINT [not null]
+  "to_id" BIGINT
+  "from_id" BIGINT
+  "object_type" NVARCHAR(255)
+  "data" NVARCHAR(255)
+  "processed_at" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "avatars" {
+  "id" BIGINT [not null]
+  "profile_id" BIGINT [not null]
+  "media_path" NVARCHAR(255)
+  "thumb_path" NVARCHAR(255)
+  "remote_url" NVARCHAR(255)
+  "change_count" INT [not null]
+  "last_fetched_at" DATETIME
+  "last_processed_at" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  profile_id [unique, name: "avatars_profile_id_unique"]
+  remote_url [name: "avatars_remote_url_index"]
+  deleted_at [name: "avatars_deleted_at_index"]
+}
+}
+
+Table "bookmarks" {
+  "id" INT [not null]
+  "status_id" BIGINT [not null]
+  "profile_id" BIGINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (status_id, profile_id) [unique, name: "bookmarks_status_id_profile_id_unique"]
+  id [pk]
+}
+}
+
+Table "circle_profiles" {
+  "id" BIGINT [not null]
+  "owner_id" BIGINT
+  "circle_id" BIGINT [not null]
+  "profile_id" BIGINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (circle_id, profile_id) [unique, name: "circle_profiles_circle_id_profile_id_unique"]
+  id [pk]
+  owner_id [name: "circle_profiles_owner_id_index"]
+  circle_id [name: "circle_profiles_circle_id_index"]
+  profile_id [name: "circle_profiles_profile_id_index"]
+}
+}
+
+Table "circles" {
+  "id" BIGINT [not null]
+  "profile_id" BIGINT [not null]
+  "name" NVARCHAR(255)
+  "description" NVARCHAR(255)
+  "scope" NVARCHAR(255) [not null]
+  "bcc" TINYINT [not null]
+  "active" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  profile_id [name: "circles_profile_id_index"]
+  active [name: "circles_active_index"]
+}
+}
+
+Table "collection_items" {
+  "id" BIGINT [not null]
+  "collection_id" BIGINT [not null]
+  "order" INT
+  "object_type" NVARCHAR(255) [not null]
+  "object_id" BIGINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  collection_id [name: "collection_items_collection_id_index"]
+  object_type [name: "collection_items_object_type_index"]
+  object_id [name: "collection_items_object_id_index"]
+}
+}
+
+Table "collections" {
+  "id" BIGINT [not null]
+  "profile_id" BIGINT
+  "title" NVARCHAR(255)
+  "description" NVARCHAR(255)
+  "is_nsfw" TINYINT [not null]
+  "visibility" NVARCHAR(255) [not null]
+  "published_at" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  visibility [name: "collections_visibility_index"]
+}
+}
+
+Table "comments" {
+  "id" BIGINT [not null]
+  "profile_id" BIGINT [not null]
+  "user_id" BIGINT
+  "status_id" BIGINT [not null]
+  "comment" NVARCHAR(255)
+  "rendered" NVARCHAR(255)
+  "entities" NVARCHAR(255)
+  "is_remote" TINYINT [not null]
+  "rendered_at" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "contacts" {
+  "id" BIGINT [not null]
+  "user_id" BIGINT [not null]
+  "response_requested" TINYINT [not null]
+  "message" NVARCHAR(255) [not null]
+  "response" NVARCHAR(255) [not null]
+  "read_at" DATETIME
+  "responded_at" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  user_id [name: "contacts_user_id_index"]
+}
+}
+
+Table "direct_messages" {
+  "id" BIGINT [not null]
+  "to_id" BIGINT [not null]
+  "from_id" BIGINT [not null]
+  "from_profile_ids" NVARCHAR(255)
+  "group_message" TINYINT [not null]
+  "status_id" BIGINT [not null]
+  "read_at" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (to_id, from_id, status_id) [unique, name: "direct_messages_to_id_from_id_status_id_unique"]
+  id [pk]
+  to_id [name: "direct_messages_to_id_index"]
+  from_id [name: "direct_messages_from_id_index"]
+}
+}
+
+Table "discover_categories" {
+  "id" BIGINT [not null]
+  "name" NVARCHAR(255)
+  "slug" NVARCHAR(255) [not null]
+  "active" TINYINT [not null]
+  "order" TINYINT [not null]
+  "media_id" BIGINT
+  "no_nsfw" TINYINT [not null]
+  "local_only" TINYINT [not null]
+  "public_only" TINYINT [not null]
+  "photos_only" TINYINT [not null]
+  "active_until" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  slug [unique, name: "discover_categories_slug_unique"]
+  active [name: "discover_categories_active_index"]
+  media_id [unique, name: "discover_categories_media_id_unique"]
+}
+}
+
+Table "discover_category_hashtags" {
+  "id" BIGINT [not null]
+  "discover_category_id" BIGINT [not null]
+  "hashtag_id" BIGINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (discover_category_id, hashtag_id) [unique, name: "discover_category_hashtags_discover_category_id_hashtag_id_unique"]
+  id [pk]
+  discover_category_id [name: "discover_category_hashtags_discover_category_id_index"]
+  hashtag_id [name: "discover_category_hashtags_hashtag_id_index"]
+}
+}
+
+Table "email_verifications" {
+  "id" BIGINT [not null]
+  "user_id" BIGINT [not null]
+  "email" NVARCHAR(255)
+  "user_token" NVARCHAR(255) [not null]
+  "random_token" NVARCHAR(255) [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  user_token [name: "email_verifications_user_token_index"]
+  random_token [name: "email_verifications_random_token_index"]
+}
+}
+
+Table "failed_jobs" {
+  "id" BIGINT [not null]
+  "connection" NVARCHAR(255) [not null]
+  "queue" NVARCHAR(255) [not null]
+  "payload" NVARCHAR(255) [not null]
+  "exception" NVARCHAR(255) [not null]
+  "failed_at" DATETIME [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "follow_requests" {
+  "id" BIGINT [not null]
+  "follower_id" BIGINT [not null]
+  "following_id" BIGINT [not null]
+  "is_rejected" TINYINT [not null]
+  "is_local" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  follower_id [name: "follow_requests_follower_id_index"]
+  following_id [name: "follow_requests_following_id_index"]
+}
+}
+
+Table "followers" {
+  "id" INT [not null]
+  "profile_id" BIGINT [not null]
+  "following_id" BIGINT [not null]
+  "local_profile" TINYINT [not null]
+  "local_following" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (profile_id, following_id) [unique, name: "followers_profile_id_following_id_unique"]
+  id [pk]
+  local_profile [name: "followers_local_profile_index"]
+  local_following [name: "followers_local_following_index"]
+  created_at [name: "followers_created_at_index"]
+}
+}
+
+Table "hashtag_follows" {
+  "id" BIGINT [not null]
+  "user_id" BIGINT [not null]
+  "profile_id" BIGINT [not null]
+  "hashtag_id" BIGINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (user_id, profile_id, hashtag_id) [unique, name: "hashtag_follows_user_id_profile_id_hashtag_id_unique"]
+  id [pk]
+  user_id [name: "hashtag_follows_user_id_index"]
+  profile_id [name: "hashtag_follows_profile_id_index"]
+  hashtag_id [name: "hashtag_follows_hashtag_id_index"]
+}
+}
+
+Table "hashtags" {
+  "id" BIGINT [not null]
+  "name" NVARCHAR(255) [not null]
+  "slug" NVARCHAR(255) [not null]
+  "is_nsfw" TINYINT [not null]
+  "is_banned" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  name [unique, name: "hashtags_name_unique"]
+  slug [unique, name: "hashtags_slug_unique"]
+}
+}
+
+Table "import_datas" {
+  "id" INT [not null]
+  "profile_id" BIGINT [not null]
+  "job_id" BIGINT
+  "service" NVARCHAR(255) [not null]
+  "path" NVARCHAR(255)
+  "stage" TINYINT [not null]
+  "original_name" NVARCHAR(255)
+  "import_accepted" TINYINT
+  "completed_at" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (job_id, original_name) [unique, name: "import_datas_job_id_original_name_unique"]
+  id [pk]
+}
+}
+
+Table "import_jobs" {
+  "id" INT [not null]
+  "profile_id" BIGINT [not null]
+  "service" NVARCHAR(255) [not null]
+  "uuid" NVARCHAR(255)
+  "storage_path" NVARCHAR(255)
+  "stage" TINYINT [not null]
+  "media_json" NVARCHAR(255)
+  "completed_at" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "instances" {
+  "id" BIGINT [not null]
+  "domain" NVARCHAR(255) [not null]
+  "url" NVARCHAR(255)
+  "name" NVARCHAR(255)
+  "admin_url" NVARCHAR(255)
+  "limit_reason" NVARCHAR(255)
+  "unlisted" TINYINT [not null]
+  "auto_cw" TINYINT [not null]
+  "banned" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  domain [unique, name: "instances_domain_unique"]
+}
+}
+
+Table "jobs" {
+  "id" BIGINT [not null]
+  "queue" NVARCHAR(255) [not null]
+  "payload" NVARCHAR(255) [not null]
+  "attempts" TINYINT [not null]
+  "reserved_at" INT
+  "available_at" INT [not null]
+  "created_at" INT [not null]
+
+Indexes {
+  id [pk]
+  queue [name: "jobs_queue_index"]
+}
+}
+
+Table "likes" {
+  "id" BIGINT [not null]
+  "profile_id" BIGINT [not null]
+  "status_id" BIGINT [not null]
+  "flagged" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  (profile_id, status_id) [unique, name: "likes_profile_id_status_id_unique"]
+  id [pk]
+  created_at [name: "likes_created_at_index"]
+  deleted_at [name: "likes_deleted_at_index"]
+}
+}
+
+Table "media" {
+  "id" INT [not null]
+  "status_id" BIGINT
+  "profile_id" BIGINT
+  "user_id" BIGINT
+  "is_nsfw" TINYINT [not null]
+  "remote_media" TINYINT [not null]
+  "original_sha256" NVARCHAR(255)
+  "optimized_sha256" NVARCHAR(255)
+  "media_path" NVARCHAR(255) [not null]
+  "thumbnail_path" NVARCHAR(255)
+  "cdn_url" NVARCHAR(255)
+  "optimized_url" NVARCHAR(255)
+  "thumbnail_url" NVARCHAR(255)
+  "remote_url" NVARCHAR(255)
+  "caption" NVARCHAR(255)
+  "hls_path" NVARCHAR(255)
+  "order" TINYINT [not null]
+  "mime" NVARCHAR(255)
+  "size" INT
+  "orientation" NVARCHAR(255)
+  "filter_name" NVARCHAR(255)
+  "filter_class" NVARCHAR(255)
+  "license" NVARCHAR(255)
+  "processed_at" DATETIME
+  "hls_transcoded_at" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+  "key" NVARCHAR(255)
+  "metadata" NVARCHAR(255)
+  "version" TINYINT [not null]
+
+Indexes {
+  (status_id, media_path) [unique, name: "media_status_id_media_path_unique"]
+  id [pk]
+  user_id [name: "media_user_id_index"]
+  original_sha256 [name: "media_original_sha256_index"]
+  optimized_sha256 [name: "media_optimized_sha256_index"]
+  deleted_at [name: "media_deleted_at_index"]
+}
+}
+
+Table "mentions" {
+  "id" BIGINT [not null]
+  "status_id" BIGINT [not null]
+  "profile_id" BIGINT [not null]
+  "local" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  deleted_at [name: "mentions_deleted_at_index"]
+}
+}
+
+Table "migrations" {
+  "id" INT [not null]
+  "migration" NVARCHAR(255) [not null]
+  "batch" INT [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "mod_logs" {
+  "id" BIGINT [not null]
+  "user_id" BIGINT [not null]
+  "user_username" NVARCHAR(255)
+  "object_uid" BIGINT
+  "object_id" BIGINT
+  "object_type" NVARCHAR(255)
+  "action" NVARCHAR(255)
+  "message" NVARCHAR(255)
+  "metadata" NVARCHAR(255)
+  "access_level" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  user_id [name: "mod_logs_user_id_index"]
+  object_uid [name: "mod_logs_object_uid_index"]
+  object_id [name: "mod_logs_object_id_index"]
+  object_type [name: "mod_logs_object_type_index"]
+}
+}
+
+Table "newsroom" {
+  "id" BIGINT [not null]
+  "user_id" BIGINT
+  "header_photo_url" NVARCHAR(255)
+  "title" NVARCHAR(255)
+  "slug" NVARCHAR(255)
+  "category" NVARCHAR(255) [not null]
+  "summary" NVARCHAR(255)
+  "body" NVARCHAR(255)
+  "body_rendered" NVARCHAR(255)
+  "link" NVARCHAR(255)
+  "force_modal" TINYINT [not null]
+  "show_timeline" TINYINT [not null]
+  "show_link" TINYINT [not null]
+  "auth_only" TINYINT [not null]
+  "published_at" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  slug [unique, name: "newsroom_slug_unique"]
+}
+}
+
+Table "notifications" {
+  "id" BIGINT [not null]
+  "profile_id" BIGINT [not null]
+  "actor_id" BIGINT
+  "item_id" BIGINT
+  "item_type" NVARCHAR(255)
+  "action" NVARCHAR(255)
+  "message" NVARCHAR(255)
+  "rendered" NVARCHAR(255)
+  "read_at" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  profile_id [name: "notifications_profile_id_index"]
+  actor_id [name: "notifications_actor_id_index"]
+  created_at [name: "notifications_created_at_index"]
+  deleted_at [name: "notifications_deleted_at_index"]
+}
+}
+
+Table "oauth_access_tokens" {
+  "id" NVARCHAR(255) [not null]
+  "user_id" BIGINT
+  "client_id" INT [not null]
+  "name" NVARCHAR(255)
+  "scopes" NVARCHAR(255)
+  "revoked" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "expires_at" DATETIME
+
+Indexes {
+  id [pk]
+  user_id [name: "oauth_access_tokens_user_id_index"]
+}
+}
+
+Table "oauth_auth_codes" {
+  "id" NVARCHAR(255) [not null]
+  "user_id" BIGINT [not null]
+  "client_id" INT [not null]
+  "scopes" NVARCHAR(255)
+  "revoked" TINYINT [not null]
+  "expires_at" DATETIME
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "oauth_clients" {
+  "id" INT [not null]
+  "user_id" BIGINT
+  "name" NVARCHAR(255) [not null]
+  "secret" NVARCHAR(255) [not null]
+  "redirect" NVARCHAR(255) [not null]
+  "personal_access_client" TINYINT [not null]
+  "password_client" TINYINT [not null]
+  "revoked" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  user_id [name: "oauth_clients_user_id_index"]
+}
+}
+
+Table "oauth_personal_access_clients" {
+  "id" INT [not null]
+  "client_id" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  client_id [name: "oauth_personal_access_clients_client_id_index"]
+}
+}
+
+Table "oauth_refresh_tokens" {
+  "id" NVARCHAR(255) [not null]
+  "access_token_id" NVARCHAR(255) [not null]
+  "revoked" TINYINT [not null]
+  "expires_at" DATETIME
+
+Indexes {
+  id [pk]
+  access_token_id [name: "oauth_refresh_tokens_access_token_id_index"]
+}
+}
+
+Table "pages" {
+  "id" BIGINT [not null]
+  "root" NVARCHAR(255)
+  "slug" NVARCHAR(255)
+  "title" NVARCHAR(255)
+  "category_id" INT
+  "content" NVARCHAR(255)
+  "template" NVARCHAR(255) [not null]
+  "active" TINYINT [not null]
+  "cached" TINYINT [not null]
+  "active_until" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  root [name: "pages_root_index"]
+  slug [unique, name: "pages_slug_unique"]
+  category_id [name: "pages_category_id_index"]
+  template [name: "pages_template_index"]
+  active [name: "pages_active_index"]
+  cached [name: "pages_cached_index"]
+}
+}
+
+Table "password_resets" {
+  "email" NVARCHAR(255) [not null]
+  "token" NVARCHAR(255) [not null]
+  "created_at" DATETIME
+
+Indexes {
+  email [name: "password_resets_email_index"]
+}
+}
+
+Table "places" {
+  "id" BIGINT [not null]
+  "slug" NVARCHAR(255) [not null]
+  "name" NVARCHAR(255) [not null]
+  "country" NVARCHAR(255) [not null]
+  "aliases" NVARCHAR(255)
+  "lat" DECIMAL(8,2)
+  "long" DECIMAL(8,2)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (slug, country, lat, long) [unique, name: "places_slug_country_lat_long_unique"]
+  id [pk]
+  slug [name: "places_slug_index"]
+  name [name: "places_name_index"]
+  country [name: "places_country_index"]
+}
+}
+
+Table "profile_sponsors" {
+  "id" BIGINT [not null]
+  "profile_id" BIGINT [not null]
+  "sponsors" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  profile_id [unique, name: "profile_sponsors_profile_id_unique"]
+}
+}
+
+Table "profiles" {
+  "id" BIGINT [not null]
+  "user_id" INT
+  "domain" NVARCHAR(255)
+  "username" NVARCHAR(255)
+  "status" NVARCHAR(255)
+  "name" NVARCHAR(255)
+  "bio" NVARCHAR(255)
+  "unlisted" TINYINT [not null]
+  "cw" TINYINT [not null]
+  "no_autolink" TINYINT [not null]
+  "location" NVARCHAR(255)
+  "website" NVARCHAR(255)
+  "profile_layout" NVARCHAR(255)
+  "header_bg" NVARCHAR(255)
+  "post_layout" NVARCHAR(255)
+  "is_private" TINYINT [not null]
+  "sharedInbox" NVARCHAR(255)
+  "inbox_url" NVARCHAR(255)
+  "outbox_url" NVARCHAR(255)
+  "key_id" NVARCHAR(255)
+  "follower_url" NVARCHAR(255)
+  "following_url" NVARCHAR(255)
+  "private_key" NVARCHAR(255)
+  "public_key" NVARCHAR(255)
+  "remote_url" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+  "delete_after" DATETIME
+  "is_suggestable" TINYINT [not null]
+  "last_fetched_at" DATETIME
+  "status_count" INT
+  "followers_count" INT
+  "following_count" INT
+  "webfinger" NVARCHAR(255)
+  "avatar_url" NVARCHAR(255)
+
+Indexes {
+  (domain, username) [unique, name: "profiles_domain_username_unique"]
+  id [pk]
+  domain [name: "profiles_domain_index"]
+  username [name: "profiles_username_index"]
+  status [name: "profiles_status_index"]
+  unlisted [name: "profiles_unlisted_index"]
+  cw [name: "profiles_cw_index"]
+  no_autolink [name: "profiles_no_autolink_index"]
+  sharedInbox [name: "profiles_sharedinbox_index"]
+  key_id [unique, name: "profiles_key_id_unique"]
+  deleted_at [name: "profiles_deleted_at_index"]
+  is_suggestable [name: "profiles_is_suggestable_index"]
+  webfinger [unique, name: "profiles_webfinger_unique"]
+}
+}
+
+Table "report_comments" {
+  "id" INT [not null]
+  "report_id" BIGINT [not null]
+  "profile_id" BIGINT [not null]
+  "user_id" BIGINT [not null]
+  "comment" NVARCHAR(255) [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  report_id [name: "report_comments_report_id_index"]
+}
+}
+
+Table "report_logs" {
+  "id" INT [not null]
+  "profile_id" BIGINT [not null]
+  "item_id" BIGINT
+  "item_type" NVARCHAR(255)
+  "action" NVARCHAR(255)
+  "system_message" TINYINT [not null]
+  "metadata" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "reports" {
+  "id" BIGINT [not null]
+  "profile_id" BIGINT [not null]
+  "user_id" BIGINT
+  "object_id" BIGINT [not null]
+  "object_type" NVARCHAR(255)
+  "reported_profile_id" BIGINT
+  "type" NVARCHAR(255)
+  "message" NVARCHAR(255)
+  "admin_seen" DATETIME
+  "not_interested" TINYINT [not null]
+  "spam" TINYINT [not null]
+  "nsfw" TINYINT [not null]
+  "abusive" TINYINT [not null]
+  "meta" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (user_id, object_id, object_type) [unique, name: "reports_user_id_object_id_object_type_unique"]
+  id [pk]
+}
+}
+
+Table "sessions" {
+  "id" NVARCHAR(255) [not null]
+  "user_id" BIGINT
+  "ip_address" NVARCHAR(255)
+  "user_agent" NVARCHAR(255)
+  "payload" NVARCHAR(255) [not null]
+  "last_activity" INT [not null]
+
+Indexes {
+  id [unique, name: "sessions_id_unique"]
+}
+}
+
+Table "status_hashtags" {
+  "id" BIGINT [not null]
+  "status_id" BIGINT [not null]
+  "hashtag_id" BIGINT [not null]
+  "profile_id" BIGINT
+  "status_visibility" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (status_id, hashtag_id) [unique, name: "status_hashtags_status_id_hashtag_id_unique"]
+  id [pk]
+  status_id [name: "status_hashtags_status_id_index"]
+  hashtag_id [name: "status_hashtags_hashtag_id_index"]
+  profile_id [name: "status_hashtags_profile_id_index"]
+  status_visibility [name: "status_hashtags_status_visibility_index"]
+}
+}
+
+Table "statuses" {
+  "id" BIGINT [not null]
+  "uri" NVARCHAR(255)
+  "caption" NVARCHAR(255)
+  "rendered" NVARCHAR(255)
+  "profile_id" BIGINT
+  "type" NVARCHAR(255)
+  "in_reply_to_id" BIGINT
+  "reblog_of_id" BIGINT
+  "url" NVARCHAR(255)
+  "is_nsfw" TINYINT [not null]
+  "scope" NVARCHAR(255) [not null]
+  "visibility" NVARCHAR(255) [not null]
+  "reply" TINYINT [not null]
+  "likes_count" BIGINT [not null]
+  "reblogs_count" BIGINT [not null]
+  "language" NVARCHAR(255)
+  "conversation_id" BIGINT
+  "local" TINYINT [not null]
+  "application_id" BIGINT
+  "in_reply_to_profile_id" BIGINT
+  "entities" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+  "cw_summary" NVARCHAR(255)
+  "reply_count" INT
+  "comments_disabled" TINYINT [not null]
+  "place_id" BIGINT
+  "object_url" NVARCHAR(255)
+
+Indexes {
+  (in_reply_to_id, reblog_of_id) [name: "statuses_in_reply_to_id_reblog_of_id_index"]
+  id [pk]
+  uri [unique, name: "statuses_uri_unique"]
+  profile_id [name: "statuses_profile_id_index"]
+  type [name: "statuses_type_index"]
+  is_nsfw [name: "statuses_is_nsfw_index"]
+  scope [name: "statuses_scope_index"]
+  visibility [name: "statuses_visibility_index"]
+  local [name: "statuses_local_index"]
+  created_at [name: "statuses_created_at_index"]
+  deleted_at [name: "statuses_deleted_at_index"]
+  place_id [name: "statuses_place_id_index"]
+  object_url [unique, name: "statuses_object_url_unique"]
+}
+}
+
+Table "stories" {
+  "id" BIGINT [not null]
+  "profile_id" BIGINT [not null]
+  "type" NVARCHAR(255)
+  "size" INT
+  "mime" NVARCHAR(255)
+  "duration" SMALLINT [not null]
+  "path" NVARCHAR(255)
+  "cdn_url" NVARCHAR(255)
+  "public" TINYINT [not null]
+  "local" TINYINT [not null]
+  "view_count" INT
+  "comment_count" INT
+  "story" NVARCHAR(255)
+  "expires_at" DATETIME [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (profile_id, path) [unique, name: "stories_profile_id_path_unique"]
+  id [pk]
+  profile_id [name: "stories_profile_id_index"]
+  public [name: "stories_public_index"]
+  local [name: "stories_local_index"]
+  expires_at [name: "stories_expires_at_index"]
+}
+}
+
+Table "story_views" {
+  "id" BIGINT [not null]
+  "story_id" BIGINT [not null]
+  "profile_id" BIGINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (story_id, profile_id) [unique, name: "story_views_story_id_profile_id_unique"]
+  id [pk]
+  story_id [name: "story_views_story_id_index"]
+  profile_id [name: "story_views_profile_id_index"]
+}
+}
+
+Table "user_devices" {
+  "id" BIGINT [not null]
+  "user_id" BIGINT [not null]
+  "ip" NVARCHAR(255) [not null]
+  "user_agent" NVARCHAR(255) [not null]
+  "fingerprint" NVARCHAR(255)
+  "name" NVARCHAR(255)
+  "trusted" TINYINT
+  "last_active_at" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (user_id, ip, user_agent, fingerprint) [unique, name: "user_devices_user_id_ip_user_agent_fingerprint_unique"]
+  id [pk]
+  user_id [name: "user_devices_user_id_index"]
+  ip [name: "user_devices_ip_index"]
+  user_agent [name: "user_devices_user_agent_index"]
+}
+}
+
+Table "user_filters" {
+  "id" BIGINT [not null]
+  "user_id" BIGINT [not null]
+  "filterable_id" BIGINT [not null]
+  "filterable_type" NVARCHAR(255) [not null]
+  "filter_type" NVARCHAR(255) [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (user_id, filterable_id, filterable_type, filter_type) [unique, name: "user_filters_user_id_filterable_id_filterable_type_filter_type_unique"]
+  id [pk]
+  user_id [name: "user_filters_user_id_index"]
+  filter_type [name: "user_filters_filter_type_index"]
+}
+}
+
+Table "user_invites" {
+  "id" BIGINT [not null]
+  "user_id" BIGINT [not null]
+  "profile_id" BIGINT [not null]
+  "email" NVARCHAR(255) [not null]
+  "message" NVARCHAR(255)
+  "key" NVARCHAR(255) [not null]
+  "token" NVARCHAR(255) [not null]
+  "valid_until" DATETIME
+  "used_at" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  user_id [name: "user_invites_user_id_index"]
+  profile_id [name: "user_invites_profile_id_index"]
+  email [unique, name: "user_invites_email_unique"]
+  used_at [name: "user_invites_used_at_index"]
+}
+}
+
+Table "user_settings" {
+  "id" BIGINT [not null]
+  "user_id" BIGINT [not null]
+  "role" NVARCHAR(255) [not null]
+  "crawlable" TINYINT [not null]
+  "show_guests" TINYINT [not null]
+  "show_discover" TINYINT [not null]
+  "public_dm" TINYINT [not null]
+  "hide_cw_search" TINYINT [not null]
+  "hide_blocked_search" TINYINT [not null]
+  "always_show_cw" TINYINT [not null]
+  "compose_media_descriptions" TINYINT [not null]
+  "reduce_motion" TINYINT [not null]
+  "optimize_screen_reader" TINYINT [not null]
+  "high_contrast_mode" TINYINT [not null]
+  "video_autoplay" TINYINT [not null]
+  "send_email_new_follower" TINYINT [not null]
+  "send_email_new_follower_request" TINYINT [not null]
+  "send_email_on_share" TINYINT [not null]
+  "send_email_on_like" TINYINT [not null]
+  "send_email_on_mention" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "show_profile_followers" TINYINT [not null]
+  "show_profile_follower_count" TINYINT [not null]
+  "show_profile_following" TINYINT [not null]
+  "show_profile_following_count" TINYINT [not null]
+
+Indexes {
+  id [pk]
+  user_id [unique, name: "user_settings_user_id_unique"]
+}
+}
+
+Table "users" {
+  "id" BIGINT [not null]
+  "profile_id" BIGINT
+  "name" NVARCHAR(255)
+  "username" NVARCHAR(255)
+  "email" NVARCHAR(255) [not null]
+  "status" NVARCHAR(255)
+  "language" NVARCHAR(255)
+  "password" NVARCHAR(255) [not null]
+  "remember_token" NVARCHAR(255)
+  "is_admin" TINYINT [not null]
+  "email_verified_at" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+  "_2fa_enabled" TINYINT [not null]
+  "_2fa_secret" NVARCHAR(255)
+  "_2fa_backup_codes" NVARCHAR(255)
+  "_2fa_setup_at" DATETIME
+  "delete_after" DATETIME
+
+Indexes {
+  id [pk]
+  profile_id [unique, name: "users_profile_id_unique"]
+  username [unique, name: "users_username_unique"]
+  email [unique, name: "users_email_unique"]
+  status [name: "users_status_index"]
+  language [name: "users_language_index"]
+  deleted_at [name: "users_deleted_at_index"]
+}
+}
+
+Table "websockets_statistics_entries" {
+  "id" INT [not null]
+  "app_id" NVARCHAR(255) [not null]
+  "peak_connection_count" INT [not null]
+  "websocket_message_count" INT [not null]
+  "api_message_count" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+}
+}
+
+Ref "circle_profiles_circle_id_foreign":"circles"."id" < "circle_profiles"."circle_id"
+
+Ref "collection_items_collection_id_foreign":"collections"."id" < "collection_items"."collection_id"
+
+Ref "discover_category_hashtags_discover_category_id_foreign":"discover_categories"."id" < "discover_category_hashtags"."discover_category_id"
+
+Ref "follow_requests_follower_id_foreign":"followers"."id" < "follow_requests"."follower_id"
+
+Ref "discover_category_hashtags_hashtag_id_foreign":"hashtags"."id" < "discover_category_hashtags"."hashtag_id"
+
+Ref "hashtag_follows_hashtag_id_foreign":"hashtags"."id" < "hashtag_follows"."hashtag_id"
+
+Ref "status_hashtags_hashtag_id_foreign":"hashtags"."id" < "status_hashtags"."hashtag_id"
+
+Ref "import_datas_job_id_foreign":"jobs"."id" < "import_datas"."job_id"
+
+Ref "discover_categories_media_id_foreign":"media"."id" < "discover_categories"."media_id"
+
+Ref "oauth_refresh_tokens_access_token_id_foreign":"oauth_access_tokens"."id" < "oauth_refresh_tokens"."access_token_id"
+
+Ref "statuses_place_id_foreign":"places"."id" < "statuses"."place_id"
+
+Ref "avatars_profile_id_foreign":"profiles"."id" < "avatars"."profile_id"
+
+Ref "bookmarks_profile_id_foreign":"profiles"."id" < "bookmarks"."profile_id"
+
+Ref "circle_profiles_profile_id_foreign":"profiles"."id" < "circle_profiles"."profile_id"
+
+Ref "circles_profile_id_foreign":"profiles"."id" < "circles"."profile_id"
+
+Ref "collections_profile_id_foreign":"profiles"."id" < "collections"."profile_id"
+
+Ref "comments_profile_id_foreign":"profiles"."id" < "comments"."profile_id"
+
+Ref "followers_profile_id_foreign":"profiles"."id" < "followers"."profile_id"
+
+Ref "hashtag_follows_profile_id_foreign":"profiles"."id" < "hashtag_follows"."profile_id"
+
+Ref "import_datas_profile_id_foreign":"profiles"."id" < "import_datas"."profile_id"
+
+Ref "import_jobs_profile_id_foreign":"profiles"."id" < "import_jobs"."profile_id"
+
+Ref "likes_profile_id_foreign":"profiles"."id" < "likes"."profile_id"
+
+Ref "media_profile_id_foreign":"profiles"."id" < "media"."profile_id"
+
+Ref "mentions_profile_id_foreign":"profiles"."id" < "mentions"."profile_id"
+
+Ref "notifications_profile_id_foreign":"profiles"."id" < "notifications"."profile_id"
+
+Ref "profile_sponsors_profile_id_foreign":"profiles"."id" < "profile_sponsors"."profile_id"
+
+Ref "report_comments_profile_id_foreign":"profiles"."id" < "report_comments"."profile_id"
+
+Ref "report_logs_profile_id_foreign":"profiles"."id" < "report_logs"."profile_id"
+
+Ref "reports_profile_id_foreign":"profiles"."id" < "reports"."profile_id"
+
+Ref "status_hashtags_profile_id_foreign":"profiles"."id" < "status_hashtags"."profile_id"
+
+Ref "statuses_profile_id_foreign":"profiles"."id" < "statuses"."profile_id"
+
+Ref "stories_profile_id_foreign":"profiles"."id" < "stories"."profile_id"
+
+Ref "story_views_profile_id_foreign":"profiles"."id" < "story_views"."profile_id"
+
+Ref "user_invites_profile_id_foreign":"profiles"."id" < "user_invites"."profile_id"
+
+Ref "users_profile_id_foreign":"profiles"."id" < "users"."profile_id"
+
+Ref "report_comments_report_id_foreign":"reports"."id" < "report_comments"."report_id"
+
+Ref "bookmarks_status_id_foreign":"statuses"."id" < "bookmarks"."status_id"
+
+Ref "comments_status_id_foreign":"statuses"."id" < "comments"."status_id"
+
+Ref "direct_messages_status_id_foreign":"statuses"."id" < "direct_messages"."status_id"
+
+Ref "likes_status_id_foreign":"statuses"."id" < "likes"."status_id"
+
+Ref "media_status_id_foreign":"statuses"."id" < "media"."status_id"
+
+Ref "mentions_status_id_foreign":"statuses"."id" < "mentions"."status_id"
+
+Ref "status_hashtags_status_id_foreign":"statuses"."id" < "status_hashtags"."status_id"
+
+Ref "story_views_story_id_foreign":"stories"."id" < "story_views"."story_id"
+
+Ref "account_logs_user_id_foreign":"users"."id" < "account_logs"."user_id"
+
+Ref "comments_user_id_foreign":"users"."id" < "comments"."user_id"
+
+Ref "contacts_user_id_foreign":"users"."id" < "contacts"."user_id"
+
+Ref "email_verifications_user_id_foreign":"users"."id" < "email_verifications"."user_id"
+
+Ref "hashtag_follows_user_id_foreign":"users"."id" < "hashtag_follows"."user_id"
+
+Ref "media_user_id_foreign":"users"."id" < "media"."user_id"
+
+Ref "mod_logs_user_id_foreign":"users"."id" < "mod_logs"."user_id"
+
+Ref "newsroom_user_id_foreign":"users"."id" < "newsroom"."user_id"
+
+Ref "oauth_access_tokens_user_id_foreign":"users"."id" < "oauth_access_tokens"."user_id"
+
+Ref "oauth_auth_codes_user_id_foreign":"users"."id" < "oauth_auth_codes"."user_id"
+
+Ref "oauth_clients_user_id_foreign":"users"."id" < "oauth_clients"."user_id"
+
+Ref "profiles_user_id_foreign":"users"."id" < "profiles"."user_id"
+
+Ref "report_comments_user_id_foreign":"users"."id" < "report_comments"."user_id"
+
+Ref "reports_user_id_foreign":"users"."id" < "reports"."user_id"
+
+Ref "sessions_user_id_foreign":"users"."id" < "sessions"."user_id"
+
+Ref "user_devices_user_id_foreign":"users"."id" < "user_devices"."user_id"
+
+Ref "user_filters_user_id_foreign":"users"."id" < "user_filters"."user_id"
+
+Ref "user_invites_user_id_foreign":"users"."id" < "user_invites"."user_id"
+
+Ref "user_settings_user_id_foreign":"users"."id" < "user_settings"."user_id"

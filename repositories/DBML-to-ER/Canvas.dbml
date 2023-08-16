@@ -1,0 +1,158 @@
+Table "canvas_posts" {
+  "id" NCHAR(255) [not null]
+  "slug" NVARCHAR(255) [not null]
+  "title" NVARCHAR(255) [not null]
+  "summary" NVARCHAR(255)
+  "body" NVARCHAR(255)
+  "published_at" DATETIME
+  "featured_image" NVARCHAR(255)
+  "featured_image_caption" NVARCHAR(255)
+  "user_id" BIGINT [not null]
+  "meta" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  (slug, user_id) [unique, name: "canvas_posts_slug_user_id_unique"]
+  id [pk]
+  user_id [name: "canvas_posts_user_id_index"]
+}
+}
+
+Table "canvas_posts_tags" {
+  "tag_id" NCHAR(255) [not null]
+  "post_id" NCHAR(255) [not null]
+
+Indexes {
+  (post_id, tag_id) [unique, name: "canvas_posts_tags_post_id_tag_id_unique"]
+}
+}
+
+Table "canvas_posts_topics" {
+  "post_id" NCHAR(255) [not null]
+  "topic_id" NCHAR(255) [not null]
+
+Indexes {
+  (post_id, topic_id) [unique, name: "canvas_posts_topics_post_id_topic_id_unique"]
+}
+}
+
+Table "canvas_tags" {
+  "id" NCHAR(255) [not null]
+  "slug" NVARCHAR(255) [not null]
+  "name" NVARCHAR(255) [not null]
+  "user_id" BIGINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  (slug, user_id) [unique, name: "canvas_tags_slug_user_id_unique"]
+  id [pk]
+  user_id [name: "canvas_tags_user_id_index"]
+  created_at [name: "canvas_tags_created_at_index"]
+}
+}
+
+Table "canvas_topics" {
+  "id" NCHAR(255) [not null]
+  "slug" NVARCHAR(255) [not null]
+  "name" NVARCHAR(255) [not null]
+  "user_id" BIGINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  (slug, user_id) [unique, name: "canvas_topics_slug_user_id_unique"]
+  id [pk]
+  user_id [name: "canvas_topics_user_id_index"]
+  created_at [name: "canvas_topics_created_at_index"]
+}
+}
+
+Table "canvas_user_meta" {
+  "id" INT [not null]
+  "user_id" BIGINT [not null]
+  "username" NVARCHAR(255)
+  "summary" NVARCHAR(255)
+  "avatar" NVARCHAR(255)
+  "dark_mode" TINYINT
+  "digest" TINYINT
+  "locale" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  user_id [unique, name: "canvas_user_meta_user_id_unique"]
+  username [unique, name: "canvas_user_meta_username_unique"]
+}
+}
+
+Table "canvas_views" {
+  "id" INT [not null]
+  "post_id" NCHAR(255) [not null]
+  "ip" NVARCHAR(255)
+  "agent" NVARCHAR(255)
+  "referer" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  post_id [name: "canvas_views_post_id_index"]
+  created_at [name: "canvas_views_created_at_index"]
+}
+}
+
+Table "canvas_visits" {
+  "id" INT [not null]
+  "post_id" NCHAR(255) [not null]
+  "ip" NVARCHAR(255)
+  "agent" NVARCHAR(255)
+  "referer" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "users" {
+  "id" BIGINT [not null]
+  "name" NVARCHAR(255) [not null]
+  "email" NVARCHAR(255) [not null]
+  "email_verified_at" DATETIME
+  "password" NVARCHAR(255) [not null]
+  "remember_token" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  email [unique, name: "users_email_unique"]
+}
+}
+
+Ref "canvas_posts_tags_post_id_foreign":"canvas_posts"."id" < "canvas_posts_tags"."post_id"
+
+Ref "canvas_posts_topics_post_id_foreign":"canvas_posts"."id" < "canvas_posts_topics"."post_id"
+
+Ref "canvas_posts_topics_topic_id_foreign":"canvas_topics"."id" < "canvas_posts_topics"."topic_id"
+
+Ref "canvas_posts_tags_tag_id_foreign":"canvas_tags"."id" < "canvas_posts_tags"."tag_id"
+
+Ref "canvas_views_post_id_foreign":"canvas_posts"."id" < "canvas_views"."post_id"
+
+Ref "canvas_visits_post_id_foreign":"canvas_posts"."id" < "canvas_visits"."post_id"
+
+Ref "canvas_posts_user_id_foreign":"users"."id" < "canvas_posts"."user_id"
+
+Ref "canvas_tags_user_id_foreign":"users"."id" < "canvas_tags"."user_id"
+
+Ref "canvas_topics_user_id_foreign":"users"."id" < "canvas_topics"."user_id"
+
+Ref "canvas_user_meta_user_id_foreign":"users"."id" < "canvas_user_meta"."user_id"

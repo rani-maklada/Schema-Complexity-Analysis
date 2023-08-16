@@ -1,0 +1,19 @@
+Table dbo.Country {
+  name String
+  alpha2Code String
+  alpha3Code String
+  nativeName String
+  region String
+  subRegion String
+  latitude String
+  longitude String
+  area Int64
+  numericCode Int32
+  nativeLanguage String
+  currencyCode String
+  currencyName String
+  currencySymbol String
+  flag String
+  flagpng String
+}
+

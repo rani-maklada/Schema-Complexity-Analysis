@@ -1,0 +1,19 @@
+Metadata-Version: 1.1
+Name: gitana
+Version: 1.0
+Summary: Gitana: a SQL-based Project Activity Inspector
+Home-page: https://github.com/SOM-Research/gitana
+Author: Valerio Cosentino
+Author-email: valcos@bitergia.com
+License: UNKNOWN
+Description: Gitana imports and digests the data of a Git repository, issue trackers and Q&A web-sites to a relational database in order to ease browsing and querying activities with standard SQL syntax and tools
+Keywords: gitana project-information-analysis communication-channels issue-trackers version-control-systems
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: License :: OSI Approved :: MIT License

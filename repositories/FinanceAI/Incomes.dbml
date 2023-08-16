@@ -1,0 +1,55 @@
+Table dbo.Incomes {
+  Ticker String [primary key]
+  Date DateTime [primary key]
+  Period Char [primary key]
+  Revenue Decimal
+  Other Revenue, Total Decimal
+  Total Revenue Decimal
+  Cost Of Revenue, Total Decimal
+  Gross Profit Decimal
+  Selling/General/Admin. Expenses, Total Decimal
+  Research & Development Decimal
+  Depreciation/Amortization Decimal
+  Interest Expense(Income) - Net Operating Decimal
+  Unusual Expense (Income) Decimal
+  Other Operating Expenses, Total Decimal
+  Total Operating Expense Decimal
+  Operating Income Decimal
+  Interest Income(Expense), Net Non-Operating Decimal
+  Gain (Loss) on Sale of Assets Decimal
+  Other, Net Decimal
+  Income Before Tax Decimal
+  Income After Tax Decimal
+  Minority Interest Decimal
+  Equity In Affiliates Decimal
+  Net Income Before Extra. Items Decimal
+  Accounting Change Decimal
+  Discontinued Operations Decimal
+  Extraordinary Item Decimal
+  Net Income Decimal
+  Preferred Dividends Decimal
+  Income Available to Common Excl. Extra Items Decimal
+  Income Available to Common Incl. Extra Items Decimal
+  Basic Weighted Average Shares Decimal
+  Basic EPS Excluding Extraordinary Items Decimal
+  Basic EPS Including Extraordinary Items Decimal
+  Dilution Adjustment Decimal
+  Diluted Weighted Average Shares Decimal
+  Diluted EPS Excluding Extraordinary Items Decimal
+  Diluted EPS Including Extraordinary Items Decimal
+  Dividends per Share - Common Stock Primary Issue Decimal
+  Gross Dividends - Common Stock Decimal
+  Net Income after Stock Based Comp. Expense Decimal
+  Basic EPS after Stock Based Comp. Expense Decimal
+  Diluted EPS after Stock Based Comp. Expense Decimal
+  Depreciation, Supplemental Decimal
+  Total Special Items Decimal
+  Normalized Income Before Taxes Decimal
+  Effect of Special Items on Income Taxes Decimal
+  Income Taxes Ex. Impact of Special Items Decimal
+  Normalized Income After Taxes Decimal
+  Normalized Income Avail to Common Decimal
+  Basic Normalized EPS Decimal
+  Diluted Normalized EPS Decimal
+}
+

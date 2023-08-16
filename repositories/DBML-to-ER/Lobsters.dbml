@@ -1,0 +1,363 @@
+Table "ar_internal_metadata" {
+  "key" VARCHAR(255) [not null]
+  "value" VARCHAR(255)
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+}
+
+Table "comments" {
+  "id" BIGINT [pk, not null, increment]
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME
+  "short_id" VARCHAR(255) [not null]
+  "story_id" BIGINT [not null]
+  "user_id" BIGINT [not null]
+  "parent_comment_id" BIGINT
+  "thread_id" BIGINT
+  "comment" MEDIUMTEXT [not null]
+  "upvotes" INT [not null]
+  "downvotes" INT [not null]
+  "confidence" DECIMAL(8,2) [not null]
+  "markeddown_comment" MEDIUMTEXT
+  "is_deleted" TINYINT
+  "is_moderated" TINYINT
+  "is_from_email" TINYINT
+  "hat_id" BIGINT
+}
+
+Table "domains" {
+  "id" BIGINT [pk, not null, increment]
+  "domain" VARCHAR(255)
+  "is_tracker" TINYINT [not null]
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "banned_at" DATETIME
+  "banned_by_user_id" INT
+  "banned_reason" VARCHAR(255)
+}
+
+Table "hat_requests" {
+  "id" BIGINT [pk, not null, increment]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "user_id" BIGINT [not null]
+  "hat" VARCHAR(255) [not null]
+  "link" VARCHAR(255) [not null]
+  "comment" TEXT [not null]
+}
+
+Table "hats" {
+  "id" BIGINT [pk, not null, increment]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "user_id" BIGINT [not null]
+  "granted_by_user_id" BIGINT [not null]
+  "hat" VARCHAR(255) [not null]
+  "link" VARCHAR(255)
+  "modlog_use" TINYINT
+  "doffed_at" DATETIME
+}
+
+Table "hidden_stories" {
+  "id" BIGINT [pk, not null, increment]
+  "user_id" BIGINT [not null]
+  "story_id" BIGINT [not null]
+}
+
+Table "invitation_requests" {
+  "id" BIGINT [pk, not null, increment]
+  "code" VARCHAR(255)
+  "is_verified" TINYINT
+  "email" VARCHAR(255) [not null]
+  "name" VARCHAR(255) [not null]
+  "memo" TEXT
+  "ip_address" VARCHAR(255)
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+}
+
+Table "invitations" {
+  "id" BIGINT [pk, not null, increment]
+  "user_id" BIGINT [not null]
+  "email" VARCHAR(255)
+  "code" VARCHAR(255)
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "memo" MEDIUMTEXT
+  "used_at" DATETIME
+  "new_user_id" BIGINT
+}
+
+Table "keystores" {
+  "key" VARCHAR(255) [not null]
+  "value" BIGINT
+}
+
+Table "messages" {
+  "id" BIGINT [pk, not null, increment]
+  "created_at" DATETIME
+  "author_user_id" BIGINT [not null]
+  "recipient_user_id" BIGINT [not null]
+  "has_been_read" TINYINT
+  "subject" VARCHAR(255)
+  "body" MEDIUMTEXT
+  "short_id" VARCHAR(255)
+  "deleted_by_author" TINYINT
+  "deleted_by_recipient" TINYINT
+  "hat_id" BIGINT
+}
+
+Table "mod_notes" {
+  "id" BIGINT [pk, not null, increment]
+  "moderator_user_id" BIGINT [not null]
+  "user_id" BIGINT [not null]
+  "note" TEXT [not null]
+  "markeddown_note" TEXT [not null]
+  "created_at" DATETIME [not null]
+}
+
+Table "moderations" {
+  "id" BIGINT [pk, not null, increment]
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "moderator_user_id" BIGINT
+  "story_id" BIGINT
+  "comment_id" BIGINT
+  "user_id" BIGINT
+  "action" MEDIUMTEXT
+  "reason" MEDIUMTEXT
+  "is_from_suggestions" TINYINT
+  "tag_id" BIGINT
+  "domain_id" INT
+}
+
+Table "read_ribbons" {
+  "id" BIGINT [pk, not null, increment]
+  "is_following" TINYINT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "user_id" BIGINT [not null]
+  "story_id" BIGINT [not null]
+}
+
+Table "saved_stories" {
+  "id" BIGINT [pk, not null, increment]
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "user_id" BIGINT [not null]
+  "story_id" BIGINT [not null]
+}
+
+Table "schema_migrations" {
+  "version" VARCHAR(255) [not null]
+}
+
+Table "stories" {
+  "id" BIGINT [pk, not null, increment]
+  "created_at" DATETIME
+  "user_id" BIGINT [not null]
+  "url" VARCHAR(255)
+  "title" VARCHAR(255) [not null]
+  "description" MEDIUMTEXT
+  "short_id" VARCHAR(255) [not null]
+  "is_expired" TINYINT [not null]
+  "upvotes" INT [not null]
+  "downvotes" INT [not null]
+  "is_moderated" TINYINT [not null]
+  "hotness" DECIMAL(8,2) [not null]
+  "markeddown_description" MEDIUMTEXT
+  "story_cache" MEDIUMTEXT
+  "comments_count" INT [not null]
+  "merged_story_id" BIGINT
+  "unavailable_at" DATETIME
+  "twitter_id" VARCHAR(255)
+  "user_is_author" TINYINT
+  "user_is_following" TINYINT [not null]
+  "domain_id" BIGINT
+}
+
+Table "suggested_taggings" {
+  "id" BIGINT [pk, not null, increment]
+  "story_id" BIGINT [not null]
+  "tag_id" BIGINT [not null]
+  "user_id" BIGINT [not null]
+}
+
+Table "suggested_titles" {
+  "id" BIGINT [pk, not null, increment]
+  "story_id" BIGINT [not null]
+  "user_id" BIGINT [not null]
+  "title" VARCHAR(255) [not null]
+}
+
+Table "tag_filters" {
+  "id" BIGINT [pk, not null, increment]
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "user_id" BIGINT [not null]
+  "tag_id" BIGINT [not null]
+}
+
+Table "taggings" {
+  "id" BIGINT [pk, not null, increment]
+  "story_id" BIGINT [not null]
+  "tag_id" BIGINT [not null]
+}
+
+Table "tags" {
+  "id" BIGINT [pk, not null, increment]
+  "tag" VARCHAR(255) [not null]
+  "description" VARCHAR(255)
+  "privileged" TINYINT
+  "is_media" TINYINT
+  "inactive" TINYINT
+  "hotness_mod" DOUBLE(8,2)
+  "permit_by_new_users" TINYINT [not null]
+}
+
+Table "users" {
+  "id" BIGINT [pk, not null, increment]
+  "username" VARCHAR(255)
+  "email" VARCHAR(255)
+  "password_digest" VARCHAR(255)
+  "created_at" DATETIME
+  "is_admin" TINYINT
+  "password_reset_token" VARCHAR(255)
+  "session_token" VARCHAR(255) [not null]
+  "about" MEDIUMTEXT
+  "invited_by_user_id" BIGINT
+  "is_moderator" TINYINT
+  "pushover_mentions" TINYINT
+  "rss_token" VARCHAR(255)
+  "mailing_list_token" VARCHAR(255)
+  "mailing_list_mode" INT
+  "karma" INT [not null]
+  "banned_at" DATETIME
+  "banned_by_user_id" BIGINT
+  "banned_reason" VARCHAR(255)
+  "deleted_at" DATETIME
+  "disabled_invite_at" DATETIME
+  "disabled_invite_by_user_id" BIGINT
+  "disabled_invite_reason" VARCHAR(255)
+  "settings" TEXT
+}
+
+Table "votes" {
+  "id" BIGINT [pk, not null, increment]
+  "user_id" BIGINT [not null]
+  "story_id" BIGINT [not null]
+  "comment_id" BIGINT
+  "vote" TINYINT [not null]
+  "reason" VARCHAR(255)
+  "updated_at" DATETIME [not null]
+}
+
+Table "replying_comments" {
+  "user_id" BIGINT
+  "comment_id" BIGINT
+  "story_id" BIGINT
+  "parent_comment_id" BIGINT
+  "comment_created_at" DATETIME
+  "parent_comment_author_id" BIGINT
+  "comment_author_id" BIGINT
+  "story_author_id" BIGINT
+  "is_unread" INT
+  "current_vote_vote" INT
+  "current_vote_reason" VARCHAR(255)
+}
+
+Ref:"stories"."id" < "comments"."story_id"
+
+Ref:"users"."id" < "comments"."user_id"
+
+Ref:"comments"."id" < "comments"."parent_comment_id"
+
+Ref:"hats"."id" < "comments"."hat_id"
+
+Ref:"users"."id" < "hat_requests"."user_id"
+
+Ref:"users"."id" < "hats"."user_id"
+
+Ref:"users"."id" < "hats"."granted_by_user_id"
+
+Ref:"users"."id" < "hidden_stories"."user_id"
+
+Ref:"stories"."id" < "hidden_stories"."story_id"
+
+Ref:"users"."id" < "invitations"."user_id"
+
+Ref:"users"."id" < "invitations"."new_user_id"
+
+Ref:"users"."id" < "messages"."author_user_id"
+
+Ref:"users"."id" < "messages"."recipient_user_id"
+
+Ref:"hats"."id" < "messages"."hat_id"
+
+Ref:"users"."id" < "mod_notes"."moderator_user_id"
+
+Ref:"users"."id" < "mod_notes"."user_id"
+
+Ref:"users"."id" < "moderations"."moderator_user_id"
+
+Ref:"stories"."id" < "moderations"."story_id"
+
+Ref:"comments"."id" < "moderations"."comment_id"
+
+Ref:"tags"."id" < "moderations"."tag_id"
+
+Ref:"users"."id" < "read_ribbons"."user_id"
+
+Ref:"stories"."id" < "read_ribbons"."story_id"
+
+Ref:"users"."id" < "saved_stories"."user_id"
+
+Ref:"stories"."id" < "saved_stories"."story_id"
+
+Ref:"users"."id" < "stories"."user_id"
+
+Ref:"stories"."id" < "stories"."merged_story_id"
+
+Ref:"domains"."id" < "stories"."domain_id"
+
+Ref:"stories"."id" < "suggested_taggings"."story_id"
+
+Ref:"tags"."id" < "suggested_taggings"."tag_id"
+
+Ref:"users"."id" < "suggested_taggings"."user_id"
+
+Ref:"stories"."id" < "suggested_titles"."story_id"
+
+Ref:"users"."id" < "suggested_titles"."user_id"
+
+Ref:"users"."id" < "tag_filters"."user_id"
+
+Ref:"tags"."id" < "tag_filters"."tag_id"
+
+Ref:"stories"."id" < "taggings"."story_id"
+
+Ref:"tags"."id" < "taggings"."tag_id"
+
+Ref:"users"."id" < "replying_comments"."user_id"
+
+Ref:"users"."id" < "users"."invited_by_user_id"
+
+Ref:"users"."id" < "users"."banned_by_user_id"
+
+Ref:"users"."id" < "users"."disabled_invite_by_user_id"
+
+Ref:"users"."id" < "votes"."user_id"
+
+Ref:"stories"."id" < "votes"."story_id"
+
+Ref:"comments"."id" < "votes"."comment_id"
+
+Ref:"comments"."id" < "replying_comments"."comment_id"
+
+Ref:"stories"."id" < "replying_comments"."story_id"
+
+Ref:"users"."id" < "replying_comments"."parent_comment_author_id"
+
+Ref:"users"."id" < "replying_comments"."comment_author_id"
+
+Ref:"users"."id" < "replying_comments"."story_author_id"

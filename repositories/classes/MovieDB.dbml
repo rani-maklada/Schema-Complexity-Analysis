@@ -1,0 +1,15 @@
+Table dbo.movies {
+  movie_id Int32 [primary key]
+  title String
+  release_date DateTime
+}
+
+Table dbo.reviews {
+  review_id Int32 [primary key]
+  movie_id Int32
+  summary String
+  rating Int32
+  review String
+  reviewer String
+}
+

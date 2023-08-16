@@ -1,0 +1,181 @@
+Table "failed_jobs" {
+  "id" BIGINT [not null]
+  "connection" NVARCHAR(255) [not null]
+  "queue" NVARCHAR(255) [not null]
+  "payload" NVARCHAR(255) [not null]
+  "exception" NVARCHAR(255) [not null]
+  "failed_at" DATETIME [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "likes" {
+  "id" INT [not null]
+  "user_id" INT [not null]
+  "likeable_id" INT [not null]
+  "likeable_type" NVARCHAR(255) [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "migrations" {
+  "id" INT [not null]
+  "migration" NVARCHAR(255) [not null]
+  "batch" INT [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "notifications" {
+  "id" NCHAR(255) [not null]
+  "type" NVARCHAR(255) [not null]
+  "notifiable_type" NVARCHAR(255) [not null]
+  "notifiable_id" BIGINT [not null]
+  "data" NVARCHAR(255) [not null]
+  "read_at" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (notifiable_type, notifiable_id) [name: "notifications_notifiable_type_notifiable_id_index"]
+  id [pk]
+}
+}
+
+Table "password_resets" {
+  "email" NVARCHAR(255) [not null]
+  "token" NVARCHAR(255) [not null]
+  "created_at" DATETIME
+
+Indexes {
+  email [name: "password_resets_email_index"]
+}
+}
+
+Table "replies" {
+  "id" INT [not null]
+  "body" NVARCHAR(255) [not null]
+  "author_id" INT [not null]
+  "replyable_id" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "replyable_type" NVARCHAR(255) [not null]
+
+Indexes {
+  id [pk]
+  author_id [name: "replies_author_id_index"]
+  replyable_id [name: "replies_replyable_id_index"]
+}
+}
+
+Table "subscriptions" {
+  "uuid" NCHAR(255) [not null]
+  "user_id" INT [not null]
+  "subscriptionable_id" INT [not null]
+  "subscriptionable_type" NVARCHAR(255) [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (user_id, subscriptionable_id, subscriptionable_type) [unique, name: "subscriptions_user_id_subscriptionable_id_subscriptionable_type_unique"]
+  uuid [pk]
+  user_id [name: "subscriptions_user_id_index"]
+}
+}
+
+Table "taggables" {
+  "id" INT [not null]
+  "taggable_id" INT [not null]
+  "tag_id" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "taggable_type" NVARCHAR(255) [not null]
+
+Indexes {
+  id [pk]
+  taggable_id [name: "taggables_taggable_id_index"]
+  tag_id [name: "taggables_tag_id_index"]
+}
+}
+
+Table "tags" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "slug" NVARCHAR(255) [not null]
+
+Indexes {
+  id [pk]
+  name [unique, name: "tags_name_unique"]
+  slug [unique, name: "tags_slug_unique"]
+}
+}
+
+Table "threads" {
+  "id" INT [not null]
+  "author_id" INT [not null]
+  "subject" NVARCHAR(255) [not null]
+  "body" NVARCHAR(255) [not null]
+  "slug" NVARCHAR(255) [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "solution_reply_id" INT
+
+Indexes {
+  id [pk]
+  author_id [name: "threads_author_id_index"]
+  slug [unique, name: "threads_slug_unique"]
+  solution_reply_id [name: "threads_solution_reply_id_index"]
+}
+}
+
+Table "users" {
+  "id" INT [not null]
+  "github_id" NVARCHAR(255) [not null]
+  "github_username" NVARCHAR(255) [not null]
+  "email" NVARCHAR(255) [not null]
+  "name" NVARCHAR(255) [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "remember_token" NVARCHAR(255) [not null]
+  "confirmed" TINYINT [not null]
+  "confirmation_code" NVARCHAR(255)
+  "username" NVARCHAR(255) [not null]
+  "password" NVARCHAR(255) [not null]
+  "type" SMALLINT [not null]
+  "bio" NVARCHAR(255) [not null]
+  "banned_at" DATETIME
+
+Indexes {
+  id [pk]
+  email [unique, name: "users_email_unique"]
+  username [unique, name: "users_username_unique"]
+}
+}
+
+Ref "likes_user_id_foreign":"users"."id" < "likes"."user_id"
+
+Ref "likes_likeable_id_foreign":"replies"."id" < "likes"."likeable_id"
+
+Ref "replies_author_id_foreign":"users"."id" < "replies"."author_id"
+
+Ref "subscriptions_user_id_foreign":"users"."id" < "subscriptions"."user_id"
+
+Ref "taggables_tag_id_foreign":"tags"."id" < "taggables"."tag_id"
+
+Ref "likes_likeable_id_foreign":"threads"."id" < "likes"."likeable_id"
+
+Ref "taggables_taggable_id_foreign":"threads"."id" < "taggables"."taggable_id"
+
+Ref "threads_author_id_foreign":"users"."id" < "threads"."author_id"
+
+Ref "threads_solution_reply_id_foreign":"replies"."id" < "threads"."solution_reply_id"
+
+Ref "notifications_notifiable_id_foreign":"users"."id" < "notifications"."notifiable_id"

@@ -1,0 +1,76 @@
+Table "attachmentable" {
+  "id" INT [pk, not null, increment]
+  "attachmentable_type" VARCHAR(255) [not null]
+  "attachmentable_id" INT [not null]
+  "attachment_id" INT [not null]
+}
+
+Table "attachments" {
+  "id" INT [pk, not null, increment]
+  "name" TEXT [not null]
+  "original_name" TEXT [not null]
+  "mime" VARCHAR(255) [not null]
+  "extension" VARCHAR(255)
+  "size" BIGINT [not null]
+  "sort" INT [not null]
+  "path" TEXT [not null]
+  "description" TEXT
+  "alt" TEXT
+  "hash" TEXT
+  "disk" VARCHAR(255) [not null]
+  "user_id" BIGINT
+  "group" VARCHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "notifications" {
+  "id" CHAR(255) [not null]
+  "type" VARCHAR(255) [not null]
+  "notifiable_type" VARCHAR(255) [not null]
+  "notifiable_id" BIGINT [not null]
+  "data" TEXT [not null]
+  "read_at" TIMESTAMP
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "role_users" {
+  "user_id" BIGINT [not null]
+  "role_id" INT [not null]
+}
+
+Table "roles" {
+  "id" INT [pk, not null, increment]
+  "slug" VARCHAR(255) [not null]
+  "name" VARCHAR(255) [not null]
+  "permissions" JSON
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "settings" {
+  "key" VARCHAR(255) [not null]
+  "value" JSON [not null]
+}
+
+Table "users" {
+  "id" BIGINT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "email" VARCHAR(255) [not null]
+  "email_verified_at" TIMESTAMP
+  "password" VARCHAR(255) [not null]
+  "remember_token" VARCHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "last_login" TIMESTAMP
+  "permissions" JSON
+}
+
+Ref:"attachments"."id" < "attachmentable"."attachment_id"
+
+Ref:"users"."id" < "notifications"."notifiable_id"
+
+Ref:"users"."id" < "role_users"."user_id"
+
+Ref:"roles"."id" < "role_users"."role_id"

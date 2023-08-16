@@ -1,0 +1,95 @@
+Table dbo.Candidate {
+  UnitID Int32 [primary key]
+  ModelID Int32 [primary key]
+}
+
+Table dbo.ModelTag {
+  ModelID Int32 [primary key]
+  TagID Int32 [primary key]
+}
+
+Table dbo.Comment {
+  CommentID Int32 [primary key]
+  ModelID Int32
+  UserID Int32
+  Text String
+  Time DateTime
+  UnitID Int32
+}
+
+Table dbo.User {
+  UserID Int32 [primary key]
+  Login String
+  Password String
+  IsAdmin Boolean
+  IsDeleted Boolean
+  PasswordText String
+}
+
+Table dbo.Unit {
+  UnitID Int32 [primary key]
+  Code String
+  ParentCode String
+  Name String
+  Description String
+  CurrentStatus String
+  LicenseType Int32
+  ModelProgress Int32
+  TextureProgress Int32
+  ScriptProgress Int32
+  SelectedModelID Int32
+  OverallProgress Int32
+  LastChangeUserID Int32
+  GameID Int32
+}
+
+Table dbo.Game {
+  GameID Int32 [primary key]
+  Name String
+  Shortcut String
+}
+
+Table dbo.Tag {
+  TagID Int32 [primary key]
+  Name String
+}
+
+Table dbo.License {
+  LicenseID Int32 [primary key]
+  Name String
+  DefaultUrl String
+}
+
+Table dbo.Event {
+  EventID Int32 [primary key]
+  Type EventType
+  UserID Int32
+  ModelID Int32
+  UnitID Int32
+  CommentID Int32
+  Text String
+  Time DateTime
+  SvnLog String
+}
+
+Table dbo.Model {
+  ModelID Int32 [primary key]
+  AuthorUserID Int32
+  Name String
+  Description String
+  Modified DateTime
+  IsDeleted Boolean
+  ModelProgress Int32
+  TextureProgress Int32
+  ScriptProgress Int32
+  OverallProgress Int32
+  IconFile String
+  LicenseID Int32
+  ForumPostID Int32
+}
+
+Table dbo.ForumNewsPost {
+  Day DateTime [primary key]
+  ForumPostID Int32
+}
+

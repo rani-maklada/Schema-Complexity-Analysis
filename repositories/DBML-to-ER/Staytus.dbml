@@ -1,0 +1,213 @@
+Table "api_tokens" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255)
+  "token" VARCHAR(255)
+  "secret" VARCHAR(255)
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+}
+
+Table "delayed_jobs" {
+  "id" INT [pk, not null, increment]
+  "priority" INT [not null]
+  "attempts" INT [not null]
+  "handler" TEXT [not null]
+  "last_error" TEXT
+  "run_at" DATETIME
+  "locked_at" DATETIME
+  "failed_at" DATETIME
+  "locked_by" VARCHAR(255)
+  "queue" VARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+}
+
+Table "email_templates" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255)
+  "subject" VARCHAR(255)
+  "content" TEXT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+}
+
+Table "history_items" {
+  "id" INT [pk, not null, increment]
+  "item_type" VARCHAR(255)
+  "item_id" INT
+  "date" DATETIME
+}
+
+Table "issue_service_joins" {
+  "id" INT [pk, not null, increment]
+  "issue_id" INT
+  "service_id" INT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+}
+
+Table "issue_updates" {
+  "id" INT [pk, not null, increment]
+  "issue_id" INT
+  "user_id" INT
+  "service_status_id" INT
+  "state" VARCHAR(255)
+  "text" TEXT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "identifier" VARCHAR(255)
+  "notify" TINYINT
+}
+
+Table "issues" {
+  "id" INT [pk, not null, increment]
+  "title" VARCHAR(255)
+  "state" VARCHAR(255)
+  "service_status_id" INT
+  "all_services" TINYINT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "user_id" INT
+  "identifier" VARCHAR(255)
+  "notify" TINYINT
+}
+
+Table "maintenance_service_joins" {
+  "id" INT [pk, not null, increment]
+  "maintenance_id" INT
+  "service_id" INT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+}
+
+Table "maintenance_updates" {
+  "id" INT [pk, not null, increment]
+  "maintenance_id" INT
+  "user_id" INT
+  "text" TEXT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "identifier" VARCHAR(255)
+  "notify" TINYINT
+}
+
+Table "maintenances" {
+  "id" INT [pk, not null, increment]
+  "title" VARCHAR(255)
+  "description" TEXT
+  "start_at" DATETIME
+  "finish_at" DATETIME
+  "length_in_minutes" INT
+  "user_id" INT
+  "service_status_id" INT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "closed_at" DATETIME
+  "identifier" VARCHAR(255)
+  "notify" TINYINT
+}
+
+Table "nifty_attachments" {
+  "id" INT [pk, not null, increment]
+  "parent_id" INT
+  "parent_type" VARCHAR(255)
+  "token" VARCHAR(255)
+  "digest" VARCHAR(255)
+  "role" VARCHAR(255)
+  "file_name" VARCHAR(255)
+  "file_type" VARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+}
+
+Table "schema_migrations" {
+  "version" VARCHAR(255) [not null]
+}
+
+Table "service_groups" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255)
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+}
+
+Table "service_statuses" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255)
+  "permalink" VARCHAR(255)
+  "color" VARCHAR(255)
+  "status_type" VARCHAR(255)
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+}
+
+Table "services" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255)
+  "permalink" VARCHAR(255)
+  "position" INT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "status_id" INT
+  "description" TEXT
+  "group_id" INT
+}
+
+Table "sites" {
+  "id" INT [pk, not null, increment]
+  "title" VARCHAR(255)
+  "description" VARCHAR(255)
+  "domain" VARCHAR(255)
+  "support_email" VARCHAR(255)
+  "website_url" VARCHAR(255)
+  "time_zone" VARCHAR(255)
+  "crawling_permitted" TINYINT
+  "email_from_name" VARCHAR(255)
+  "email_from_address" VARCHAR(255)
+  "allow_subscriptions" TINYINT
+  "http_protocol" VARCHAR(255)
+}
+
+Table "subscribers" {
+  "id" INT [pk, not null, increment]
+  "email_address" VARCHAR(255)
+  "verification_token" VARCHAR(255)
+  "verified_at" DATETIME
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+}
+
+Table "users" {
+  "id" INT [pk, not null, increment]
+  "email_address" VARCHAR(255)
+  "name" VARCHAR(255)
+  "password_digest" VARCHAR(255)
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+}
+
+Ref:"issues"."id" < "issue_service_joins"."issue_id"
+
+Ref:"issues"."id" < "issue_updates"."issue_id"
+
+Ref:"maintenances"."id" < "maintenance_service_joins"."maintenance_id"
+
+Ref:"maintenances"."id" < "maintenance_updates"."maintenance_id"
+
+Ref:"service_statuses"."id" < "issue_updates"."service_status_id"
+
+Ref:"service_statuses"."id" < "issues"."service_status_id"
+
+Ref:"service_statuses"."id" < "maintenances"."service_status_id"
+
+Ref:"services"."id" < "issue_service_joins"."service_id"
+
+Ref:"services"."id" < "maintenance_service_joins"."service_id"
+
+Ref:"users"."id" < "issue_updates"."user_id"
+
+Ref:"users"."id" < "issues"."user_id"
+
+Ref:"users"."id" < "maintenance_updates"."user_id"
+
+Ref:"users"."id" < "maintenances"."user_id"

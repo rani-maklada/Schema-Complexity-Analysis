@@ -1,0 +1,491 @@
+Table "appointments" {
+  "id" INT [not null]
+  "issuer_id" INT
+  "contact_id" INT [not null]
+  "business_id" INT [not null]
+  "hash" NVARCHAR(255) [not null]
+  "status" NVARCHAR(255) [not null]
+  "start_at" DATETIME
+  "finish_at" DATETIME
+  "duration" INT
+  "service_id" INT
+  "comments" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+  "vacancy_id" INT
+  "humanresource_id" INT
+
+Indexes {
+  id [pk]
+  issuer_id [name: "appointments_issuer_id_index"]
+  contact_id [name: "appointments_contact_id_index"]
+  business_id [name: "appointments_business_id_index"]
+  hash [unique, name: "appointments_hash_unique"]
+  start_at [name: "appointments_start_at_index"]
+  finish_at [name: "appointments_finish_at_index"]
+  service_id [name: "appointments_service_id_index"]
+  vacancy_id [name: "appointments_vacancy_id_index"]
+  humanresource_id [name: "appointments_humanresource_id_index"]
+}
+}
+
+Table "business_contact" {
+  "business_id" INT [not null]
+  "contact_id" INT [not null]
+  "notes" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (business_id, contact_id) [unique, name: "business_contact_business_id_contact_id_unique"]
+  business_id [name: "business_contact_business_id_index"]
+  contact_id [name: "business_contact_contact_id_index"]
+}
+}
+
+Table "business_user" {
+  "business_id" INT [not null]
+  "user_id" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  business_id [name: "business_user_business_id_index"]
+  user_id [name: "business_user_user_id_index"]
+}
+}
+
+Table "businesses" {
+  "id" INT [not null]
+  "category_id" INT [not null]
+  "domain_id" INT
+  "slug" NVARCHAR(255) [not null]
+  "name" NVARCHAR(255) [not null]
+  "description" NVARCHAR(255) [not null]
+  "postal_address" NVARCHAR(255)
+  "phone" NVARCHAR(255)
+  "social_facebook" NVARCHAR(255)
+  "timezone" NVARCHAR(255) [not null]
+  "strategy" NVARCHAR(255) [not null]
+  "plan" NVARCHAR(255) [not null]
+  "deleted_at" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "country_code" NVARCHAR(255)
+  "locale" NVARCHAR(255)
+  "listed" TINYINT [not null]
+
+Indexes {
+  id [pk]
+  category_id [name: "businesses_category_id_index"]
+  domain_id [name: "businesses_domain_id_index"]
+  slug [unique, name: "businesses_slug_unique"]
+  country_code [name: "businesses_country_code_index"]
+}
+}
+
+Table "categories" {
+  "id" INT [not null]
+  "slug" NVARCHAR(255) [not null]
+  "name" NVARCHAR(255) [not null]
+  "description" NVARCHAR(255) [not null]
+  "strategy" NVARCHAR(255) [not null]
+  "deleted_at" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  slug [unique, name: "categories_slug_unique"]
+}
+}
+
+Table "contacts" {
+  "id" INT [not null]
+  "user_id" INT
+  "nin" NVARCHAR(255)
+  "gender" NVARCHAR(255) [not null]
+  "firstname" NVARCHAR(255) [not null]
+  "lastname" NVARCHAR(255) [not null]
+  "occupation" NVARCHAR(255)
+  "martial_status" NVARCHAR(255)
+  "postal_address" NVARCHAR(255)
+  "birthdate" DATE
+  "mobile" NCHAR(255)
+  "mobile_country" NCHAR(255)
+  "email" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  user_id [name: "contacts_user_id_index"]
+  nin [name: "contacts_nin_index"]
+}
+}
+
+Table "countries" {
+  "id" INT [not null]
+  "capital" NVARCHAR(255)
+  "citizenship" NVARCHAR(255)
+  "country_code" NCHAR(255) [not null]
+  "currency" NVARCHAR(255)
+  "currency_code" NVARCHAR(255)
+  "currency_sub_unit" NVARCHAR(255)
+  "currency_symbol" NVARCHAR(255)
+  "full_name" NVARCHAR(255)
+  "iso_3166_2" NCHAR(255) [not null]
+  "iso_3166_3" NCHAR(255) [not null]
+  "name" NVARCHAR(255) [not null]
+  "region_code" NCHAR(255) [not null]
+  "sub_region_code" NCHAR(255) [not null]
+  "eea" TINYINT [not null]
+  "calling_code" NVARCHAR(255)
+  "flag" NVARCHAR(255)
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "domains" {
+  "id" INT [not null]
+  "slug" NVARCHAR(255) [not null]
+  "owner_id" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  slug [unique, name: "domains_slug_unique"]
+  owner_id [name: "domains_owner_id_index"]
+}
+}
+
+Table "humanresources" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "slug" NVARCHAR(255) [not null]
+  "capacity" INT [not null]
+  "business_id" INT [not null]
+  "contact_id" INT
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+  "calendar_link" NVARCHAR(255)
+
+Indexes {
+  id [pk]
+  slug [name: "humanresources_slug_index"]
+  business_id [name: "humanresources_business_id_index"]
+  contact_id [name: "humanresources_contact_id_index"]
+}
+}
+
+Table "migrations" {
+  "id" INT [not null]
+  "migration" NVARCHAR(255) [not null]
+  "batch" INT [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "notification_categories" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "text" NVARCHAR(255) [not null]
+
+Indexes {
+  id [pk]
+  name [unique, name: "notification_categories_name_unique"]
+}
+}
+
+Table "notification_groups" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+
+Indexes {
+  id [pk]
+  name [unique, name: "notification_groups_name_unique"]
+}
+}
+
+Table "notifications" {
+  "id" INT [not null]
+  "from_id" BIGINT [not null]
+  "from_type" NVARCHAR(255)
+  "to_id" BIGINT [not null]
+  "to_type" NVARCHAR(255)
+  "category_id" INT [not null]
+  "url" NVARCHAR(255) [not null]
+  "extra" NVARCHAR(255)
+  "read" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "expire_time" DATETIME
+
+Indexes {
+  id [pk]
+  from_id [name: "notifications_from_id_index"]
+  from_type [name: "notifications_from_type_index"]
+  to_id [name: "notifications_to_id_index"]
+  to_type [name: "notifications_to_type_index"]
+  category_id [name: "notifications_category_id_index"]
+}
+}
+
+Table "notifications_categories_in_groups" {
+  "id" INT [not null]
+  "category_id" INT [not null]
+  "group_id" INT [not null]
+
+Indexes {
+  id [pk]
+  category_id [name: "notifications_categories_in_groups_category_id_index"]
+  group_id [name: "notifications_categories_in_groups_group_id_index"]
+}
+}
+
+Table "password_resets" {
+  "email" NVARCHAR(255) [not null]
+  "token" NVARCHAR(255) [not null]
+  "created_at" DATETIME [not null]
+
+Indexes {
+  email [name: "password_resets_email_index"]
+  token [name: "password_resets_token_index"]
+}
+}
+
+Table "permission_role" {
+  "permission_id" INT [not null]
+  "role_id" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (permission_id, role_id) [pk]
+  role_id [name: "permission_role_role_id_index"]
+}
+}
+
+Table "permission_user" {
+  "permission_id" INT [not null]
+  "user_id" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (permission_id, user_id) [pk]
+  user_id [name: "permission_user_user_id_index"]
+}
+}
+
+Table "permissions" {
+  "id" INT [not null]
+  "inherit_id" INT
+  "name" NVARCHAR(255) [not null]
+  "slug" NVARCHAR(255) [not null]
+  "description" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  inherit_id [name: "permissions_inherit_id_index"]
+  name [name: "permissions_name_index"]
+  slug [name: "permissions_slug_index"]
+}
+}
+
+Table "preferences" {
+  "id" INT [not null]
+  "key" NVARCHAR(255) [not null]
+  "value" NVARCHAR(255) [not null]
+  "type" NVARCHAR(255) [not null]
+  "preferenceable_type" NVARCHAR(255) [not null]
+  "preferenceable_id" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (key, preferenceable_type, preferenceable_id) [unique, name: "preferences_key_preferenceable_type_preferenceable_id_unique"]
+  id [pk]
+}
+}
+
+Table "role_user" {
+  "role_id" INT [not null]
+  "user_id" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (role_id, user_id) [pk]
+  user_id [name: "role_user_user_id_index"]
+}
+}
+
+Table "roles" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "slug" NVARCHAR(255) [not null]
+  "description" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  name [unique, name: "roles_name_unique"]
+  slug [unique, name: "roles_slug_unique"]
+}
+}
+
+Table "service_types" {
+  "id" INT [not null]
+  "business_id" INT [not null]
+  "slug" NVARCHAR(255) [not null]
+  "name" NVARCHAR(255) [not null]
+  "description" NVARCHAR(255) [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  business_id [name: "service_types_business_id_index"]
+  slug [name: "service_types_slug_index"]
+}
+}
+
+Table "services" {
+  "id" INT [not null]
+  "type_id" INT
+  "business_id" INT [not null]
+  "slug" NVARCHAR(255) [not null]
+  "name" NVARCHAR(255) [not null]
+  "duration" INT [not null]
+  "description" NVARCHAR(255) [not null]
+  "prerequisites" NVARCHAR(255)
+  "color" NVARCHAR(255)
+  "deleted_at" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (business_id, slug) [unique, name: "services_business_id_slug_unique"]
+  id [pk]
+  type_id [name: "services_type_id_index"]
+}
+}
+
+Table "users" {
+  "id" INT [not null]
+  "username" NVARCHAR(255) [not null]
+  "name" NVARCHAR(255) [not null]
+  "email" NVARCHAR(255) [not null]
+  "password" NVARCHAR(255) [not null]
+  "remember_token" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "last_login_at" DATETIME
+  "last_ip" NVARCHAR(255)
+
+Indexes {
+  id [pk]
+  username [unique, name: "users_username_unique"]
+  email [unique, name: "users_email_unique"]
+}
+}
+
+Table "vacancies" {
+  "id" INT [not null]
+  "date" DATE [not null]
+  "start_at" DATETIME
+  "finish_at" DATETIME
+  "business_id" INT [not null]
+  "service_id" INT [not null]
+  "capacity" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "humanresource_id" INT
+
+Indexes {
+  id [pk]
+  start_at [name: "vacancies_start_at_index"]
+  finish_at [name: "vacancies_finish_at_index"]
+  business_id [name: "vacancies_business_id_index"]
+  service_id [name: "vacancies_service_id_index"]
+  humanresource_id [name: "vacancies_humanresource_id_index"]
+}
+}
+
+Ref "appointments_issuer_id_foreign":"users"."id" < "appointments"."issuer_id"
+
+Ref "appointments_contact_id_foreign":"contacts"."id" < "appointments"."contact_id"
+
+Ref "appointments_business_id_foreign":"businesses"."id" < "appointments"."business_id"
+
+Ref "appointments_service_id_foreign":"services"."id" < "appointments"."service_id"
+
+Ref "appointments_vacancy_id_foreign":"vacancies"."id" < "appointments"."vacancy_id"
+
+Ref "appointments_humanresource_id_foreign":"humanresources"."id" < "appointments"."humanresource_id"
+
+Ref "business_contact_business_id_foreign":"businesses"."id" < "business_contact"."business_id"
+
+Ref "business_contact_contact_id_foreign":"contacts"."id" < "business_contact"."contact_id"
+
+Ref "business_user_business_id_foreign":"businesses"."id" < "business_user"."business_id"
+
+Ref "business_user_user_id_foreign":"users"."id" < "business_user"."user_id"
+
+Ref "businesses_category_id_foreign":"categories"."id" < "businesses"."category_id"
+
+Ref "businesses_domain_id_foreign":"domains"."id" < "businesses"."domain_id"
+
+Ref "contacts_user_id_foreign":"users"."id" < "contacts"."user_id"
+
+Ref "domains_owner_id_foreign":"users"."id" < "domains"."owner_id"
+
+Ref "humanresources_business_id_foreign":"businesses"."id" < "humanresources"."business_id"
+
+Ref "humanresources_contact_id_foreign":"contacts"."id" < "humanresources"."contact_id"
+
+Ref "notifications_category_id_foreign":"notification_categories"."id" < "notifications"."category_id"
+
+Ref "notifications_categories_in_groups_category_id_foreign":"notification_categories"."id" < "notifications_categories_in_groups"."category_id"
+
+Ref "notifications_categories_in_groups_group_id_foreign":"notification_groups"."id" < "notifications_categories_in_groups"."group_id"
+
+Ref "permission_role_permission_id_foreign":"permissions"."id" < "permission_role"."permission_id"
+
+Ref "permission_role_role_id_foreign":"roles"."id" < "permission_role"."role_id"
+
+Ref "permission_user_permission_id_foreign":"permissions"."id" < "permission_user"."permission_id"
+
+Ref "permission_user_user_id_foreign":"users"."id" < "permission_user"."user_id"
+
+Ref "permissions_inherit_id_foreign":"permissions"."id" < "permissions"."inherit_id"
+
+Ref "role_user_role_id_foreign":"roles"."id" < "role_user"."role_id"
+
+Ref "role_user_user_id_foreign":"users"."id" < "role_user"."user_id"
+
+Ref "service_types_business_id_foreign":"businesses"."id" < "service_types"."business_id"
+
+Ref "services_type_id_foreign":"service_types"."id" < "services"."type_id"
+
+Ref "services_business_id_foreign":"businesses"."id" < "services"."business_id"
+
+Ref "vacancies_business_id_foreign":"businesses"."id" < "vacancies"."business_id"
+
+Ref "vacancies_service_id_foreign":"services"."id" < "vacancies"."service_id"
+
+Ref "vacancies_humanresource_id_foreign":"humanresources"."id" < "vacancies"."humanresource_id"

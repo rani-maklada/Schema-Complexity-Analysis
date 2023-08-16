@@ -1,0 +1,246 @@
+Table dbo.Battle {
+  BattleID Int32 [primary key]
+  CelestialObjectID Int32
+  IsDone Boolean
+}
+
+Table dbo.BattleEvent {
+  BattleID Int32 [primary key]
+  EventID Int32 [primary key]
+}
+
+Table dbo.CelestialObjectEvent {
+  ObjectID Int32 [primary key]
+  EventID Int32 [primary key]
+}
+
+Table dbo.CelestialObjectLink {
+  FirstObjectID Int32 [primary key]
+  SecondObjectID Int32 [primary key]
+}
+
+Table dbo.Event {
+  EventID Int32 [primary key]
+  Text String
+  EventType Int32
+  Time DateTime
+  BattleTurn Int32
+}
+
+Table dbo.PlayerEvent {
+  PlayerID Int32 [primary key]
+  EventID Int32 [primary key]
+}
+
+Table dbo.SpringAccount {
+  SpringAccountID Int32 [primary key]
+  Name String
+  Flags String
+  UserCookie Int32
+  LastLogin DateTime
+  Created DateTime
+  LastIP String
+  LastCountry String
+  Password String
+}
+
+Table dbo.Config {
+  Started DateTime
+  CombatTurn Int32
+  StartOn DateTime
+  GameID Int32 [primary key]
+  SecondsPerTurn Int32
+  ResourceTick Int32
+  PopulationTick Int32
+  WarpDistance Int32
+  DirtySecond Int32
+  TurnStarted DateTime
+}
+
+Table dbo.CelestialObjectStructure {
+  CelestialObjectID Int32 [primary key]
+  StructureTypeID Int32 [primary key]
+  Count Int32
+}
+
+Table dbo.MothershipStructure {
+  PlayerID Int32 [primary key]
+  StructureTypeID Int32 [primary key]
+  Count Int32
+}
+
+Table dbo.StarSystemTech {
+  StarSystemID Int32 [primary key]
+  TechID Int32 [primary key]
+}
+
+Table dbo.PlayerTechSpent {
+  PlayerID Int32 [primary key]
+  TechID Int32 [primary key]
+  SpentResearch Int32
+  SpentQuantium Int32
+}
+
+Table dbo.FleetShip {
+  FleetID Int32 [primary key]
+  ShipTypeID Int32 [primary key]
+  Count Int32
+}
+
+Table dbo.CelestialObjectShip {
+  CelestialObjectID Int32 [primary key]
+  ShipTypeID Int32 [primary key]
+  Count Int32
+}
+
+Table dbo.Transit {
+  TransitID Int32 [primary key]
+  FromObjectID Int32
+  ToObjectID Int32
+  FromX Single
+  FromY Single
+  ToX Single
+  ToY Single
+  StartBattleTurn Int32
+  EndBattleTurn Int32
+  Warp Int32
+  OrbitsObjectID Int32
+}
+
+Table dbo.Fleet {
+  FleetID Int32 [primary key]
+  OwnerID Int32
+  Tactics Int32
+  TransitID Int32
+  CustomName String
+  CanPresidentControl Boolean
+}
+
+Table dbo.PopulationTransport {
+  PopulationTransportID Int32 [primary key]
+  OwnerID Int32
+  TransitID Int32
+  Count Int32
+}
+
+Table dbo.StructureType {
+  StructureTypeID Int32 [primary key]
+  Name String
+  CostMetal Int32
+  MakesMetal Int32
+  MakesFood Int32
+  BuildsMetal Int32
+  MakesPeople Int32
+  NeedsPeople Int32
+  StoresPeople Int32
+  NeedsTechID Int32
+  HitPoints Int32
+  MakesResearch Int32
+  LaserDamage Int32
+  MissileDamage Int32
+}
+
+Table dbo.ShipType {
+  ShipTypeID Int32 [primary key]
+  Class Int32
+  LaserDamage Int32
+  MissileDamage Int32
+  BombDamage Int32
+  Name String
+  Shortcut String
+  NeedsTechID Int32
+  MetalCost Int32
+  Hitpoints Int32
+  QuantiumCost Int32
+  DarkMetalCost Int32
+  IsInterdictor Boolean
+  IsStealthy Boolean
+}
+
+Table dbo.Tech {
+  TechID Int32 [primary key]
+  Name String
+  Description String
+  NeedsTechID Int32
+  CostResearch Int32
+  CostQuantium Int32
+}
+
+Table dbo.FleetEvent {
+  FleetID Int32 [primary key]
+  EventID Int32 [primary key]
+}
+
+Table dbo.StarSystem {
+  SystemID Int32 [primary key]
+  HomeStarID Int32
+  Name String
+  PresidentID Int32
+  CoalitionID Int32
+}
+
+Table dbo.Coalition {
+  CoalitionID Int32 [primary key]
+  Name String
+}
+
+Table dbo.CelestialObject {
+  CelestialObjectID Int32 [primary key]
+  CelestialObjectType CelestialObjectType
+  OrbitSpeed Double
+  OrbitDistance Double
+  OrbitInitialAngle Double
+  ParentObject Int32
+  Name String
+  X Double
+  Y Double
+  MetalDensity Double
+  FoodDensity Double
+  QuantiumDensity Double
+  DarkMatterDensity Double
+  Size Int32
+  OwnerID Int32
+  IsStargate Boolean
+  Population Int32
+  HitpointsDamaged Double
+  IsConnected Boolean
+  MaxPopulation Int32
+  MetalIncome Double
+  FoodIncome Double
+  QuantiumIncome Double
+  DarkMatterIncome Double
+  Efficiency Double
+  Buildpower Double
+  ResearchIncome Double
+  BuildpowerUsed Double
+  CanBeRenamed Boolean
+  CanMapBeChanged Boolean
+  MapName String
+}
+
+Table dbo.Player {
+  PlayerID Int32 [primary key]
+  SystemID Int32
+  SpringAccountID Int32
+  IsActive Boolean
+  MothershipName String
+  TransitID Int32
+  Credits Double
+  Metal Double
+  Food Double
+  MetalIncome Double
+  FoodIncome Double
+  Population Int32
+  PopulationCapacity Int32
+  Quantium Double
+  QuantiumIncome Double
+  DarkMatter Double
+  DarkMatterIncome Double
+  XP Int32
+  Level Int32
+  ResearchIncome Double
+  ResearchPoints Double
+  HomeworldID Int32
+  PresidentVote Int32
+}
+

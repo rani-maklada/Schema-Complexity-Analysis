@@ -1,0 +1,10 @@
+Table dbo.Quotes {
+  Ticker String [primary key]
+  Date DateTime [primary key]
+  Open Decimal
+  High Decimal
+  Low Decimal
+  Close Decimal
+  Volume Decimal
+}
+

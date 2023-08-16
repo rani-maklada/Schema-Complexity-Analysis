@@ -1,0 +1,62 @@
+Table Person.Contact {
+  ContactID Int32 [primary key]
+  NameStyle Boolean
+  Title String
+  FirstName String
+  MiddleName String
+  LastName String
+  Suffix String
+  EmailAddress String
+  EmailPromotion Int32
+  Phone String
+  PasswordHash String
+  PasswordSalt String
+  AdditionalContactInfo XElement
+  rowguid Guid
+  ModifiedDate DateTime
+}
+
+Table Sales.SalesOrderDetail {
+  SalesOrderID Int32 [primary key]
+  SalesOrderDetailID Int32 [primary key]
+  CarrierTrackingNumber String
+  OrderQty Int16
+  ProductID Int32
+  SpecialOfferID Int32
+  UnitPrice Decimal
+  UnitPriceDiscount Decimal
+  LineTotal Decimal
+  rowguid Guid
+  ModifiedDate DateTime
+}
+
+Table Sales.SalesOrderHeader {
+  SalesOrderID Int32 [primary key]
+  RevisionNumber Byte
+  OrderDate DateTime
+  DueDate DateTime
+  ShipDate DateTime
+  Status Byte
+  OnlineOrderFlag Boolean
+  SalesOrderNumber String
+  PurchaseOrderNumber String
+  AccountNumber String
+  CustomerID Int32
+  ContactID Int32
+  SalesPersonID Int32
+  TerritoryID Int32
+  BillToAddressID Int32
+  ShipToAddressID Int32
+  ShipMethodID Int32
+  CreditCardID Int32
+  CreditCardApprovalCode String
+  CurrencyRateID Int32
+  SubTotal Decimal
+  TaxAmt Decimal
+  Freight Decimal
+  TotalDue Decimal
+  Comment String
+  rowguid Guid
+  ModifiedDate DateTime
+}
+

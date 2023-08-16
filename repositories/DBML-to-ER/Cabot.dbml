@@ -1,0 +1,343 @@
+Table "alert_acknowledgement" {
+  "id" INT [not null]
+  "time" DATETIME [not null]
+  "cancelled_time" DATETIME
+  "cancelled_user_id" INT [not null]
+  "service_id" INT [not null]
+  "user_id" INT [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "alert_plugin" {
+  "id" INT [not null]
+  "title" NVARCHAR(255) [not null]
+  "enabled" BIT [not null]
+  "polumorphic_ctype" INT [not null]
+
+Indexes {
+  id [pk]
+  title [unique, name: "alert_plugin_title_unique"]
+}
+}
+
+Table "alert_plugin_user_data" {
+  "id" INT [not null]
+  "title" NVARCHAR(255) [not null]
+  "polymorphic_ctype" INT [not null]
+  "user_id" INT [not null]
+
+Indexes {
+  (title, user_id) [unique, name: "alert_plugin_user_data_title_user_id_unique"]
+  id [pk]
+}
+}
+
+Table "instance" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "alerts_enabled" BIT [not null]
+  "last_alert_sent" DATETIME
+  "email_alert" BIT [not null]
+  "hipchat_alert" BIT [not null]
+  "sms_alert" BIT [not null]
+  "telephone_alert" BIT [not null]
+  "overall_status" NVARCHAR(255) [not null]
+  "old_overall_status" NVARCHAR(255) [not null]
+  "hackpad_id" NVARCHAR(255) [not null]
+  "runbook_link" NVARCHAR(255) [not null]
+  "address" NVARCHAR(255) [not null]
+  "alerts" INT [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "alert_plugin_instance" {
+  "id" INT [not null]
+  "alert_plugin_id" INT [not null]
+  "instance_id" INT [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "instance_status_snapshot" {
+  "id" INT [not null]
+  "time" DATETIME [not null]
+  "num_checks_active" INT [not null]
+  "num_checks_passing" INT [not null]
+  "num_checks_failing" INT [not null]
+  "overall_status" NVARCHAR(255) [not null]
+  "did_send_alert" INT [not null]
+  "instance_id" INT [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "service" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "alerts_enabled" BIT [not null]
+  "last_alert_sent" DATETIME
+  "email_alert" BIT [not null]
+  "hipchat_alert" BIT [not null]
+  "sms_alert" BIT [not null]
+  "telephone_alert" BIT [not null]
+  "overall_status" NVARCHAR(255) [not null]
+  "old_overall_status" NVARCHAR(255) [not null]
+  "hackpad_id" NVARCHAR(255) [not null]
+  "runbook_link" NVARCHAR(255) [not null]
+  "url" NVARCHAR(255) [not null]
+  "alerts" INT [not null]
+  "instances" INT [not null]
+  "is_public" BIT [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "alert_plugin_service" {
+  "id" INT [not null]
+  "alert_plugin_id" INT [not null]
+  "service_id" INT [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "instance_service" {
+  "id" INT [not null]
+  "instance_id" INT [not null]
+  "service_id" INT [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "service_status_snapshot" {
+  "id" INT [not null]
+  "time" DATETIME [not null]
+  "num_checks_active" INT [not null]
+  "num_checks_passing" INT [not null]
+  "num_checks_failing" INT [not null]
+  "overall_status" NVARCHAR(255) [not null]
+  "did_send_alert" INT [not null]
+  "service_id" INT [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "shift" {
+  "id" INT [not null]
+  "start" DATETIME [not null]
+  "end" DATETIME [not null]
+  "uid" NVARCHAR(255) [not null]
+  "last_modified" DATETIME [not null]
+  "deleted" BIT [not null]
+  "user_id" INT [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "user" {
+  "id" INT [not null]
+  "username" NVARCHAR(255) [not null]
+  "first_name" NVARCHAR(255)
+  "last_name" NVARCHAR(255)
+  "email" NVARCHAR(255)
+  "password" NVARCHAR(255) [not null]
+  "is_staff" BIT [not null]
+  "is_active" BIT [not null]
+  "is_superuser" BIT [not null]
+  "last_login" DATETIME [not null]
+  "date_joined" DATETIME [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "status_check" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "active" BIT [not null]
+  "importance" NVARCHAR(255) [not null]
+  "frequency" INT [not null]
+  "debounce" INT
+  "calculated_status" NVARCHAR(255) [not null]
+  "last_run" DATETIME
+  "cached_health" NVARCHAR(255)
+  "metric" NVARCHAR(255)
+  "check_type" NVARCHAR(255)
+  "value" NVARCHAR(255)
+  "expected_num_hosts" INT
+  "allowed_num_failures" INT
+  "endpoint" NVARCHAR(255)
+  "username" NVARCHAR(255)
+  "password" NVARCHAR(255)
+  "text_match" NVARCHAR(255)
+  "status_code" NVARCHAR(255)
+  "timeout" INT
+  "verify_ssl_certificate" BIT [not null]
+  "max_queued_build_time" INT
+  "created_by" INT
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "status_check_result" {
+  "id" INT [not null]
+  "time" DATETIME [not null]
+  "time_complete" DATETIME
+  "raw_data" NVARCHAR(255)
+  "succeeded" BIT [not null]
+  "error" NVARCHAR(255)
+  "job_number" INT
+  "status_check_id" INT [not null]
+  "consecutive_failures" INT
+
+Indexes {
+  (status_check_id, time_complete) [name: "status_check_result_status_check_id_time_complete_index"]
+  (status_check_id, id) [name: "status_check_result_status_check_id_id_index"]
+  id [pk]
+}
+}
+
+Table "user_profile" {
+  "id" INT [not null]
+  "mobile_number" NVARCHAR(255) [not null]
+  "hipchat_alias" NVARCHAR(255) [not null]
+  "fallback_alert_user" BIT [not null]
+  "user_id" INT [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "service_status_check" {
+  "id" INT [not null]
+  "service_id" INT [not null]
+  "status_check_id" INT [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "service_user" {
+  "id" INT [not null]
+  "service_id" INT [not null]
+  "user_id" INT [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "instance_status_check" {
+  "id" INT [not null]
+  "status_check_id" INT [not null]
+  "instance_id" INT [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "instance_users" {
+  "id" INT [not null]
+  "user_id" INT [not null]
+  "instance_id" INT [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "jenkins_status_check" {
+  "statuscheck_ptr_id" INT [not null]
+  "jenkins_config_id" INT [not null]
+
+Indexes {
+  statuscheck_ptr_id [pk]
+}
+}
+
+Table "jenkins_config" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "jenkins_api" NVARCHAR(255) [not null]
+  "jenkins_user" NVARCHAR(255) [not null]
+  "jenkins_pass" NVARCHAR(255) [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Ref "alert_acknowledgement_cancelled_user_id_foreign":"user"."id" < "alert_acknowledgement"."cancelled_user_id"
+
+Ref "alert_plugin_instance_alert_plugin_id_foreign":"alert_plugin"."id" < "alert_plugin_instance"."alert_plugin_id"
+
+Ref "alert_plugin_service_alert_plugin_id_foreign":"alert_plugin"."id" < "alert_plugin_service"."alert_plugin_id"
+
+Ref "alert_plugin_user_data_user_id_foreign":"user_profile"."id" < "alert_plugin_user_data"."user_id"
+
+Ref "alert_plugin_instance_instance_id_foreign":"instance"."id" < "alert_plugin_instance"."instance_id"
+
+Ref "instance_status_snapshot_instance_id_foreign":"instance"."id" < "instance_status_snapshot"."instance_id"
+
+Ref "instance_service_instance_id_foreign":"instance"."id" < "instance_service"."instance_id"
+
+Ref "alert_plugin_service_service_id_foreign":"service"."id" < "alert_plugin_service"."service_id"
+
+Ref "service_user_service_id_foreign":"service"."id" < "service_user"."service_id"
+
+Ref "alert_acknowledgement_service_id_foreign":"service"."id" < "alert_acknowledgement"."service_id"
+
+Ref "service_status_snapshot_service_id_foreign":"service"."id" < "service_status_snapshot"."service_id"
+
+Ref "instance_service_service_id_foreign":"service"."id" < "instance_service"."service_id"
+
+Ref "shift_user_id_foreign":"user"."id" < "shift"."user_id"
+
+Ref "service_user_user_id_foreign":"user"."id" < "service_user"."user_id"
+
+Ref "alert_acknowledgement_user_id_foreign":"user"."id" < "alert_acknowledgement"."user_id"
+
+Ref "status_check_result_status_check_id_foreign":"status_check"."id" < "status_check_result"."status_check_id"
+
+Ref "service_status_check_status_check_id_foreign":"status_check"."id" < "service_status_check"."status_check_id"
+
+Ref "status_check_created_by_foreign":"user"."id" < "status_check"."created_by"
+
+Ref "user_profile_user_id_foreign":"user"."id" < "user_profile"."user_id"
+
+Ref "service_status_check_service_id_foreign":"service"."id" < "service_status_check"."service_id"
+
+Ref "instance_status_check_status_check_id_foreign":"status_check"."id" < "instance_status_check"."status_check_id"
+
+Ref "instance_status_check_instance_id_foreign":"instance"."id" < "instance_status_check"."instance_id"
+
+Ref "instance_users_user_id_foreign":"user"."id" < "instance_users"."user_id"
+
+Ref "instance_users_instance_id_foreign":"instance"."id" < "instance_users"."instance_id"
+
+Ref "jenkins_status_check_jenkins_config_id_foreign":"jenkins_config"."id" < "jenkins_status_check"."jenkins_config_id"

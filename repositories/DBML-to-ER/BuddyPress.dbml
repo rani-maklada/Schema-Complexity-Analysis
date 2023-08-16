@@ -1,0 +1,236 @@
+Table "bp_notifications" {
+  "id" BIGINT [pk, not null, increment]
+  "user_id" BIGINT [not null]
+  "item_id" BIGINT [not null]
+  "secondary_item_id" BIGINT
+  "component_name" VARCHAR(255) [not null]
+  "component_action" VARCHAR(255) [not null]
+  "date_notified" DATETIME [not null]
+  "is_new" TINYINT(1) [not null]
+}
+
+Table "bp_notifications_meta" {
+  "id" BIGINT [pk, not null, increment]
+  "notification_id" BIGINT [not null]
+  "meta_key" VARCHAR(255)
+  "meta_value" LONGTEXT
+}
+
+Table "bp_activity" {
+  "id" BIGINT [pk, not null, increment]
+  "user_id" BIGINT [not null]
+  "component" VARCHAR(255) [not null]
+  "type" VARCHAR(255) [not null]
+  "action" TEXT [not null]
+  "content" LONGTEXT [not null]
+  "primary_link" TEXT [not null]
+  "item_id" BIGINT [not null]
+  "secondary_item_id" BIGINT
+  "date_recorded" DATETIME [not null]
+  "hide_sitewide" TINYINT(1)
+  "mptt_left" INT [not null]
+  "mptt_right" INT [not null]
+  "is_spam" TINYINT [not null]
+}
+
+Table "bp_activity_meta" {
+  "id" BIGINT [pk, not null, increment]
+  "activity_id" BIGINT [not null]
+  "meta_key" VARCHAR(255)
+  "meta_value" LONGTEXT
+}
+
+Table "bp_friends" {
+  "id" BIGINT [pk, not null, increment]
+  "initiator_user_id" BIGINT [not null]
+  "friend_user_id" BIGINT [not null]
+  "is_confirmed" TINYINT(1)
+  "is_limited" TINYINT(1)
+  "date_created" DATETIME [not null]
+}
+
+Table "bp_groups" {
+  "id" BIGINT [pk, not null, increment]
+  "creator_id" BIGINT [not null]
+  "name" VARCHAR(255) [not null]
+  "slug" VARCHAR(255) [not null]
+  "description" LONGTEXT [not null]
+  "status" VARCHAR(255) [not null]
+  "parent_id" BIGINT [not null]
+  "enable_forum" TINYINT [not null]
+  "date_created" DATETIME [not null]
+}
+
+Table "bp_groups_members" {
+  "id" BIGINT [pk, not null, increment]
+  "group_id" BIGINT [not null]
+  "user_id" BIGINT [not null]
+  "inviter_id" BIGINT [not null]
+  "is_admin" TINYINT [not null]
+  "is_mod" TINYINT [not null]
+  "user_title" VARCHAR(255) [not null]
+  "date_modified" DATETIME [not null]
+  "comments" LONGTEXT [not null]
+  "is_confirmed" TINYINT [not null]
+  "is_banned" TINYINT [not null]
+  "invite_sent" TINYINT [not null]
+}
+
+Table "bp_groups_groupmeta" {
+  "id" BIGINT [pk, not null, increment]
+  "group_id" BIGINT [not null]
+  "meta_key" VARCHAR(255)
+  "meta_value" LONGTEXT
+}
+
+Table "bp_messages_messages" {
+  "id" BIGINT [pk, not null, increment]
+  "thread_id" BIGINT [not null]
+  "sender_id" BIGINT [not null]
+  "subject" VARCHAR(255) [not null]
+  "message" LONGTEXT [not null]
+  "date_sent" DATETIME [not null]
+}
+
+Table "bp_messages_recipients" {
+  "id" BIGINT [pk, not null, increment]
+  "user_id" BIGINT [not null]
+  "thread_id" BIGINT [not null]
+  "unread_count" INT [not null]
+  "sender_only" TINYINT [not null]
+  "is_deleted" TINYINT [not null]
+}
+
+Table "bp_messages_notices" {
+  "id" BIGINT [pk, not null, increment]
+  "subject" VARCHAR(255) [not null]
+  "message" LONGTEXT [not null]
+  "date_sent" DATETIME [not null]
+  "is_active" TINYINT [not null]
+}
+
+Table "bp_messages_meta" {
+  "id" BIGINT [pk, not null, increment]
+  "message_id" BIGINT [not null]
+  "meta_key" VARCHAR(255)
+  "meta_value" LONGTEXT
+}
+
+Table "bp_xprofile_groups" {
+  "id" BIGINT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "description" MEDIUMTEXT [not null]
+  "group_order" BIGINT [not null]
+  "can_delete" TINYINT [not null]
+}
+
+Table "bp_xprofile_fields" {
+  "id" BIGINT [pk, not null, increment]
+  "group_id" BIGINT [not null]
+  "parent_id" BIGINT [not null]
+  "type" VARCHAR(255) [not null]
+  "name" VARCHAR(255) [not null]
+  "description" LONGTEXT [not null]
+  "is_required" TINYINT [not null]
+  "is_default_option" TINYINT [not null]
+  "field_order" BIGINT [not null]
+  "option_order" BIGINT [not null]
+  "order_by" VARCHAR(255) [not null]
+  "can_delete" TINYINT [not null]
+}
+
+Table "bp_xprofile_data" {
+  "id" BIGINT [pk, not null, increment]
+  "field_id" BIGINT [not null]
+  "user_id" BIGINT [not null]
+  "value" LONGTEXT [not null]
+  "last_updated" DATETIME [not null]
+}
+
+Table "bp_xprofile_meta" {
+  "id" BIGINT [pk, not null, increment]
+  "object_id" BIGINT [not null]
+  "object_type" VARCHAR(255) [not null]
+  "meta_key" VARCHAR(255)
+  "meta_value" LONGTEXT
+}
+
+Table "bp_user_blogs" {
+  "id" BIGINT [pk, not null, increment]
+  "user_id" BIGINT [not null]
+  "blog_id" BIGINT [not null]
+}
+
+Table "bp_user_blogs_blogmeta" {
+  "id" BIGINT [pk, not null, increment]
+  "blog_id" BIGINT [not null]
+  "meta_key" VARCHAR(255)
+  "meta_value" LONGTEXT
+}
+
+Table "bp_invitations" {
+  "id" BIGINT [pk, not null, increment]
+  "user_id" BIGINT [not null]
+  "inviter_id" BIGINT [not null]
+  "invitee_email" VARCHAR(255)
+  "class" VARCHAR(255) [not null]
+  "item_id" BIGINT [not null]
+  "secondary_item_id" BIGINT
+  "type" VARCHAR(255) [not null]
+  "content" LONGTEXT
+  "date_modified" DATETIME [not null]
+  "invite_sent" TINYINT [not null]
+  "accepted" TINYINT [not null]
+}
+
+Table "wp_users" {
+  "id" INT [pk, not null, increment]
+}
+
+Ref:"bp_notifications"."id" < "bp_notifications_meta"."notification_id"
+
+Ref:"wp_users"."id" < "bp_notifications"."user_id"
+
+Ref:"bp_activity"."id" < "bp_activity_meta"."activity_id"
+
+Ref:"wp_users"."id" < "bp_activity"."user_id"
+
+Ref:"wp_users"."id" < "bp_friends"."initiator_user_id"
+
+Ref:"wp_users"."id" < "bp_friends"."friend_user_id"
+
+Ref:"bp_groups"."id" < "bp_groups"."parent_id"
+
+Ref:"wp_users"."id" < "bp_groups"."creator_id"
+
+Ref:"bp_groups"."id" < "bp_groups_members"."group_id"
+
+Ref:"wp_users"."id" < "bp_groups_members"."inviter_id"
+
+Ref:"bp_groups"."id" < "bp_groups_groupmeta"."group_id"
+
+Ref:"wp_users"."id" < "bp_messages_messages"."sender_id"
+
+Ref:"bp_messages_messages"."id" < "bp_messages_meta"."message_id"
+
+Ref:"bp_groups"."id" < "bp_xprofile_fields"."group_id"
+
+Ref:"bp_xprofile_fields"."id" < "bp_xprofile_fields"."parent_id"
+
+Ref:"bp_xprofile_data"."id" < "bp_xprofile_meta"."object_id"
+
+Ref:"bp_xprofile_fields"."id" < "bp_xprofile_data"."field_id"
+
+Ref:"wp_users"."id" < "bp_xprofile_data"."user_id"
+
+Ref:"bp_xprofile_fields"."id" < "bp_xprofile_meta"."object_id"
+
+Ref:"wp_users"."id" < "bp_invitations"."user_id"
+
+Ref:"wp_users"."id" < "bp_invitations"."inviter_id"
+
+Ref:"wp_users"."id" < "bp_messages_recipients"."user_id"
+
+Ref:"wp_users"."id" < "bp_user_blogs"."user_id"
+
+Ref:"wp_users"."id" < "bp_groups_members"."user_id"

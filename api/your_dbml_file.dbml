@@ -1,0 +1,79 @@
+Table "employees" {
+  "emp_no" INT             ,
+    birth_date  DATE            ,
+    first_name  VARCHAR(14)     ,
+    last_name   VARCHAR(16)     ,
+    gender      ENUM ('M','F')  ,    
+    hire_date   DATE            ,
+    PRIMARY KEY (emp_no)
+) [not null, pk]
+
+Indexes {
+  emp_no [pk]
+}
+}
+
+Table "departments" {
+  "dept_no" CHAR(4)         ,
+    dept_name   VARCHAR(40)     ,
+    PRIMARY KEY (dept_no),
+    UNIQUE  KEY (dept_name)
+) [not null, pk]
+
+Indexes {
+  dept_no [pk]
+}
+}
+
+Table "dept_manager" {
+  "emp_no" INT             ,
+   dept_no      CHAR(4)         ,
+   from_date    DATE            ,
+   to_date      DATE            ,
+   FOREIGN KEY (emp_no)  REFERENCES employees (emp_no)    ON DELETE CASCADE,
+   FOREIGN KEY (dept_no) REFERENCES departments (dept_no) ON DELETE CASCADE,
+   PRIMARY KEY (emp_no,dept_no)
+) [not null, pk]
+
+Indexes {
+  emp_no [pk]
+  dept_no [pk]
+}
+}
+Ref: "dept_manager"."emp_no" < "employees"."emp_no" [delete: cascade]
+
+Table "dept_emp" {
+  "emp_no" INT             ,
+    dept_no     CHAR(4)         ,
+    from_date   DATE            ,
+    to_date     DATE            ,
+    FOREIGN KEY (emp_no)  REFERENCES employees   (emp_no)  ON DELETE CASCADE,
+    FOREIGN KEY (dept_no) REFERENCES departments (dept_no) ON DELETE CASCADE,
+    PRIMARY KEY (emp_no,dept_no)
+) [not null, pk]
+
+Indexes {
+  emp_no [pk]
+  dept_no [pk]
+}
+}
+
+Table "titles" {
+  "emp_no" INT             ,
+    title       VARCHAR(50)     ,
+    from_date   DATE            ,
+    to_date     DATE,
+    FOREIGN KEY (emp_no) REFERENCES employees (emp_no) ON DELETE CASCADE,
+    PRIMARY KEY (emp_no,title, from_date)
+) [not null]
+}
+
+Table "salaries" {
+  "emp_no" INT             ,
+    salary      INT             ,
+    from_date   DATE            ,
+    to_date     DATE            ,
+    FOREIGN KEY (emp_no) REFERENCES employees (emp_no) ON DELETE CASCADE,
+    PRIMARY KEY (emp_no, from_date)
+) [not null]
+}

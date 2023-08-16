@@ -1,0 +1,76 @@
+Table dbo.ActivityManifest {
+  Name String [primary key]
+  ManifestDefinition XElement
+}
+
+Table dbo.TaskTraceEntity {
+  TaskId Guid [primary key]
+  ActivityInstanceId Guid
+  Status String
+  Outcome String
+  StartTime DateTime
+  EndTime DateTime
+  AssignedTo String
+  AssignedToDisplayName String
+  ExecutedBy String
+  ExecutedByDisplayName String
+}
+
+Table dbo.WorkflowTraceEntity {
+  WorkflowId Guid
+  WorkflowConfigurationId Guid
+  WorkflowInstanceId Guid [primary key]
+  WorkflowTitle String
+  WorkflowDescription String
+  WorkflowVersion String
+  InternalStatus String
+  ExternalStatus String
+  InitiatedBy String
+  InitiatedByDisplayName String
+  StartTime DateTime
+  EndTime DateTime
+  WorkflowData XElement
+  SLA Double
+  Timestamp Binary
+  WorkflowDurationBusinessHours Double
+}
+
+Table dbo.ActivityTraceEntity {
+  ActivityInstanceId Guid [primary key]
+  WorkflowInstanceId Guid
+  ActivityId Guid
+  ActivityInternalName String
+  ActivityDisplayName String
+  ActivityDescription String
+  ActivityType String
+  StartTime DateTime
+  EndTime DateTime
+  Outcome String
+  Status String
+  InitiatedByNotificationSubscription XElement
+  OriginatingActivityInstanceID Guid
+  ExecutedByRole String
+  WorkflowContainer String
+  SLA Double
+  Timestamp Binary
+  ActivityDurationBusinessHours Double
+}
+
+Table dbo.WorkflowInstanceLocks {
+  WorkflowInstanceId Guid [primary key]
+  LockedOn DateTime
+}
+
+Table dbo.WorkflowQueue {
+  Id Int64
+  Payload Binary
+  ApplicationId Guid
+}
+
+Table dbo.ServiceProvider {
+  Name String [primary key]
+  Definition XElement
+  Enabled Boolean
+  DefaultServiceProvider Boolean
+}
+

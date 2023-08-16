@@ -1,0 +1,563 @@
+Table "auth_group" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+
+Indexes {
+  id [pk]
+  name [unique, name: "auth_group_name_unique"]
+}
+}
+
+Table "auth_group_permissions" {
+  "id" INT [not null]
+  "group_id" INT [not null]
+  "permission_id" INT [not null]
+
+Indexes {
+  (group_id, permission_id) [unique, name: "auth_group_permissions_group_id_permission_id_unique"]
+  id [pk]
+  permission_id [name: "auth_group_permissions_permission_id_index"]
+}
+}
+
+Table "auth_permission" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "content_type_id" INT [not null]
+  "codename" NVARCHAR(255) [not null]
+
+Indexes {
+  (content_type_id, codename) [unique, name: "auth_permission_content_type_id_codename_unique"]
+  id [pk]
+}
+}
+
+Table "auth_user" {
+  "id" INT [not null]
+  "password" NVARCHAR(255) [not null]
+  "last_login" DATETIME
+  "is_superuser" TINYINT [not null]
+  "username" NVARCHAR(255) [not null]
+  "first_name" NVARCHAR(255) [not null]
+  "last_name" NVARCHAR(255) [not null]
+  "email" NVARCHAR(255) [not null]
+  "is_staff" TINYINT [not null]
+  "is_active" TINYINT [not null]
+  "date_joined" DATETIME [not null]
+
+Indexes {
+  id [pk]
+  username [unique, name: "auth_user_username_unique"]
+}
+}
+
+Table "auth_user_groups" {
+  "id" INT [not null]
+  "user_id" INT [not null]
+  "group_id" INT [not null]
+
+Indexes {
+  (user_id, group_id) [unique, name: "auth_user_groups_user_id_group_id_unique"]
+  id [pk]
+  group_id [name: "auth_user_groups_group_id_index"]
+}
+}
+
+Table "auth_user_user_permissions" {
+  "id" INT [not null]
+  "user_id" INT [not null]
+  "permission_id" INT [not null]
+
+Indexes {
+  (user_id, permission_id) [unique, name: "auth_user_user_permissions_user_id_permission_id_unique"]
+  id [pk]
+  permission_id [name: "auth_user_user_permissions_permission_id_index"]
+}
+}
+
+Table "django_admin_log" {
+  "id" INT [not null]
+  "action_time" DATETIME [not null]
+  "object_id" NVARCHAR(255)
+  "object_repr" NVARCHAR(255) [not null]
+  "action_flag" SMALLINT [not null]
+  "change_message" NVARCHAR(255) [not null]
+  "content_type_id" INT
+  "user_id" INT [not null]
+
+Indexes {
+  id [pk]
+  content_type_id [name: "django_admin_log_content_type_id_index"]
+  user_id [name: "django_admin_log_user_id_index"]
+}
+}
+
+Table "django_content_type" {
+  "id" INT [not null]
+  "app_label" NVARCHAR(255) [not null]
+  "model" NVARCHAR(255) [not null]
+
+Indexes {
+  (app_label, model) [unique, name: "django_content_type_app_label_model_unique"]
+  id [pk]
+}
+}
+
+Table "django_migrations" {
+  "id" INT [not null]
+  "app" NVARCHAR(255) [not null]
+  "name" NVARCHAR(255) [not null]
+  "applied" DATETIME [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "django_session" {
+  "session_key" NVARCHAR(255) [not null]
+  "session_data" NVARCHAR(255) [not null]
+  "expire_date" DATETIME [not null]
+
+Indexes {
+  session_key [pk]
+  expire_date [name: "django_session_expire_date_index"]
+}
+}
+
+Table "home_homepage" {
+  "page_ptr_id" INT [not null]
+
+Indexes {
+  page_ptr_id [pk]
+}
+}
+
+Table "taggit_tag" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "slug" NVARCHAR(255) [not null]
+
+Indexes {
+  id [pk]
+  name [unique, name: "taggit_tag_name_unique"]
+  slug [unique, name: "taggit_tag_slug_unique"]
+}
+}
+
+Table "taggit_taggeditem" {
+  "id" INT [not null]
+  "object_id" INT [not null]
+  "content_type_id" INT [not null]
+  "tag_id" INT [not null]
+
+Indexes {
+  (object_id, content_type_id, tag_id) [unique, name: "taggit_taggeditem_object_id_content_type_id_tag_id_unique"]
+  (object_id, content_type_id) [name: "taggit_taggeditem_object_id_content_type_id_index"]
+  id [pk]
+  object_id [name: "taggit_taggeditem_object_id_index"]
+  tag_id [name: "taggit_taggeditem_tag_id_index"]
+}
+}
+
+Table "wagtailcore_collection" {
+  "id" INT [not null]
+  "path" NVARCHAR(255) [not null]
+  "depth" INT [not null]
+  "numchild" INT [not null]
+  "name" NVARCHAR(255) [not null]
+
+Indexes {
+  id [pk]
+  path [unique, name: "wagtailcore_collection_path_unique"]
+}
+}
+
+Table "wagtailcore_collectionviewrestriction" {
+  "id" INT [not null]
+  "restriction_type" NVARCHAR(255) [not null]
+  "password" NVARCHAR(255) [not null]
+  "collection_id" INT [not null]
+
+Indexes {
+  id [pk]
+  collection_id [name: "wagtailcore_collectionviewrestriction_collection_id_index"]
+}
+}
+
+Table "wagtailcore_collectionviewrestriction_groups" {
+  "id" INT [not null]
+  "collectionviewrestriction_id" INT [not null]
+  "group_id" INT [not null]
+
+Indexes {
+  (collectionviewrestriction_id, group_id) [unique, name: "wagtailcore_collectionviewrestriction_groups_collectionviewrestriction_id_group_id_unique"]
+  id [pk]
+  group_id [name: "wagtailcore_collectionviewrestriction_groups_group_id_index"]
+}
+}
+
+Table "wagtailcore_groupcollectionpermission" {
+  "id" INT [not null]
+  "collection_id" INT [not null]
+  "group_id" INT [not null]
+  "permission_id" INT [not null]
+
+Indexes {
+  (collection_id, group_id, permission_id) [unique, name: "wagtailcore_groupcollectionpermission_collection_id_group_id_permission_id_unique"]
+  id [pk]
+  collection_id [name: "wagtailcore_groupcollectionpermission_collection_id_index"]
+  permission_id [name: "wagtailcore_groupcollectionpermission_permission_id_index"]
+}
+}
+
+Table "wagtailcore_grouppagepermission" {
+  "id" INT [not null]
+  "permission_type" NVARCHAR(255) [not null]
+  "group_id" INT [not null]
+  "page_id" INT [not null]
+
+Indexes {
+  (permission_type, group_id, page_id) [unique, name: "wagtailcore_grouppagepermission_permission_type_group_id_page_id_unique"]
+  id [pk]
+  page_id [name: "wagtailcore_grouppagepermission_page_id_index"]
+}
+}
+
+Table "wagtailcore_page" {
+  "id" INT [not null]
+  "path" NVARCHAR(255) [not null]
+  "depth" INT [not null]
+  "numchild" INT [not null]
+  "title" NVARCHAR(255) [not null]
+  "slug" NVARCHAR(255) [not null]
+  "live" TINYINT [not null]
+  "has_unpublished_changes" TINYINT [not null]
+  "url_path" NVARCHAR(255) [not null]
+  "seo_title" NVARCHAR(255) [not null]
+  "show_in_menus" TINYINT [not null]
+  "search_description" NVARCHAR(255) [not null]
+  "go_live_at" DATETIME
+  "expire_at" DATETIME
+  "expired" TINYINT [not null]
+  "content_type_id" INT [not null]
+  "owner_id" INT
+  "locked" TINYINT [not null]
+  "latest_revision_created_at" DATETIME
+  "first_published_at" DATETIME
+  "live_revision_id" INT
+  "last_published_at" DATETIME
+  "draft_title" NVARCHAR(255) [not null]
+  "locked_at" DATETIME
+  "locked_by_id" INT
+
+Indexes {
+  id [pk]
+  path [unique, name: "wagtailcore_page_path_unique"]
+  slug [name: "wagtailcore_page_slug_index"]
+  content_type_id [name: "wagtailcore_page_content_type_id_index"]
+  owner_id [name: "wagtailcore_page_owner_id_index"]
+  first_published_at [name: "wagtailcore_page_first_published_at_index"]
+  live_revision_id [name: "wagtailcore_page_live_revision_id_index"]
+  locked_by_id [name: "wagtailcore_page_locked_by_id_index"]
+}
+}
+
+Table "wagtailcore_pagerevision" {
+  "id" INT [not null]
+  "submitted_for_moderation" TINYINT [not null]
+  "created_at" DATETIME [not null]
+  "content_json" NVARCHAR(255) [not null]
+  "approved_go_live_at" DATETIME
+  "page_id" INT [not null]
+  "user_id" INT
+
+Indexes {
+  id [pk]
+  submitted_for_moderation [name: "wagtailcore_pagerevision_submitted_for_moderation_index"]
+  created_at [name: "wagtailcore_pagerevision_created_at_index"]
+  approved_go_live_at [name: "wagtailcore_pagerevision_approved_go_live_at_index"]
+  page_id [name: "wagtailcore_pagerevision_page_id_index"]
+  user_id [name: "wagtailcore_pagerevision_user_id_index"]
+}
+}
+
+Table "wagtailcore_pageviewrestriction" {
+  "id" INT [not null]
+  "password" NVARCHAR(255) [not null]
+  "page_id" INT [not null]
+  "restriction_type" NVARCHAR(255) [not null]
+
+Indexes {
+  id [pk]
+  page_id [name: "wagtailcore_pageviewrestriction_page_id_index"]
+}
+}
+
+Table "wagtailcore_pageviewrestriction_groups" {
+  "id" INT [not null]
+  "pageviewrestriction_id" INT [not null]
+  "group_id" INT [not null]
+
+Indexes {
+  (pageviewrestriction_id, group_id) [unique, name: "wagtailcore_pageviewrestriction_groups_pageviewrestriction_id_group_id_unique"]
+  id [pk]
+  group_id [name: "wagtailcore_pageviewrestriction_groups_group_id_index"]
+}
+}
+
+Table "wagtailcore_site" {
+  "id" INT [not null]
+  "hostname" NVARCHAR(255) [not null]
+  "port" INT [not null]
+  "is_default_site" TINYINT [not null]
+  "root_page_id" INT [not null]
+  "site_name" NVARCHAR(255)
+
+Indexes {
+  (hostname, port) [unique, name: "wagtailcore_site_hostname_port_unique"]
+  id [pk]
+  hostname [name: "wagtailcore_site_hostname_index"]
+  root_page_id [name: "wagtailcore_site_root_page_id_index"]
+}
+}
+
+Table "wagtaildocs_document" {
+  "id" INT [not null]
+  "title" NVARCHAR(255) [not null]
+  "file" NVARCHAR(255) [not null]
+  "created_at" DATETIME [not null]
+  "uploaded_by_user_id" INT
+  "collection_id" INT [not null]
+  "file_size" INT
+  "file_hash" NVARCHAR(255) [not null]
+
+Indexes {
+  id [pk]
+  uploaded_by_user_id [name: "wagtaildocs_document_uploaded_by_user_id_index"]
+  collection_id [name: "wagtaildocs_document_collection_id_index"]
+}
+}
+
+Table "wagtailembeds_embed" {
+  "id" INT [not null]
+  "url" NVARCHAR(255) [not null]
+  "max_width" SMALLINT
+  "type" NVARCHAR(255) [not null]
+  "html" NVARCHAR(255) [not null]
+  "title" NVARCHAR(255) [not null]
+  "author_name" NVARCHAR(255) [not null]
+  "provider_name" NVARCHAR(255) [not null]
+  "thumbnail_url" NVARCHAR(255)
+  "width" INT
+  "height" INT
+  "last_updated" DATETIME [not null]
+
+Indexes {
+  (url, max_width) [unique, name: "wagtailembeds_embed_url_max_width_unique"]
+  id [pk]
+}
+}
+
+Table "wagtailforms_formsubmission" {
+  "id" INT [not null]
+  "form_data" NVARCHAR(255) [not null]
+  "submit_time" DATETIME [not null]
+  "page_id" INT [not null]
+
+Indexes {
+  id [pk]
+  page_id [name: "wagtailforms_formsubmission_page_id_index"]
+}
+}
+
+Table "wagtailimages_image" {
+  "id" INT [not null]
+  "title" NVARCHAR(255) [not null]
+  "file" NVARCHAR(255) [not null]
+  "width" INT [not null]
+  "height" INT [not null]
+  "created_at" DATETIME [not null]
+  "focal_point_x" INT
+  "focal_point_y" INT
+  "focal_point_width" INT
+  "focal_point_height" INT
+  "uploaded_by_user_id" INT
+  "file_size" INT
+  "collection_id" INT [not null]
+  "file_hash" NVARCHAR(255) [not null]
+
+Indexes {
+  id [pk]
+  created_at [name: "wagtailimages_image_created_at_index"]
+  uploaded_by_user_id [name: "wagtailimages_image_uploaded_by_user_id_index"]
+  collection_id [name: "wagtailimages_image_collection_id_index"]
+}
+}
+
+Table "wagtailimages_rendition" {
+  "id" INT [not null]
+  "file" NVARCHAR(255) [not null]
+  "width" INT [not null]
+  "height" INT [not null]
+  "focal_point_key" NVARCHAR(255) [not null]
+  "filter_spec" NVARCHAR(255) [not null]
+  "image_id" INT [not null]
+
+Indexes {
+  (focal_point_key, filter_spec, image_id) [unique, name: "wagtailimages_rendition_focal_point_key_filter_spec_image_id_unique"]
+  id [pk]
+  filter_spec [name: "wagtailimages_rendition_filter_spec_index"]
+}
+}
+
+Table "wagtailredirects_redirect" {
+  "id" INT [not null]
+  "old_path" NVARCHAR(255) [not null]
+  "is_permanent" TINYINT [not null]
+  "redirect_link" NVARCHAR(255) [not null]
+  "redirect_page_id" INT
+  "site_id" INT
+
+Indexes {
+  (old_path, site_id) [unique, name: "wagtailredirects_redirect_old_path_site_id_unique"]
+  id [pk]
+  old_path [name: "wagtailredirects_redirect_old_path_index"]
+  redirect_page_id [name: "wagtailredirects_redirect_redirect_page_id_index"]
+  site_id [name: "wagtailredirects_redirect_site_id_index"]
+}
+}
+
+Table "wagtailsearch_editorspick" {
+  "id" INT [not null]
+  "sort_order" INT
+  "description" NVARCHAR(255) [not null]
+  "page_id" INT [not null]
+  "query_id" INT [not null]
+
+Indexes {
+  id [pk]
+  page_id [name: "wagtailsearch_editorspick_page_id_index"]
+  query_id [name: "wagtailsearch_editorspick_query_id_index"]
+}
+}
+
+Table "wagtailsearch_query" {
+  "id" INT [not null]
+  "query_string" NVARCHAR(255) [not null]
+
+Indexes {
+  id [pk]
+  query_string [unique, name: "wagtailsearch_query_query_string_unique"]
+}
+}
+
+Table "wagtailsearch_querydailyhits" {
+  "id" INT [not null]
+  "date" DATE [not null]
+  "hits" INT [not null]
+  "query_id" INT [not null]
+
+Indexes {
+  (date, query_id) [unique, name: "wagtailsearch_querydailyhits_date_query_id_unique"]
+  id [pk]
+}
+}
+
+Table "wagtailusers_userprofile" {
+  "id" INT [not null]
+  "submitted_notifications" TINYINT [not null]
+  "approved_notifications" TINYINT [not null]
+  "rejected_notifications" TINYINT [not null]
+  "user_id" INT [not null]
+  "preferred_language" NVARCHAR(255) [not null]
+  "current_time_zone" NVARCHAR(255) [not null]
+  "avatar" NVARCHAR(255) [not null]
+
+Indexes {
+  id [pk]
+  user_id [unique, name: "wagtailusers_userprofile_user_id_unique"]
+}
+}
+
+Ref "auth_group_permissions_group_id_foreign":"auth_group"."id" < "auth_group_permissions"."group_id"
+
+Ref "auth_group_permissions_permission_id_foreign":"auth_permission"."id" < "auth_group_permissions"."permission_id"
+
+Ref "auth_permission_content_type_id_foreign":"django_content_type"."id" < "auth_permission"."content_type_id"
+
+Ref "auth_user_groups_user_id_foreign":"auth_user"."id" < "auth_user_groups"."user_id"
+
+Ref "auth_user_groups_group_id_foreign":"auth_group"."id" < "auth_user_groups"."group_id"
+
+Ref "auth_user_user_permissions_user_id_foreign":"auth_user"."id" < "auth_user_user_permissions"."user_id"
+
+Ref "auth_user_user_permissions_permission_id_foreign":"auth_permission"."id" < "auth_user_user_permissions"."permission_id"
+
+Ref "django_admin_log_content_type_id_foreign":"django_content_type"."id" < "django_admin_log"."content_type_id"
+
+Ref "django_admin_log_user_id_foreign":"auth_user"."id" < "django_admin_log"."user_id"
+
+Ref "taggit_taggeditem_content_type_id_foreign":"django_content_type"."id" < "taggit_taggeditem"."content_type_id"
+
+Ref "taggit_taggeditem_tag_id_foreign":"taggit_tag"."id" < "taggit_taggeditem"."tag_id"
+
+Ref "wagtailcore_collectionviewrestriction_collection_id_foreign":"wagtailcore_collection"."id" < "wagtailcore_collectionviewrestriction"."collection_id"
+
+Ref "wagtailcore_collectionviewrestriction_groups_collectionviewrestriction_id_foreign":"wagtailcore_collectionviewrestriction"."id" < "wagtailcore_collectionviewrestriction_groups"."collectionviewrestriction_id"
+
+Ref "wagtailcore_collectionviewrestriction_groups_group_id_foreign":"auth_group"."id" < "wagtailcore_collectionviewrestriction_groups"."group_id"
+
+Ref "wagtailcore_groupcollectionpermission_collection_id_foreign":"wagtailcore_collection"."id" < "wagtailcore_groupcollectionpermission"."collection_id"
+
+Ref "wagtailcore_groupcollectionpermission_group_id_foreign":"auth_group"."id" < "wagtailcore_groupcollectionpermission"."group_id"
+
+Ref "wagtailcore_groupcollectionpermission_permission_id_foreign":"auth_permission"."id" < "wagtailcore_groupcollectionpermission"."permission_id"
+
+Ref "wagtailcore_grouppagepermission_group_id_foreign":"auth_group"."id" < "wagtailcore_grouppagepermission"."group_id"
+
+Ref "wagtailcore_grouppagepermission_page_id_foreign":"wagtailcore_page"."id" < "wagtailcore_grouppagepermission"."page_id"
+
+Ref "wagtailcore_page_content_type_id_foreign":"django_content_type"."id" < "wagtailcore_page"."content_type_id"
+
+Ref "wagtailcore_page_owner_id_foreign":"auth_user"."id" < "wagtailcore_page"."owner_id"
+
+Ref "wagtailcore_page_live_revision_id_foreign":"wagtailcore_pagerevision"."id" < "wagtailcore_page"."live_revision_id"
+
+Ref "wagtailcore_page_locked_by_id_foreign":"auth_user"."id" < "wagtailcore_page"."locked_by_id"
+
+Ref "wagtailcore_pagerevision_page_id_foreign":"wagtailcore_page"."id" < "wagtailcore_pagerevision"."page_id"
+
+Ref "wagtailcore_pagerevision_user_id_foreign":"auth_user"."id" < "wagtailcore_pagerevision"."user_id"
+
+Ref "wagtailcore_pageviewrestriction_page_id_foreign":"wagtailcore_page"."id" < "wagtailcore_pageviewrestriction"."page_id"
+
+Ref "wagtailcore_pageviewrestriction_groups_pageviewrestriction_id_foreign":"wagtailcore_pageviewrestriction"."id" < "wagtailcore_pageviewrestriction_groups"."pageviewrestriction_id"
+
+Ref "wagtailcore_pageviewrestriction_groups_group_id_foreign":"auth_group"."id" < "wagtailcore_pageviewrestriction_groups"."group_id"
+
+Ref "wagtailcore_site_root_page_id_foreign":"wagtailcore_page"."id" < "wagtailcore_site"."root_page_id"
+
+Ref "wagtaildocs_document_uploaded_by_user_id_foreign":"auth_user"."id" < "wagtaildocs_document"."uploaded_by_user_id"
+
+Ref "wagtaildocs_document_collection_id_foreign":"wagtailcore_collection"."id" < "wagtaildocs_document"."collection_id"
+
+Ref "wagtailforms_formsubmission_page_id_foreign":"wagtailcore_page"."id" < "wagtailforms_formsubmission"."page_id"
+
+Ref "wagtailimages_image_uploaded_by_user_id_foreign":"auth_user"."id" < "wagtailimages_image"."uploaded_by_user_id"
+
+Ref "wagtailimages_image_collection_id_foreign":"wagtailcore_collection"."id" < "wagtailimages_image"."collection_id"
+
+Ref "wagtailimages_rendition_image_id_foreign":"wagtailimages_image"."id" < "wagtailimages_rendition"."image_id"
+
+Ref "wagtailredirects_redirect_redirect_page_id_foreign":"wagtailcore_page"."id" < "wagtailredirects_redirect"."redirect_page_id"
+
+Ref "wagtailredirects_redirect_site_id_foreign":"wagtailcore_site"."id" < "wagtailredirects_redirect"."site_id"
+
+Ref "wagtailsearch_editorspick_page_id_foreign":"wagtailcore_page"."id" < "wagtailsearch_editorspick"."page_id"
+
+Ref "wagtailsearch_editorspick_query_id_foreign":"wagtailsearch_query"."id" < "wagtailsearch_editorspick"."query_id"
+
+Ref "wagtailsearch_querydailyhits_query_id_foreign":"wagtailsearch_query"."id" < "wagtailsearch_querydailyhits"."query_id"
+
+Ref "wagtailusers_userprofile_user_id_foreign":"auth_user"."id" < "wagtailusers_userprofile"."user_id"

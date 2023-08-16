@@ -1,0 +1,13 @@
+Table dbo.Customer {
+  Id Int32 [primary key]
+  FirstName String
+  LastName String
+  CustomerSince DateTime
+  AmountPaidLocalCalls Double
+  AmountPaidNationalCalls Double
+  AmountPaidInternationalCalls Double
+  NumberFamilyMembersInPlan Int32
+  JoinedPreferredProgram Boolean
+  Region Int32
+}
+

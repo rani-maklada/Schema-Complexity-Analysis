@@ -1,0 +1,65 @@
+Table "product" {
+  "id" int [pk]
+  "name" varchar
+  "type" int
+  "stock" int
+  "img_path_id" int
+  "created_at" timestamptz
+  "updated_at" timestamptz
+}
+
+Table "prod_type" {
+  "id" int [pk]
+  "prod_id" int
+  "type_name" varchar
+  "img_path_id" int
+  "created_at" timestamptz
+  "updated_at" timestamptz
+}
+
+Table "img_path" {
+  "id" int [pk]
+  "path" varchar
+  "created_at" timestamptz
+  "updated_at" timestamptz
+}
+
+Table "user" {
+  "id" int [pk, increment]
+  "name" varchar
+  "lastname" varchar
+  "email" varchar
+  "created_at" timestamptz
+  "updated_at" timestamptz
+}
+
+Table "cart" {
+  "id" int [pk]
+  "user_id" int
+  "prod_id" int
+  "created_at" timestamptz
+  "updated_at" timestamptz
+}
+
+Table "order" {
+  "id" int [pk]
+  "user_id" int
+  "prod_id" int
+  "cart_id" int
+  "created_at" timestamptz
+  "updated_at" timestamptz
+}
+
+Ref:"product"."type" < "prod_type"."prod_id"
+
+Ref:"user"."id" < "cart"."user_id"
+
+Ref:"user"."id" < "order"."user_id"
+
+Ref:"product"."img_path_id" < "img_path"."id"
+
+Ref:"prod_type"."img_path_id" < "img_path"."id"
+
+Ref:"product"."id" < "order"."prod_id"
+
+Ref:"cart"."prod_id" < "product"."id"

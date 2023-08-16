@@ -1,0 +1,9 @@
+Table dbo.tblCalendar {
+  CalendarID Guid [primary key]
+  EventDate DateTime
+  EventTitle String
+  EventDetail String
+  IsActive Boolean
+  SiteID Guid
+}
+

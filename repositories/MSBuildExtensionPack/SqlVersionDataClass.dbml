@@ -1,0 +1,8 @@
+Table dbo.BuildNumbers {
+  SequenceName String [primary key]
+  Major Int32
+  Minor Int32
+  Build Int32
+  Increment Int32
+}
+

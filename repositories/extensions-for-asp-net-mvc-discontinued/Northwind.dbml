@@ -1,0 +1,13 @@
+Table dbo.Products {
+  ProductID Int32 [primary key]
+  ProductName String
+  SupplierID Int32
+  CategoryID Int32
+  QuantityPerUnit String
+  UnitPrice Decimal
+  UnitsInStock Int16
+  UnitsOnOrder Int16
+  ReorderLevel Int16
+  Discontinued Boolean
+}
+

@@ -1,0 +1,31 @@
+Table System.Activities.DurableInstancing.Instances {
+  InstanceId Guid
+  PendingTimer DateTime
+  CreationTime DateTime
+  LastUpdatedTime DateTime
+  ServiceDeploymentId Int64
+  SuspensionExceptionName String
+  SuspensionReason String
+  ActiveBookmarks String
+  CurrentMachine String
+  LastMachine String
+  ExecutionStatus String
+  IsInitialized Boolean
+  IsSuspended Boolean
+  IsCompleted Boolean
+  EncodingOption Byte
+  ReadWritePrimitiveDataProperties Binary
+  WriteOnlyPrimitiveDataProperties Binary
+  ReadWriteComplexDataProperties Binary
+  WriteOnlyComplexDataProperties Binary
+}
+
+Table System.Activities.DurableInstancing.ServiceDeployments {
+  ServiceDeploymentId Int64
+  SiteName String
+  RelativeServicePath String
+  RelativeApplicationPath String
+  ServiceName String
+  ServiceNamespace String
+}
+

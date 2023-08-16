@@ -1,0 +1,6 @@
+Table dbo.UserFiles {
+  ID Int32 [primary key]
+  Name String
+  Data Binary
+}
+

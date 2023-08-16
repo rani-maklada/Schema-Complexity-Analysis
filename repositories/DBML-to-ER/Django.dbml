@@ -1,0 +1,144 @@
+Table "auth_group" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+
+Indexes {
+  id [pk]
+  name [unique, name: "auth_group_name_unique"]
+}
+}
+
+Table "auth_group_permissions" {
+  "id" INT [not null]
+  "group_id" INT [not null]
+  "permission_id" INT [not null]
+
+Indexes {
+  (group_id, permission_id) [unique, name: "auth_group_permissions_group_id_permission_id_unique"]
+  id [pk]
+  permission_id [name: "auth_group_permissions_permission_id_index"]
+}
+}
+
+Table "auth_permission" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "content_type_id" INT [not null]
+  "codename" NVARCHAR(255) [not null]
+
+Indexes {
+  (content_type_id, codename) [unique, name: "auth_permission_content_type_id_codename_unique"]
+  id [pk]
+}
+}
+
+Table "auth_user" {
+  "id" INT [not null]
+  "password" NVARCHAR(255) [not null]
+  "last_login" DATETIME
+  "is_superuser" TINYINT [not null]
+  "username" NVARCHAR(255) [not null]
+  "first_name" NVARCHAR(255) [not null]
+  "last_name" NVARCHAR(255) [not null]
+  "email" NVARCHAR(255) [not null]
+  "is_staff" TINYINT [not null]
+  "is_active" TINYINT [not null]
+  "date_joined" DATETIME [not null]
+
+Indexes {
+  id [pk]
+  username [unique, name: "auth_user_username_unique"]
+}
+}
+
+Table "auth_user_groups" {
+  "id" INT [not null]
+  "user_id" INT [not null]
+  "group_id" INT [not null]
+
+Indexes {
+  (user_id, group_id) [unique, name: "auth_user_groups_user_id_group_id_unique"]
+  id [pk]
+  group_id [name: "auth_user_groups_group_id_index"]
+}
+}
+
+Table "auth_user_user_permissions" {
+  "id" INT [not null]
+  "user_id" INT [not null]
+  "permission_id" INT [not null]
+
+Indexes {
+  (user_id, permission_id) [unique, name: "auth_user_user_permissions_user_id_permission_id_unique"]
+  id [pk]
+  permission_id [name: "auth_user_user_permissions_permission_id_index"]
+}
+}
+
+Table "django_admin_log" {
+  "id" INT [not null]
+  "action_time" DATETIME [not null]
+  "object_id" NVARCHAR(255)
+  "object_repr" NVARCHAR(255) [not null]
+  "action_flag" SMALLINT [not null]
+  "change_message" NVARCHAR(255) [not null]
+  "user_id" INT [not null]
+  "content_type_id" INT
+
+Indexes {
+  id [pk]
+  user_id [name: "django_admin_log_user_id_index"]
+  content_type_id [name: "django_admin_log_content_type_id_index"]
+}
+}
+
+Table "django_content_type" {
+  "id" INT [not null]
+  "app_label" NVARCHAR(255) [not null]
+  "model" NVARCHAR(255) [not null]
+
+Indexes {
+  (app_label, model) [unique, name: "django_content_type_app_label_model_unique"]
+  id [pk]
+}
+}
+
+Table "django_migrations" {
+  "id" INT [not null]
+  "app" NVARCHAR(255) [not null]
+  "name" NVARCHAR(255) [not null]
+  "applied" DATETIME [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "django_session" {
+  "session_key" NVARCHAR(255) [not null]
+  "session_data" NVARCHAR(255) [not null]
+  "expire_date" DATETIME [not null]
+
+Indexes {
+  session_key [pk]
+  expire_date [name: "django_session_expire_date_index"]
+}
+}
+
+Ref "auth_group_permissions_group_id_foreign":"auth_group"."id" < "auth_group_permissions"."group_id"
+
+Ref "auth_group_permissions_permission_id_foreign":"auth_permission"."id" < "auth_group_permissions"."permission_id"
+
+Ref "auth_permission_content_type_id_foreign":"django_content_type"."id" < "auth_permission"."content_type_id"
+
+Ref "auth_user_groups_user_id_foreign":"auth_user"."id" < "auth_user_groups"."user_id"
+
+Ref "auth_user_groups_group_id_foreign":"auth_group"."id" < "auth_user_groups"."group_id"
+
+Ref "auth_user_user_permissions_user_id_foreign":"auth_user"."id" < "auth_user_user_permissions"."user_id"
+
+Ref "auth_user_user_permissions_permission_id_foreign":"auth_permission"."id" < "auth_user_user_permissions"."permission_id"
+
+Ref "django_admin_log_user_id_foreign":"auth_user"."id" < "django_admin_log"."user_id"
+
+Ref "django_admin_log_content_type_id_foreign":"django_content_type"."id" < "django_admin_log"."content_type_id"

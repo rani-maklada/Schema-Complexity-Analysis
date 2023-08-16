@@ -1,0 +1,811 @@
+Table "accessories" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255)
+  "category_id" INT
+  "user_id" INT
+  "qty" INT [not null]
+  "requestable" TINYINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "deleted_at" TIMESTAMP
+  "location_id" INT
+  "purchase_date" DATE
+  "purchase_cost" DECIMAL(8,2)
+  "order_number" VARCHAR(255)
+  "company_id" INT
+  "min_amt" INT
+  "manufacturer_id" INT
+  "model_number" VARCHAR(255)
+  "image" VARCHAR(255)
+  "supplier_id" INT
+}
+
+Table "accessories_users" {
+  "id" INT [pk, not null, increment]
+  "user_id" INT
+  "accessory_id" INT
+  "assigned_to" INT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "action_logs" {
+  "id" INT [pk, not null, increment]
+  "user_id" INT
+  "action_type" VARCHAR(255) [not null]
+  "target_id" INT
+  "target_type" VARCHAR(255)
+  "location_id" INT
+  "note" TEXT
+  "filename" TEXT
+  "item_type" VARCHAR(255) [not null]
+  "item_id" INT [not null]
+  "expected_checkin" DATE
+  "accepted_id" INT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "deleted_at" TIMESTAMP
+  "thread_id" INT
+  "company_id" INT
+  "accept_signature" VARCHAR(255)
+  "log_meta" TEXT
+}
+
+Table "asset_logs" {
+  "id" INT [pk, not null, increment]
+  "user_id" INT
+  "action_type" VARCHAR(255) [not null]
+  "asset_id" INT [not null]
+  "checkedout_to" INT
+  "location_id" INT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "deleted_at" TIMESTAMP
+  "asset_type" VARCHAR(255)
+  "note" TEXT
+  "filename" TEXT
+  "requested_at" DATETIME
+  "accepted_at" DATETIME
+  "accessory_id" INT
+  "accepted_id" INT
+  "consumable_id" INT
+  "expected_checkin" DATE
+  "component_id" INT
+}
+
+Table "asset_maintenances" {
+  "id" INT [pk, not null, increment]
+  "asset_id" INT [not null]
+  "supplier_id" INT [not null]
+  "asset_maintenance_type" VARCHAR(255) [not null]
+  "title" VARCHAR(255) [not null]
+  "is_warranty" TINYINT [not null]
+  "start_date" DATE [not null]
+  "completion_date" DATE
+  "asset_maintenance_time" INT
+  "notes" LONGTEXT
+  "cost" DECIMAL(8,2)
+  "deleted_at" DATETIME
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "user_id" INT
+}
+
+Table "asset_uploads" {
+  "id" INT [pk, not null, increment]
+  "user_id" INT
+  "filename" VARCHAR(255) [not null]
+  "asset_id" INT [not null]
+  "filenotes" VARCHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "deleted_at" TIMESTAMP
+}
+
+Table "assets" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255)
+  "asset_tag" VARCHAR(255)
+  "model_id" INT
+  "serial" VARCHAR(255)
+  "purchase_date" DATE
+  "purchase_cost" DECIMAL(8,2)
+  "order_number" VARCHAR(255)
+  "assigned_to" INT
+  "notes" TEXT
+  "image" TEXT
+  "user_id" INT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "physical" TINYINT [not null]
+  "deleted_at" TIMESTAMP
+  "status_id" INT
+  "archived" TINYINT
+  "warranty_months" INT
+  "depreciate" TINYINT
+  "supplier_id" INT
+  "requestable" TINYINT [not null]
+  "rtd_location_id" INT
+  "_snipeit_mac_address_1" VARCHAR(255)
+  "accepted" VARCHAR(255)
+  "last_checkout" DATETIME
+  "expected_checkin" DATE
+  "company_id" INT
+  "assigned_type" VARCHAR(255)
+  "last_audit_date" DATETIME
+  "next_audit_date" DATE
+  "location_id" INT
+  "checkin_counter" INT [not null]
+  "checkout_counter" INT [not null]
+  "requests_counter" INT [not null]
+}
+
+Table "categories" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "user_id" INT
+  "deleted_at" TIMESTAMP
+  "eula_text" LONGTEXT
+  "use_default_eula" TINYINT [not null]
+  "require_acceptance" TINYINT [not null]
+  "category_type" VARCHAR(255)
+  "checkin_email" TINYINT [not null]
+  "image" VARCHAR(255)
+}
+
+Table "checkout_requests" {
+  "id" INT [pk, not null, increment]
+  "user_id" INT [not null]
+  "requestable_id" INT [not null]
+  "requestable_type" VARCHAR(255) [not null]
+  "quantity" INT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "canceled_at" DATETIME
+  "fulfilled_at" DATETIME
+  "deleted_at" DATETIME
+}
+
+Table "companies" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "image" VARCHAR(255)
+}
+
+Table "components" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255)
+  "category_id" INT
+  "location_id" INT
+  "company_id" INT
+  "user_id" INT
+  "qty" INT [not null]
+  "order_number" VARCHAR(255)
+  "purchase_date" DATE
+  "purchase_cost" DECIMAL(8,2)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "deleted_at" TIMESTAMP
+  "min_amt" INT
+  "serial" VARCHAR(255)
+  "image" VARCHAR(255)
+}
+
+Table "components_assets" {
+  "id" INT [pk, not null, increment]
+  "user_id" INT
+  "assigned_qty" INT
+  "component_id" INT
+  "asset_id" INT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "consumables" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255)
+  "category_id" INT
+  "location_id" INT
+  "user_id" INT
+  "qty" INT [not null]
+  "requestable" TINYINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "deleted_at" TIMESTAMP
+  "purchase_date" DATE
+  "purchase_cost" DECIMAL(8,2)
+  "order_number" VARCHAR(255)
+  "company_id" INT
+  "min_amt" INT
+  "model_number" VARCHAR(255)
+  "manufacturer_id" INT
+  "item_no" VARCHAR(255)
+  "image" VARCHAR(255)
+}
+
+Table "consumables_users" {
+  "id" INT [pk, not null, increment]
+  "user_id" INT
+  "consumable_id" INT
+  "assigned_to" INT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "custom_field_custom_fieldset" {
+  "custom_field_id" INT [not null]
+  "custom_fieldset_id" INT [not null]
+  "order" INT [not null]
+  "required" TINYINT [not null]
+}
+
+Table "custom_fields" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "format" VARCHAR(255) [not null]
+  "element" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "user_id" INT
+  "field_values" TEXT
+  "field_encrypted" TINYINT [not null]
+  "db_column" VARCHAR(255)
+  "help_text" TEXT
+  "show_in_email" TINYINT [not null]
+}
+
+Table "custom_fieldsets" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "user_id" INT
+}
+
+Table "departments" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "user_id" INT [not null]
+  "company_id" INT
+  "location_id" INT
+  "manager_id" INT
+  "notes" VARCHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "deleted_at" TIMESTAMP
+  "image" VARCHAR(255)
+}
+
+Table "depreciations" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "months" INT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "user_id" INT
+}
+
+Table "imports" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255)
+  "file_path" VARCHAR(255) [not null]
+  "filesize" INT [not null]
+  "import_type" VARCHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "header_row" TEXT
+  "first_row" TEXT
+  "field_map" TEXT
+}
+
+Table "license_seats" {
+  "id" INT [pk, not null, increment]
+  "license_id" INT
+  "assigned_to" INT
+  "notes" TEXT
+  "user_id" INT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "deleted_at" TIMESTAMP
+  "asset_id" INT
+}
+
+Table "licenses" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255)
+  "serial" VARCHAR(255)
+  "purchase_date" DATE
+  "purchase_cost" DECIMAL(8,2)
+  "order_number" VARCHAR(255)
+  "seats" INT [not null]
+  "notes" TEXT
+  "user_id" INT
+  "depreciation_id" INT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "deleted_at" TIMESTAMP
+  "license_name" VARCHAR(255)
+  "license_email" VARCHAR(255)
+  "depreciate" TINYINT
+  "supplier_id" INT
+  "expiration_date" DATE
+  "purchase_order" VARCHAR(255)
+  "termination_date" DATE
+  "maintained" TINYINT
+  "reassignable" TINYINT [not null]
+  "company_id" INT
+  "manufacturer_id" INT
+  "category_id" INT
+}
+
+Table "locations" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255)
+  "city" VARCHAR(255)
+  "state" VARCHAR(255)
+  "country" VARCHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "user_id" INT
+  "address" VARCHAR(255)
+  "address2" VARCHAR(255)
+  "zip" VARCHAR(255)
+  "deleted_at" TIMESTAMP
+  "parent_id" INT
+  "currency" VARCHAR(255)
+  "ldap_ou" VARCHAR(255)
+  "manager_id" INT
+  "image" VARCHAR(255)
+}
+
+Table "login_attempts" {
+  "id" INT [pk, not null, increment]
+  "username" VARCHAR(255)
+  "remote_ip" VARCHAR(255)
+  "user_agent" VARCHAR(255)
+  "successful" TINYINT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "manufacturers" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "user_id" INT
+  "deleted_at" TIMESTAMP
+  "url" VARCHAR(255)
+  "support_url" VARCHAR(255)
+  "support_phone" VARCHAR(255)
+  "support_email" VARCHAR(255)
+  "image" VARCHAR(255)
+}
+
+Table "models" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "model_number" VARCHAR(255)
+  "manufacturer_id" INT
+  "category_id" INT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "depreciation_id" INT
+  "user_id" INT
+  "eol" INT
+  "image" VARCHAR(255)
+  "deprecated_mac_address" TINYINT [not null]
+  "deleted_at" TIMESTAMP
+  "fieldset_id" INT
+  "notes" TEXT
+  "requestable" TINYINT [not null]
+}
+
+Table "models_custom_fields" {
+  "id" INT [pk, not null, increment]
+  "asset_model_id" INT [not null]
+  "custom_field_id" INT [not null]
+  "default_value" TEXT
+}
+
+Table "password_resets" {
+  "email" VARCHAR(255) [not null]
+  "token" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP [not null]
+}
+
+Table "permission_groups" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "permissions" TEXT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "requested_assets" {
+  "id" INT [pk, not null, increment]
+  "asset_id" INT [not null]
+  "user_id" INT [not null]
+  "accepted_at" DATETIME
+  "denied_at" DATETIME
+  "notes" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "requests" {
+  "id" INT [pk, not null, increment]
+  "asset_id" INT [not null]
+  "user_id" INT
+  "request_code" TEXT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "deleted_at" TIMESTAMP
+}
+
+Table "settings" {
+  "id" INT [pk, not null, increment]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "user_id" INT
+  "per_page" INT [not null]
+  "site_name" VARCHAR(255) [not null]
+  "qr_code" INT
+  "qr_text" VARCHAR(255)
+  "display_asset_name" INT
+  "display_checkout_date" INT
+  "display_eol" INT
+  "auto_increment_assets" INT [not null]
+  "auto_increment_prefix" VARCHAR(255)
+  "load_remote" TINYINT [not null]
+  "logo" VARCHAR(255)
+  "header_color" VARCHAR(255)
+  "alert_email" VARCHAR(255)
+  "alerts_enabled" TINYINT [not null]
+  "default_eula_text" LONGTEXT
+  "barcode_type" VARCHAR(255)
+  "slack_endpoint" VARCHAR(255)
+  "slack_channel" VARCHAR(255)
+  "slack_botname" VARCHAR(255)
+  "default_currency" VARCHAR(255)
+  "custom_css" TEXT
+  "brand" TINYINT [not null]
+  "ldap_enabled" VARCHAR(255)
+  "ldap_server" VARCHAR(255)
+  "ldap_uname" VARCHAR(255)
+  "ldap_pword" LONGTEXT
+  "ldap_basedn" VARCHAR(255)
+  "ldap_filter" TEXT
+  "ldap_username_field" VARCHAR(255)
+  "ldap_lname_field" VARCHAR(255)
+  "ldap_fname_field" VARCHAR(255)
+  "ldap_auth_filter_query" VARCHAR(255)
+  "ldap_version" INT
+  "ldap_active_flag" VARCHAR(255)
+  "ldap_emp_num" VARCHAR(255)
+  "ldap_email" VARCHAR(255)
+  "full_multiple_companies_support" TINYINT [not null]
+  "ldap_server_cert_ignore" TINYINT [not null]
+  "locale" VARCHAR(255)
+  "labels_per_page" TINYINT [not null]
+  "labels_width" DECIMAL(8,2) [not null]
+  "labels_height" DECIMAL(8,2) [not null]
+  "labels_pmargin_left" DECIMAL(8,2) [not null]
+  "labels_pmargin_right" DECIMAL(8,2) [not null]
+  "labels_pmargin_top" DECIMAL(8,2) [not null]
+  "labels_pmargin_bottom" DECIMAL(8,2) [not null]
+  "labels_display_bgutter" DECIMAL(8,2) [not null]
+  "labels_display_sgutter" DECIMAL(8,2) [not null]
+  "labels_fontsize" TINYINT [not null]
+  "labels_pagewidth" DECIMAL(8,2) [not null]
+  "labels_pageheight" DECIMAL(8,2) [not null]
+  "labels_display_name" TINYINT [not null]
+  "labels_display_serial" TINYINT [not null]
+  "labels_display_tag" TINYINT [not null]
+  "alt_barcode" VARCHAR(255)
+  "alt_barcode_enabled" TINYINT
+  "alert_interval" INT
+  "alert_threshold" INT
+  "email_domain" VARCHAR(255)
+  "email_format" VARCHAR(255)
+  "username_format" VARCHAR(255)
+  "is_ad" TINYINT [not null]
+  "ad_domain" VARCHAR(255)
+  "ldap_port" VARCHAR(255) [not null]
+  "ldap_tls" TINYINT [not null]
+  "zerofill_count" INT [not null]
+  "ldap_pw_sync" TINYINT [not null]
+  "two_factor_enabled" TINYINT
+  "require_accept_signature" TINYINT [not null]
+  "date_display_format" VARCHAR(255) [not null]
+  "time_display_format" VARCHAR(255) [not null]
+  "next_auto_tag_base" BIGINT [not null]
+  "login_note" TEXT
+  "thumbnail_max_h" INT
+  "pwd_secure_uncommon" TINYINT [not null]
+  "pwd_secure_complexity" VARCHAR(255)
+  "pwd_secure_min" INT [not null]
+  "audit_interval" INT
+  "audit_warning_days" INT
+  "show_url_in_emails" TINYINT [not null]
+  "custom_forgot_pass_url" VARCHAR(255)
+  "show_alerts_in_menu" TINYINT [not null]
+  "labels_display_company_name" TINYINT [not null]
+  "show_archived_in_list" TINYINT [not null]
+  "dashboard_message" TEXT
+  "support_footer" CHAR(255)
+  "footer_text" TEXT
+  "modellist_displays" CHAR(255)
+  "login_remote_user_enabled" TINYINT [not null]
+  "login_common_disabled" TINYINT [not null]
+  "login_remote_user_custom_logout_url" VARCHAR(255) [not null]
+  "skin" CHAR(255)
+  "show_images_in_email" TINYINT [not null]
+  "admin_cc_email" CHAR(255)
+  "labels_display_model" TINYINT [not null]
+  "privacy_policy_link" CHAR(255)
+  "version_footer" CHAR(255)
+  "unique_serial" TINYINT [not null]
+  "logo_print_assets" TINYINT [not null]
+}
+
+Table "status_labels" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255)
+  "user_id" INT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "deleted_at" TIMESTAMP
+  "deployable" TINYINT [not null]
+  "pending" TINYINT [not null]
+  "archived" TINYINT [not null]
+  "notes" TEXT
+  "color" VARCHAR(255)
+  "show_in_nav" TINYINT [not null]
+  "default_label" TINYINT [not null]
+}
+
+Table "suppliers" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "address" VARCHAR(255)
+  "address2" VARCHAR(255)
+  "city" VARCHAR(255)
+  "state" VARCHAR(255)
+  "country" VARCHAR(255)
+  "phone" VARCHAR(255)
+  "fax" VARCHAR(255)
+  "email" VARCHAR(255)
+  "contact" VARCHAR(255)
+  "notes" VARCHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "user_id" INT
+  "deleted_at" TIMESTAMP
+  "zip" VARCHAR(255)
+  "url" VARCHAR(255)
+  "image" VARCHAR(255)
+}
+
+Table "throttle" {
+  "id" INT [pk, not null, increment]
+  "user_id" INT
+  "ip_address" VARCHAR(255)
+  "attempts" INT [not null]
+  "suspended" TINYINT [not null]
+  "banned" TINYINT [not null]
+  "last_attempt_at" TIMESTAMP
+  "suspended_at" TIMESTAMP
+  "banned_at" TIMESTAMP
+}
+
+Table "users" {
+  "id" INT [pk, not null, increment]
+  "email" VARCHAR(255)
+  "password" VARCHAR(255) [not null]
+  "permissions" TEXT
+  "activated" TINYINT [not null]
+  "activation_code" VARCHAR(255)
+  "activated_at" TIMESTAMP
+  "last_login" TIMESTAMP
+  "persist_code" VARCHAR(255)
+  "reset_password_code" VARCHAR(255)
+  "first_name" VARCHAR(255)
+  "last_name" VARCHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "deleted_at" TIMESTAMP
+  "website" VARCHAR(255)
+  "country" VARCHAR(255)
+  "gravatar" VARCHAR(255)
+  "location_id" INT
+  "phone" VARCHAR(255)
+  "jobtitle" VARCHAR(255)
+  "manager_id" INT
+  "employee_num" TEXT
+  "avatar" VARCHAR(255)
+  "username" VARCHAR(255)
+  "notes" TEXT
+  "company_id" INT
+  "remember_token" TEXT
+  "ldap_import" TINYINT [not null]
+  "locale" VARCHAR(255)
+  "show_in_list" TINYINT [not null]
+  "two_factor_secret" VARCHAR(255)
+  "two_factor_enrolled" TINYINT [not null]
+  "two_factor_optin" TINYINT [not null]
+  "department_id" INT
+  "address" VARCHAR(255)
+  "city" VARCHAR(255)
+  "state" VARCHAR(255)
+  "zip" VARCHAR(255)
+}
+
+Table "users_groups" {
+  "user_id" INT [not null]
+  "group_id" INT [not null]
+}
+
+Ref:"accessories"."id" < "asset_logs"."accepted_at"
+
+Ref:"accessories"."id" < "accessories_users"."accessory_id"
+
+Ref:"categories"."id" < "accessories"."category_id"
+
+Ref:"users"."id" < "accessories_users"."user_id"
+
+Ref:"users"."id" < "accessories_users"."assigned_to"
+
+Ref:"users"."id" < "action_logs"."user_id"
+
+Ref:"locations"."id" < "action_logs"."location_id"
+
+Ref:"users"."id" < "asset_logs"."user_id"
+
+Ref:"assets"."id" < "asset_logs"."asset_id"
+
+Ref:"locations"."id" < "asset_logs"."location_id"
+
+Ref:"components"."id" < "asset_logs"."component_id"
+
+Ref:"assets"."id" < "asset_maintenances"."asset_id"
+
+Ref:"suppliers"."id" < "asset_maintenances"."supplier_id"
+
+Ref:"users"."id" < "asset_maintenances"."user_id"
+
+Ref:"users"."id" < "asset_uploads"."user_id"
+
+Ref:"assets"."id" < "asset_uploads"."asset_id"
+
+Ref:"users"."id" < "assets"."assigned_to"
+
+Ref:"users"."id" < "assets"."user_id"
+
+Ref:"suppliers"."id" < "assets"."supplier_id"
+
+Ref:"locations"."id" < "assets"."location_id"
+
+Ref:"categories"."id" < "licenses"."category_id"
+
+Ref:"users"."id" < "checkout_requests"."user_id"
+
+Ref:"companies"."id" < "accessories"."company_id"
+
+Ref:"companies"."id" < "action_logs"."company_id"
+
+Ref:"companies"."id" < "assets"."company_id"
+
+Ref:"categories"."id" < "components"."category_id"
+
+Ref:"locations"."id" < "components"."location_id"
+
+Ref:"companies"."id" < "components"."company_id"
+
+Ref:"components"."id" < "components_assets"."component_id"
+
+Ref:"assets"."id" < "components_assets"."asset_id"
+
+Ref:"consumables"."id" < "consumables_users"."consumable_id"
+
+Ref:"users"."id" < "consumables"."user_id"
+
+Ref:"companies"."id" < "consumables"."company_id"
+
+Ref:"manufacturers"."id" < "consumables"."manufacturer_id"
+
+Ref:"users"."id" < "consumables_users"."assigned_to"
+
+Ref:"custom_fields"."id" < "custom_field_custom_fieldset"."custom_field_id"
+
+Ref:"custom_fieldsets"."id" < "custom_field_custom_fieldset"."custom_fieldset_id"
+
+Ref:"users"."id" < "custom_fieldsets"."user_id"
+
+Ref:"companies"."id" < "departments"."company_id"
+
+Ref:"users"."id" < "departments"."manager_id"
+
+Ref:"users"."id" < "depreciations"."user_id"
+
+Ref:"licenses"."id" < "license_seats"."license_id"
+
+Ref:"users"."id" < "license_seats"."assigned_to"
+
+Ref:"users"."id" < "license_seats"."user_id"
+
+Ref:"assets"."id" < "license_seats"."asset_id"
+
+Ref:"depreciations"."id" < "licenses"."depreciation_id"
+
+Ref:"suppliers"."id" < "licenses"."supplier_id"
+
+Ref:"companies"."id" < "licenses"."company_id"
+
+Ref:"locations"."id" < "accessories"."location_id"
+
+Ref:"locations"."id" < "users"."location_id"
+
+Ref:"locations"."id" < "departments"."location_id"
+
+Ref:"users"."id" < "locations"."user_id"
+
+Ref:"locations"."id" < "locations"."parent_id"
+
+Ref:"users"."id" < "locations"."manager_id"
+
+Ref:"manufacturers"."id" < "accessories"."manufacturer_id"
+
+Ref:"models"."id" < "assets"."model_id"
+
+Ref:"manufacturers"."id" < "models"."manufacturer_id"
+
+Ref:"categories"."id" < "models"."category_id"
+
+Ref:"depreciations"."id" < "models"."depreciation_id"
+
+Ref:"users"."id" < "models"."user_id"
+
+Ref:"custom_fields"."id" < "models_custom_fields"."custom_field_id"
+
+Ref:"assets"."id" < "requested_assets"."asset_id"
+
+Ref:"assets"."id" < "requests"."asset_id"
+
+Ref:"users"."id" < "requests"."user_id"
+
+Ref:"users"."id" < "settings"."user_id"
+
+Ref:"suppliers"."id" < "accessories"."supplier_id"
+
+Ref:"users"."id" < "suppliers"."user_id"
+
+Ref:"users"."id" < "throttle"."user_id"
+
+Ref:"users"."id" < "users_groups"."user_id"
+
+Ref:"users"."id" < "consumables_users"."user_id"
+
+Ref:"users"."id" < "components_assets"."user_id"
+
+Ref:"users"."id" < "components"."user_id"
+
+Ref:"users"."id" < "licenses"."user_id"
+
+Ref:"users"."id" < "requested_assets"."user_id"
+
+Ref:"users"."id" < "manufacturers"."user_id"
+
+Ref:"users"."id" < "status_labels"."user_id"
+
+Ref:"users"."id" < "users"."manager_id"
+
+Ref:"companies"."id" < "users"."company_id"
+
+Ref:"departments"."id" < "users"."department_id"
+
+Ref:"permission_groups"."id" < "users_groups"."group_id"

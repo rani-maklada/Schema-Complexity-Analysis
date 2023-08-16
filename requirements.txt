@@ -1,0 +1,12 @@
+# To ensure app dependencies are ported from your virtual environment/host machine into your container, run 'pip freeze > requirements.txt' in the terminal to overwrite this file
+networkx==1.11
+gitpython==2.1.15
+python-bugzilla==2.2.0
+pygithub==1.45
+selenium==3.141.0   
+py-stackexchange==2.2.7
+slacker==0.14.0
+pygal==2.4.0
+mysql-connector-python-rf==2.2.2
+beautifulsoup4==4.8.2
+# mysql-connector-python==2.2.2

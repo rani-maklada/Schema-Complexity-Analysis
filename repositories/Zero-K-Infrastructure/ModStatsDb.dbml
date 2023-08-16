@@ -1,0 +1,30 @@
+Table dbo.Damage {
+  GameID Int32 [primary key]
+  AttackerUnit String [primary key]
+  VictimUnit String [primary key]
+  Damage Double
+  Paralyze Double
+}
+
+Table dbo.Unit {
+  GameID Int32 [primary key]
+  Unit String [primary key]
+  Created Int32
+  Destroyed Int32
+  Cost Int32
+  Health Int32
+}
+
+Table dbo.Game {
+  GameID Int32 [primary key]
+  SpringGameIDString String
+  Mod String
+  Players Int32
+  Teams Int32
+  Created DateTime
+  IP String
+  Version Double
+  Map String
+  PlayerList String
+}
+

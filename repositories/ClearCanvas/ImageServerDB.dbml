@@ -1,0 +1,54 @@
+Table dbo.WorkQueue {
+  GUID Guid [primary key]
+  ServerPartitionGUID Guid
+  StudyStorageGUID Guid
+  DeviceGUID Guid
+  StudyHistoryGUID Guid
+  WorkQueueTypeEnum Int16
+  WorkQueueStatusEnum Int16
+  WorkQueuePriorityEnum Int16
+  ProcessorID String
+  GroupID String
+  ExpirationTime DateTime
+  ScheduledTime DateTime
+  InsertTime DateTime
+  LastUpdatedTime DateTime
+  FailureCount Int32
+  FailureDescription String
+  ExternalRequestQueueGUID Guid
+}
+
+Table dbo.WorkQueueUid {
+  GUID Guid [primary key]
+  WorkQueueGUID Guid
+  SeriesInstanceUid String
+  SopInstanceUid String
+  Failed Boolean
+  Duplicate Boolean
+  Extension String
+  FailureCount Int16
+  GroupID String
+}
+
+Table dbo.Study {
+  GUID Guid [primary key]
+  ServerPartitionGUID Guid
+  StudyStorageGUID Guid
+  SpecificCharacterSet String
+  StudyInstanceUid String
+  NumberOfStudyRelatedSeries Int32
+  NumberOfStudyRelatedInstances Int32
+}
+
+Table dbo.StudyStorage {
+  GUID Guid [primary key]
+  ServerPartitionGUID Guid
+  StudyInstanceUid String
+  InsertTime DateTime
+  LastAccessedTime DateTime
+  WriteLock Boolean
+  ReadLock Int16
+  StudyStatusEnum Int16
+  QueueStudyStateEnum Int16
+}
+

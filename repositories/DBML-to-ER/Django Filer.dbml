@@ -1,0 +1,178 @@
+Table "auth_group" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+
+Indexes {
+  id [pk]
+  name [unique, name: "auth_group_name_unique"]
+}
+}
+
+Table "auth_user" {
+  "id" INT [not null]
+  "password" NVARCHAR(255) [not null]
+  "last_login" DATETIME
+  "is_superuser" TINYINT [not null]
+  "username" NVARCHAR(255) [not null]
+  "first_name" NVARCHAR(255) [not null]
+  "last_name" NVARCHAR(255) [not null]
+  "email" NVARCHAR(255) [not null]
+  "is_staff" TINYINT [not null]
+  "is_active" TINYINT [not null]
+  "date_joined" DATETIME [not null]
+
+Indexes {
+  id [pk]
+  username [unique, name: "auth_user_username_unique"]
+}
+}
+
+Table "django_content_type" {
+  "id" INT [not null]
+  "app_label" NVARCHAR(255) [not null]
+  "model" NVARCHAR(255) [not null]
+
+Indexes {
+  (app_label, model) [unique, name: "django_content_type_app_label_model_unique"]
+  id [pk]
+}
+}
+
+Table "filer_clipboard" {
+  "id" INT [not null]
+  "user_id" INT [not null]
+
+Indexes {
+  id [pk]
+  user_id [name: "filer_clipboard_user_id_index"]
+}
+}
+
+Table "filer_clipboarditem" {
+  "id" INT [not null]
+  "clipboard_id" INT [not null]
+  "file_id" INT [not null]
+
+Indexes {
+  id [pk]
+  clipboard_id [name: "filer_clipboarditem_clipboard_id_index"]
+  file_id [name: "filer_clipboarditem_file_id_index"]
+}
+}
+
+Table "filer_file" {
+  "id" INT [not null]
+  "file" NVARCHAR(255)
+  "_file_size" BIGINT
+  "sha1" NVARCHAR(255) [not null]
+  "has_all_mandatory_data" TINYINT [not null]
+  "original_filename" NVARCHAR(255)
+  "name" NVARCHAR(255) [not null]
+  "description" NVARCHAR(255)
+  "uploaded_at" DATETIME [not null]
+  "modified_at" DATETIME [not null]
+  "is_public" TINYINT [not null]
+  "folder_id" INT
+  "owner_id" INT
+  "polymorphic_ctype_id" INT
+
+Indexes {
+  id [pk]
+  folder_id [name: "filer_file_folder_id_index"]
+  owner_id [name: "filer_file_owner_id_index"]
+  polymorphic_ctype_id [name: "filer_file_polymorphic_ctype_id_index"]
+}
+}
+
+Table "filer_folder" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "uploaded_at" DATETIME [not null]
+  "created_at" DATETIME [not null]
+  "modified_at" DATETIME [not null]
+  "lft" INT [not null]
+  "rght" INT [not null]
+  "tree_id" INT [not null]
+  "level" INT [not null]
+  "owner_id" INT
+  "parent_id" INT
+
+Indexes {
+  (name, parent_id) [unique, name: "filer_folder_name_parent_id_unique"]
+  (lft, tree_id) [name: "filer_folder_lft_tree_id_index"]
+  id [pk]
+  tree_id [name: "filer_folder_tree_id_index"]
+  owner_id [name: "filer_folder_owner_id_index"]
+}
+}
+
+Table "filer_folderpermission" {
+  "id" INT [not null]
+  "type" SMALLINT [not null]
+  "everybody" TINYINT [not null]
+  "can_edit" SMALLINT
+  "can_read" SMALLINT
+  "can_add_children" SMALLINT
+  "folder_id" INT
+  "user_id" INT
+  "group_id" INT
+
+Indexes {
+  id [pk]
+  folder_id [name: "filer_folderpermission_folder_id_index"]
+  user_id [name: "filer_folderpermission_user_id_index"]
+  group_id [name: "filer_folderpermission_group_id_index"]
+}
+}
+
+Table "filer_image" {
+  "file_ptr_id" INT [not null]
+  "_height" INT
+  "_width" INT
+  "date_taken" DATETIME
+  "default_alt_text" NVARCHAR(255)
+  "default_caption" NVARCHAR(255)
+  "author" NVARCHAR(255)
+  "must_always_publish_author_credit" TINYINT [not null]
+  "must_always_publish_copyright" TINYINT [not null]
+  "subject_location" NVARCHAR(255) [not null]
+
+Indexes {
+  file_ptr_id [pk]
+}
+}
+
+Table "filer_thumbnailoption" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "width" INT [not null]
+  "height" INT [not null]
+  "crop" TINYINT [not null]
+  "upscale" TINYINT [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Ref "filer_clipboard_user_id_foreign":"auth_user"."id" < "filer_clipboard"."user_id"
+
+Ref "filer_clipboarditem_clipboard_id_foreign":"filer_clipboard"."id" < "filer_clipboarditem"."clipboard_id"
+
+Ref "filer_clipboarditem_file_id_foreign":"filer_file"."id" < "filer_clipboarditem"."file_id"
+
+Ref "filer_file_folder_id_foreign":"filer_folder"."id" < "filer_file"."folder_id"
+
+Ref "filer_file_owner_id_foreign":"auth_user"."id" < "filer_file"."owner_id"
+
+Ref "filer_file_polymorphic_ctype_id_foreign":"django_content_type"."id" < "filer_file"."polymorphic_ctype_id"
+
+Ref "filer_folder_owner_id_foreign":"auth_user"."id" < "filer_folder"."owner_id"
+
+Ref "filer_folder_parent_id_foreign":"filer_folder"."id" < "filer_folder"."parent_id"
+
+Ref "filer_folderpermission_folder_id_foreign":"filer_folder"."id" < "filer_folderpermission"."folder_id"
+
+Ref "filer_folderpermission_user_id_foreign":"auth_user"."id" < "filer_folderpermission"."user_id"
+
+Ref "filer_folderpermission_group_id_foreign":"auth_group"."id" < "filer_folderpermission"."group_id"

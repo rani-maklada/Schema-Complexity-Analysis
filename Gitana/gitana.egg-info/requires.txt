@@ -1,0 +1,10 @@
+networkx
+gitpython
+python-bugzilla
+pygithub
+selenium
+py-stackexchange
+slacker
+pygal
+mysql-connector-python-rf
+beautifulsoup4

@@ -1,0 +1,125 @@
+Table "users" {
+  "id" BIGINT [pk, not null, increment]
+  "avatar" VARCHAR(255)
+  "role_id" BIGINT
+  "settings" TEXT
+}
+
+Table "data_types" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "slug" VARCHAR(255) [not null]
+  "display_name_singular" VARCHAR(255) [not null]
+  "display_name_plural" VARCHAR(255) [not null]
+  "icon" VARCHAR(255)
+  "model_name" VARCHAR(255)
+  "policy_name" VARCHAR(255)
+  "controller" VARCHAR(255)
+  "description" VARCHAR(255)
+  "generate_permissions" TINYINT(1) [not null]
+  "server_side" TINYINT [not null]
+  "details" TEXT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+}
+
+Table "menus" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+}
+
+Table "menu_items" {
+  "id" INT [pk, not null, increment]
+  "menu_id" INT
+  "title" VARCHAR(255) [not null]
+  "url" VARCHAR(255) [not null]
+  "target" VARCHAR(255) [not null]
+  "icon_class" VARCHAR(255)
+  "color" VARCHAR(255)
+  "parent_id" INT
+  "order" INT [not null]
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "route" VARCHAR(255)
+  "parameters" TEXT
+}
+
+Table "roles" {
+  "id" BIGINT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "display_name" VARCHAR(255) [not null]
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+}
+
+Table "settings" {
+  "id" INT [pk, not null, increment]
+  "key" VARCHAR(255) [not null]
+  "display_name" VARCHAR(255) [not null]
+  "value" TEXT
+  "details" TEXT
+  "type" VARCHAR(255) [not null]
+  "order" INT [not null]
+  "group" INT
+}
+
+Table "permissions" {
+  "id" BIGINT [pk, not null, increment]
+  "key" VARCHAR(255) [not null]
+  "table_name" VARCHAR(255)
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+}
+
+Table "permission_role" {
+  "permission_id" BIGINT [not null]
+  "role_id" BIGINT [not null]
+}
+
+Table "translations" {
+  "id" INT [pk, not null, increment]
+  "table_name" VARCHAR(255) [not null]
+  "column_name" VARCHAR(255) [not null]
+  "foreign_key" INT [not null]
+  "locale" VARCHAR(255) [not null]
+  "value" TEXT [not null]
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+}
+
+Table "data_rows" {
+  "id" INT [pk, not null, increment]
+  "data_type_id" INT [not null]
+  "field" VARCHAR(255) [not null]
+  "type" VARCHAR(255) [not null]
+  "display_name" VARCHAR(255) [not null]
+  "required" TINYINT(1) [not null]
+  "browse" TINYINT(1) [not null]
+  "read" TINYINT(1) [not null]
+  "edit" TINYINT(1) [not null]
+  "add" TINYINT(1) [not null]
+  "delete" TINYINT(1) [not null]
+  "details" TEXT
+  "order" INT [not null]
+}
+
+Table "user_roles" {
+  "user_id" BIGINT [not null]
+  "role_id" BIGINT [not null]
+}
+
+Ref:"data_types"."id" < "data_rows"."data_type_id"
+
+Ref:"users"."id" < "user_roles"."user_id"
+
+Ref:"roles"."id" < "permission_role"."role_id"
+
+Ref:"permissions"."id" < "permission_role"."permission_id"
+
+Ref:"menus"."id" < "menu_items"."menu_id"
+
+Ref:"menu_items"."id" < "menu_items"."parent_id"
+
+Ref:"roles"."id" < "user_roles"."role_id"

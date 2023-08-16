@@ -1,0 +1,15 @@
+Table dbo.Customers {
+  CustomerID String [primary key]
+  CompanyName String
+  ContactName String
+  ContactTitle String
+  Address String
+  City String
+  Region String
+  PostalCode String
+  Country String
+  Phone String
+  Fax String
+  Bool Boolean
+}
+

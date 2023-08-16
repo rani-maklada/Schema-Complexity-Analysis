@@ -1,0 +1,12 @@
+Table Company {
+  Id Guid [primary key]
+  Name String
+}
+
+Table Employee {
+  Id Guid [primary key]
+  Firstname String
+  Lastname String
+  CompanyId Guid
+}
+

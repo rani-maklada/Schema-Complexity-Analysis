@@ -1,0 +1,106 @@
+Table dbo.carrot_CalendarEventCategory {
+  CalendarEventCategoryID Guid [primary key]
+  CategoryFGColor String
+  CategoryBGColor String
+  CategoryName String
+  SiteID Guid
+}
+
+Table dbo.carrot_CalendarFrequency {
+  CalendarFrequencyID Guid [primary key]
+  FrequencySortOrder Int32
+  FrequencyValue String
+  FrequencyName String
+}
+
+Table dbo.carrot_CalendarEvent {
+  CalendarEventID Guid [primary key]
+  CalendarEventProfileID Guid
+  EventDate DateTime
+  EventDetail String
+  IsCancelled Boolean
+  EventStartTime TimeSpan
+  EventEndTime TimeSpan
+}
+
+Table dbo.carrot_CalendarEventProfile {
+  CalendarEventProfileID Guid [primary key]
+  CalendarFrequencyID Guid
+  CalendarEventCategoryID Guid
+  EventStartDate DateTime
+  EventStartTime TimeSpan
+  EventEndDate DateTime
+  EventEndTime TimeSpan
+  EventTitle String
+  EventDetail String
+  EventRepeatPattern Int32
+  IsAllDayEvent Boolean
+  IsPublic Boolean
+  IsCancelled Boolean
+  IsCancelledPublic Boolean
+  SiteID Guid
+  IsHoliday Boolean
+  IsAnnualHoliday Boolean
+  RecursEvery Int32
+}
+
+Table dbo.vw_carrot_CalendarEvent {
+  SiteID Guid
+  CalendarEventProfileID Guid
+  CalendarFrequencyID Guid
+  CalendarEventCategoryID Guid
+  EventStartDate DateTime
+  EventEndDate DateTime
+  EventStartTime TimeSpan
+  EventEndTime TimeSpan
+  EventTitle String
+  EventRepeatPattern Int32
+  EventSeriesDetail String
+  IsCancelledPublic Boolean
+  IsAllDayEvent Boolean
+  IsPublic Boolean
+  IsCancelledSeries Boolean
+  IsCancelledEvent Boolean
+  IsHoliday Boolean
+  IsAnnualHoliday Boolean
+  RecursEvery Int32
+  CalendarEventID Guid
+  EventDate DateTime
+  EventDetail String
+  FrequencyValue String
+  FrequencyName String
+  FrequencySortOrder Int32
+  EventStartTimeOverride TimeSpan
+  EventEndTimeOverride TimeSpan
+  CategoryFGColor String
+  CategoryBGColor String
+  CategoryName String
+}
+
+Table dbo.vw_carrot_CalendarEventProfile {
+  SiteID Guid
+  CalendarEventProfileID Guid
+  CalendarFrequencyID Guid
+  CalendarEventCategoryID Guid
+  EventStartDate DateTime
+  EventStartTime TimeSpan
+  EventEndDate DateTime
+  EventEndTime TimeSpan
+  EventTitle String
+  EventRepeatPattern Int32
+  EventDetail String
+  IsCancelled Boolean
+  IsCancelledPublic Boolean
+  IsHoliday Boolean
+  IsAnnualHoliday Boolean
+  IsAllDayEvent Boolean
+  RecursEvery Int32
+  IsPublic Boolean
+  FrequencyValue String
+  FrequencyName String
+  FrequencySortOrder Int32
+  CategoryFGColor String
+  CategoryBGColor String
+  CategoryName String
+}
+

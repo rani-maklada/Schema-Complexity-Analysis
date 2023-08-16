@@ -1,0 +1,36 @@
+Project Example {
+    database_type: 'SQL Server'
+    Note: '''
+        # Example
+        This is a Database
+    '''
+}
+
+Table Users as U {
+    ID integer [primary key]
+    Username varchar
+    Role varchar
+    created_at timestamp
+    Note: '''
+        # Users Table
+        Table for storing users
+    '''
+}
+
+Table Posts {
+    ID integer [primary key]
+    Title varchar
+    Body text [note: 'Content of the Post']
+    User integer
+    Status Post_Status
+    created_at timestamp
+    Note: 'Posts Table'
+}
+
+Enum Post_Status {
+    Draft
+    Published
+    Private [note: 'Visible Via URL Only']
+}
+
+Ref PostsUserID: Posts.User > Users.ID  // Many to One

@@ -1,0 +1,748 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>importers.db.dbschema &#8212; Gitana 1.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for importers.db.dbschema</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;valerio cosentino&#39;</span>
+
+<span class="kn">from</span> <span class="nn">util.db_util</span> <span class="k">import</span> <span class="n">DbUtil</span>
+<span class="kn">from</span> <span class="nn">util.logging_util</span> <span class="k">import</span> <span class="n">LoggingUtil</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+
+
+<div class="viewcode-block" id="DbSchema"><a class="viewcode-back" href="../../../dbschema.html#importers.db.dbschema.DbSchema">[docs]</a><span class="k">class</span> <span class="nc">DbSchema</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class initializes the DB schema</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_name</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">log_root_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type db_name: str</span>
+<span class="sd">        :param db_name: the name of the DB to initialize/connect to, it cannot be null and must follow the format</span>
+<span class="sd">        allowed in MySQL (http://dev.mysql.com/doc/refman/5.7/en/identifiers.html).</span>
+<span class="sd">        If a DB having a name equal already exists in Gitana, the existing DB will</span>
+<span class="sd">        be dropped and a new one will be created</span>
+
+
+<span class="sd">        :type config: dict</span>
+<span class="sd">        :param config: the DB configuration file</span>
+
+<span class="sd">        :type log_root_path: str</span>
+<span class="sd">        :param log_root_path: the log path</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_db_name</span> <span class="o">=</span> <span class="n">db_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_root_path</span> <span class="o">=</span> <span class="n">log_root_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_db_util</span> <span class="o">=</span> <span class="n">DbUtil</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logging_util</span> <span class="o">=</span> <span class="n">LoggingUtil</span><span class="p">()</span>
+
+        <span class="n">log_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_root_path</span> <span class="o">+</span> <span class="s2">&quot;db-schema-&quot;</span> <span class="o">+</span> <span class="n">db_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_logging_util</span><span class="o">.</span><span class="n">get_logger</span><span class="p">(</span><span class="n">log_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fileHandler</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_logging_util</span><span class="o">.</span><span class="n">get_file_handler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="p">,</span> <span class="n">log_path</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db_util</span><span class="o">.</span><span class="n">get_connection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_db_util</span><span class="o">.</span><span class="n">close_connection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="p">:</span>
+            <span class="c1"># deletes the file handler of the logger</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_logging_util</span><span class="o">.</span><span class="n">remove_file_handler_logger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fileHandler</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DbSchema.add_git_tables"><a class="viewcode-back" href="../../../dbschema.html#importers.db.dbschema.DbSchema.add_git_tables">[docs]</a>    <span class="k">def</span> <span class="nf">add_git_tables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        initializes git tables if they do not exist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_db_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_git_tables</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DbSchema.add_issue_tracker_tables"><a class="viewcode-back" href="../../../dbschema.html#importers.db.dbschema.DbSchema.add_issue_tracker_tables">[docs]</a>    <span class="k">def</span> <span class="nf">add_issue_tracker_tables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        initializes issue tracker tables if they do not exist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_db_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_shared_tables_issue_tracker_communication_channels</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_issue_tracker_tables</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DbSchema.add_instant_messaging_tables"><a class="viewcode-back" href="../../../dbschema.html#importers.db.dbschema.DbSchema.add_instant_messaging_tables">[docs]</a>    <span class="k">def</span> <span class="nf">add_instant_messaging_tables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        initializes instant messaging tables if they do not exist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_db_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_shared_tables_issue_tracker_communication_channels</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_instant_messaging_tables</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DbSchema.add_forum_tables"><a class="viewcode-back" href="../../../dbschema.html#importers.db.dbschema.DbSchema.add_forum_tables">[docs]</a>    <span class="k">def</span> <span class="nf">add_forum_tables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        initializes forum tables if they do not exist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_db_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_shared_tables_issue_tracker_communication_channels</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_forum_tables</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DbSchema.init_database"><a class="viewcode-back" href="../../../dbschema.html#importers.db.dbschema.DbSchema.init_database">[docs]</a>    <span class="k">def</span> <span class="nf">init_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_git</span><span class="p">,</span> <span class="n">init_issue_tracker</span><span class="p">,</span> <span class="n">init_forum</span><span class="p">,</span> <span class="n">init_instant_messaging</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        initializes the database tables and functions</span>
+
+<span class="sd">        :type init_git: bool</span>
+<span class="sd">        :param init_git: if True, it initializes the tables containing git data</span>
+
+<span class="sd">        :type init_issue_tracker: bool</span>
+<span class="sd">        :param init_issue_tracker: if True, it initializes the tables containing issue tracker data</span>
+
+<span class="sd">        :type init_forum: bool</span>
+<span class="sd">        :param init_forum: if True, it initializes the tables containing forum data</span>
+
+<span class="sd">        :type init_instant_messaging: bool</span>
+<span class="sd">        :param init_instant_messaging: if True, it initializes the tables containing instant messaging data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;init database started&quot;</span><span class="p">)</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_create_database</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_db_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_settings</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_init_common_tables</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">init_issue_tracker</span> <span class="ow">or</span> <span class="n">init_forum</span> <span class="ow">or</span> <span class="n">init_instant_messaging</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_init_shared_tables_issue_tracker_communication_channels</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">init_git</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_init_git_tables</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">init_issue_tracker</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_init_issue_tracker_tables</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">init_forum</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_init_forum_tables</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">init_instant_messaging</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_init_instant_messaging_tables</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_init_functions</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;database &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db_name</span> <span class="o">+</span> <span class="s2">&quot; created&quot;</span><span class="p">)</span>
+
+            <span class="n">end_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+            <span class="n">minutes_and_seconds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_logging_util</span><span class="o">.</span><span class="n">calculate_execution_time</span><span class="p">(</span><span class="n">end_time</span><span class="p">,</span> <span class="n">start_time</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Init database finished after &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">minutes_and_seconds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span>
+                              <span class="s2">&quot; minutes and &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">minutes_and_seconds</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; secs&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;init database failed&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DbSchema.create_project"><a class="viewcode-back" href="../../../dbschema.html#importers.db.dbschema.DbSchema.create_project">[docs]</a>    <span class="k">def</span> <span class="nf">create_project</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        inserts a project in the DB</span>
+
+<span class="sd">        :type project_name: str</span>
+<span class="sd">        :param project_name: the name of the project to create</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db_util</span><span class="o">.</span><span class="n">get_connection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_db_util</span><span class="o">.</span><span class="n">insert_project</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db_name</span><span class="p">,</span> <span class="n">project_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_db_util</span><span class="o">.</span><span class="n">close_connection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DbSchema.create_repository"><a class="viewcode-back" href="../../../dbschema.html#importers.db.dbschema.DbSchema.create_repository">[docs]</a>    <span class="k">def</span> <span class="nf">create_repository</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_name</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        inserts a repository in the DB</span>
+
+<span class="sd">        :type project_name: str</span>
+<span class="sd">        :param project_name: the name of an existing project</span>
+
+<span class="sd">        :type repo_name: str</span>
+<span class="sd">        :param repo_name: the name of the repository to insert</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db_util</span><span class="o">.</span><span class="n">get_connection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_db_name</span><span class="p">)</span>
+        <span class="n">project_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db_util</span><span class="o">.</span><span class="n">select_project_id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span><span class="p">,</span> <span class="n">project_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_db_util</span><span class="o">.</span><span class="n">insert_repo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span><span class="p">,</span> <span class="n">project_id</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;repository &quot;</span> <span class="o">+</span> <span class="n">repo_name</span> <span class="o">+</span> <span class="s2">&quot; not inserted&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_db_util</span><span class="o">.</span><span class="n">close_connection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DbSchema.list_projects"><a class="viewcode-back" href="../../../dbschema.html#importers.db.dbschema.DbSchema.list_projects">[docs]</a>    <span class="k">def</span> <span class="nf">list_projects</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        lists all projects contained in the DB</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db_util</span><span class="o">.</span><span class="n">get_connection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
+        <span class="n">project_names</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_db_name</span><span class="p">)</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT name FROM project&quot;</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+        <span class="n">row</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+
+        <span class="k">while</span> <span class="n">row</span><span class="p">:</span>
+            <span class="n">project_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">project_names</span></div>
+
+<div class="viewcode-block" id="DbSchema.set_database"><a class="viewcode-back" href="../../../dbschema.html#importers.db.dbschema.DbSchema.set_database">[docs]</a>    <span class="k">def</span> <span class="nf">set_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        sets the DB used by the tool</span>
+
+<span class="sd">        :type db_name: str</span>
+<span class="sd">        :param db_name: the name of the DB</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;set database &quot;</span> <span class="o">+</span> <span class="n">db_name</span> <span class="o">+</span> <span class="s2">&quot; started&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_db_util</span><span class="o">.</span><span class="n">set_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span><span class="p">,</span> <span class="n">db_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;set database &quot;</span> <span class="o">+</span> <span class="n">db_name</span> <span class="o">+</span> <span class="s2">&quot; finished&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;set database failed&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_set_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># sets the settings (max connections, charset, file format, ...) used by the DB</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_db_util</span><span class="o">.</span><span class="n">set_settings</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_create_database</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># creates the database</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="n">drop_database_if_exists</span> <span class="o">=</span> <span class="s2">&quot;DROP DATABASE IF EXISTS &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db_name</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">drop_database_if_exists</span><span class="p">)</span>
+
+        <span class="n">create_database</span> <span class="o">=</span> <span class="s2">&quot;CREATE DATABASE &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db_name</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_database</span><span class="p">)</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_init_functions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># initializes functions</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="n">levenshtein_distance</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        CREATE DEFINER=`root`@`localhost` FUNCTION `levenshtein_distance`</span>
+<span class="s2">            (s1 VARCHAR(255) CHARACTER SET utf8, s2 VARCHAR(255) CHARACTER SET utf8) RETURNS int(11)</span>
+<span class="s2">            DETERMINISTIC</span>
+<span class="s2">        BEGIN</span>
+<span class="s2">            DECLARE s1_len, s2_len, i, j, c, c_temp, cost INT;</span>
+<span class="s2">            DECLARE s1_char CHAR CHARACTER SET utf8;</span>
+<span class="s2">            -- max strlen=255 for this function</span>
+<span class="s2">            DECLARE cv0, cv1 VARBINARY(256);</span>
+
+<span class="s2">            SET s1_len = CHAR_LENGTH(s1),</span>
+<span class="s2">                s2_len = CHAR_LENGTH(s2),</span>
+<span class="s2">                cv1 = 0x00,</span>
+<span class="s2">                j = 1,</span>
+<span class="s2">                i = 1,</span>
+<span class="s2">                c = 0;</span>
+
+<span class="s2">            IF (s1 = s2) THEN</span>
+<span class="s2">              RETURN (0);</span>
+<span class="s2">            ELSEIF (s1_len = 0) THEN</span>
+<span class="s2">              RETURN (s2_len);</span>
+<span class="s2">            ELSEIF (s2_len = 0) THEN</span>
+<span class="s2">              RETURN (s1_len);</span>
+<span class="s2">            END IF;</span>
+
+<span class="s2">            WHILE (j &lt;= s2_len) DO</span>
+<span class="s2">              SET cv1 = CONCAT(cv1, CHAR(j)),</span>
+<span class="s2">                  j = j + 1;</span>
+<span class="s2">            END WHILE;</span>
+
+<span class="s2">            WHILE (i &lt;= s1_len) DO</span>
+<span class="s2">              SET s1_char = SUBSTRING(s1, i, 1),</span>
+<span class="s2">                  c = i,</span>
+<span class="s2">                  cv0 = CHAR(i),</span>
+<span class="s2">                  j = 1;</span>
+
+<span class="s2">              WHILE (j &lt;= s2_len) DO</span>
+<span class="s2">                SET c = c + 1,</span>
+<span class="s2">                    cost = IF(s1_char = SUBSTRING(s2, j, 1), 0, 1);</span>
+
+<span class="s2">                SET c_temp = ORD(SUBSTRING(cv1, j, 1)) + cost;</span>
+<span class="s2">                IF (c &gt; c_temp) THEN</span>
+<span class="s2">                  SET c = c_temp;</span>
+<span class="s2">                END IF;</span>
+
+<span class="s2">                SET c_temp = ORD(SUBSTRING(cv1, j+1, 1)) + 1;</span>
+<span class="s2">                IF (c &gt; c_temp) THEN</span>
+<span class="s2">                  SET c = c_temp;</span>
+<span class="s2">                END IF;</span>
+
+<span class="s2">                SET cv0 = CONCAT(cv0, CHAR(c)),</span>
+<span class="s2">                    j = j + 1;</span>
+<span class="s2">              END WHILE;</span>
+
+<span class="s2">              SET cv1 = cv0,</span>
+<span class="s2">                  i = i + 1;</span>
+<span class="s2">            END WHILE;</span>
+
+<span class="s2">            RETURN (c);</span>
+<span class="s2">        END&quot;&quot;&quot;</span>
+
+        <span class="n">soundex_match</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        CREATE DEFINER=`root`@`localhost` FUNCTION `soundex_match`</span>
+<span class="s2">            (s1 VARCHAR(255) CHARACTER SET utf8, s2 VARCHAR(255) CHARACTER SET utf8) RETURNS int(1)</span>
+<span class="s2">            DETERMINISTIC</span>
+<span class="s2">        BEGIN</span>
+<span class="s2">            DECLARE _result INT DEFAULT 0;</span>
+<span class="s2">            IF SOUNDEX(s1) = SOUNDEX(s2) THEN</span>
+<span class="s2">                SET _result = 1;</span>
+<span class="s2">            END IF;</span>
+<span class="s2">            RETURN _result;</span>
+<span class="s2">        END&quot;&quot;&quot;</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">levenshtein_distance</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">soundex_match</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_init_common_tables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># initializes common tables used by tables modeling git, issue tracker, forum and instant messaging data</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="n">create_table_project</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS project( &quot;</span> \
+                               <span class="s2">&quot;id int(20) AUTO_INCREMENT PRIMARY KEY, &quot;</span> \
+                               <span class="s2">&quot;name varchar(255), &quot;</span> \
+                               <span class="s2">&quot;CONSTRAINT name UNIQUE (name)&quot;</span> \
+                               <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_user</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS user ( &quot;</span> \
+                            <span class="s2">&quot;id int(20) AUTO_INCREMENT PRIMARY KEY, &quot;</span> \
+                            <span class="s2">&quot;name varchar(256), &quot;</span> \
+                            <span class="s2">&quot;email varchar(256), &quot;</span> \
+                            <span class="s2">&quot;CONSTRAINT namem UNIQUE (name, email) &quot;</span> \
+                            <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_user_alias</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS user_alias ( &quot;</span> \
+                                  <span class="s2">&quot;user_id int(20), &quot;</span> \
+                                  <span class="s2">&quot;alias_id int(20), &quot;</span> \
+                                  <span class="s2">&quot;CONSTRAINT a UNIQUE (user_id) &quot;</span> \
+                                  <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_project</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_user</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_user_alias</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_init_shared_tables_issue_tracker_communication_channels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># initializes shared tables used by tables modeling issue tracker, forum and instant messaging data</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="n">create_table_label</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS label ( &quot;</span> \
+                             <span class="s2">&quot;id int(20) AUTO_INCREMENT PRIMARY KEY, &quot;</span> \
+                             <span class="s2">&quot;name varchar(256), &quot;</span> \
+                             <span class="s2">&quot;CONSTRAINT name UNIQUE (name) &quot;</span> \
+                             <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_message</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS message ( &quot;</span> \
+                               <span class="s2">&quot;id int(20) AUTO_INCREMENT PRIMARY KEY, &quot;</span> \
+                               <span class="s2">&quot;own_id varchar(20), &quot;</span> \
+                               <span class="s2">&quot;pos int(10), &quot;</span> \
+                               <span class="s2">&quot;type_id int(20), &quot;</span> \
+                               <span class="s2">&quot;issue_id int(20), &quot;</span> \
+                               <span class="s2">&quot;topic_id int(20), &quot;</span> \
+                               <span class="s2">&quot;channel_id int(20), &quot;</span> \
+                               <span class="s2">&quot;body longblob, &quot;</span> \
+                               <span class="s2">&quot;votes int(20), &quot;</span> \
+                               <span class="s2">&quot;author_id int(20), &quot;</span> \
+                               <span class="s2">&quot;created_at timestamp NULL DEFAULT NULL,&quot;</span> \
+                               <span class="s2">&quot;CONSTRAINT ip UNIQUE (issue_id, topic_id, channel_id, own_id) &quot;</span> \
+                               <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_message_dependency</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS message_dependency ( &quot;</span> \
+                                          <span class="s2">&quot;source_message_id int(20), &quot;</span> \
+                                          <span class="s2">&quot;target_message_id int(20), &quot;</span> \
+                                          <span class="s2">&quot;PRIMARY KEY st (source_message_id, target_message_id) &quot;</span> \
+                                          <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_message_type</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS message_type ( &quot;</span> \
+                                    <span class="s2">&quot;id int(20) AUTO_INCREMENT PRIMARY KEY, &quot;</span> \
+                                    <span class="s2">&quot;name varchar(255), &quot;</span> \
+                                    <span class="s2">&quot;CONSTRAINT name UNIQUE (name) &quot;</span> \
+                                    <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">insert_message_types</span> <span class="o">=</span> <span class="s2">&quot;INSERT IGNORE INTO message_type VALUES (NULL, &#39;question&#39;), &quot;</span> \
+                               <span class="s2">&quot;(NULL, &#39;answer&#39;), &quot;</span> \
+                               <span class="s2">&quot;(NULL, &#39;comment&#39;), &quot;</span> \
+                               <span class="s2">&quot;(NULL, &#39;accepted_answer&#39;), &quot;</span> \
+                               <span class="s2">&quot;(NULL, &#39;reply&#39;), &quot;</span> \
+                               <span class="s2">&quot;(NULL, &#39;file_upload&#39;), &quot;</span> \
+                               <span class="s2">&quot;(NULL, &#39;info&#39;);&quot;</span>
+
+        <span class="n">create_table_attachment</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS attachment ( &quot;</span> \
+                                  <span class="s2">&quot;id int(20) AUTO_INCREMENT PRIMARY KEY, &quot;</span> \
+                                  <span class="s2">&quot;own_id varchar(20), &quot;</span> \
+                                  <span class="s2">&quot;message_id int(20), &quot;</span> \
+                                  <span class="s2">&quot;name varchar(256), &quot;</span> \
+                                  <span class="s2">&quot;extension varchar(10), &quot;</span> \
+                                  <span class="s2">&quot;bytes int(20), &quot;</span> \
+                                  <span class="s2">&quot;url varchar(512), &quot;</span> \
+                                  <span class="s2">&quot;CONSTRAINT ip UNIQUE (message_id, own_id) &quot;</span> \
+                                  <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_label</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_message</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_message_dependency</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_message_type</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert_message_types</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_attachment</span><span class="p">)</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_init_git_tables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># initializes tables used to model git data</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="n">create_table_repository</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS repository( &quot;</span> \
+                                  <span class="s2">&quot;id int(20) AUTO_INCREMENT PRIMARY KEY, &quot;</span> \
+                                  <span class="s2">&quot;project_id int(20), &quot;</span> \
+                                  <span class="s2">&quot;name varchar(255), &quot;</span> \
+                                  <span class="s2">&quot;CONSTRAINT name UNIQUE (name)&quot;</span> \
+                                  <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_reference</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS reference( &quot;</span> \
+                                 <span class="s2">&quot;id int(20) AUTO_INCREMENT PRIMARY KEY, &quot;</span> \
+                                 <span class="s2">&quot;repo_id int(20), &quot;</span> \
+                                 <span class="s2">&quot;name varchar(255), &quot;</span> \
+                                 <span class="s2">&quot;type varchar(255), &quot;</span> \
+                                 <span class="s2">&quot;CONSTRAINT name UNIQUE (repo_id, name, type) &quot;</span> \
+                                 <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_commit</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS commit(&quot;</span> \
+                              <span class="s2">&quot;id int(20) AUTO_INCREMENT PRIMARY KEY, &quot;</span> \
+                              <span class="s2">&quot;repo_id int(20), &quot;</span> \
+                              <span class="s2">&quot;sha varchar(512), &quot;</span> \
+                              <span class="s2">&quot;message varchar(512), &quot;</span> \
+                              <span class="s2">&quot;author_id int(20), &quot;</span> \
+                              <span class="s2">&quot;committer_id int(20), &quot;</span> \
+                              <span class="s2">&quot;authored_date timestamp NULL DEFAULT NULL, &quot;</span> \
+                              <span class="s2">&quot;committed_date timestamp NULL DEFAULT NULL, &quot;</span> \
+                              <span class="s2">&quot;size int(20), &quot;</span> \
+                              <span class="s2">&quot;INDEX sha (sha), &quot;</span> \
+                              <span class="s2">&quot;INDEX auth (author_id), &quot;</span> \
+                              <span class="s2">&quot;INDEX comm (committer_id), &quot;</span> \
+                              <span class="s2">&quot;CONSTRAINT s UNIQUE (sha, repo_id) &quot;</span> \
+                              <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_commit_parent</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS commit_parent(&quot;</span> \
+                                     <span class="s2">&quot;repo_id int(20), &quot;</span> \
+                                     <span class="s2">&quot;commit_id int(20), &quot;</span> \
+                                     <span class="s2">&quot;commit_sha varchar(512), &quot;</span> \
+                                     <span class="s2">&quot;parent_id int(20), &quot;</span> \
+                                     <span class="s2">&quot;parent_sha varchar(512), &quot;</span> \
+                                     <span class="s2">&quot;PRIMARY KEY copa (repo_id, commit_id, parent_id), &quot;</span> \
+                                     <span class="s2">&quot;CONSTRAINT cshapsha UNIQUE (repo_id, commit_id, parent_sha) &quot;</span> \
+                                     <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_commits2reference</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS commit_in_reference(&quot;</span> \
+                                         <span class="s2">&quot;repo_id int(20), &quot;</span> \
+                                         <span class="s2">&quot;commit_id int(20), &quot;</span> \
+                                         <span class="s2">&quot;ref_id int(20), &quot;</span> \
+                                         <span class="s2">&quot;PRIMARY KEY core (commit_id, ref_id) &quot;</span> \
+                                         <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_file</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS file( &quot;</span> \
+                            <span class="s2">&quot;id int(20) AUTO_INCREMENT PRIMARY KEY, &quot;</span> \
+                            <span class="s2">&quot;repo_id int(20), &quot;</span> \
+                            <span class="s2">&quot;name varchar(512), &quot;</span> \
+                            <span class="s2">&quot;ext varchar(255), &quot;</span> \
+                            <span class="s2">&quot;CONSTRAINT rerena UNIQUE (repo_id, name) &quot;</span> \
+                            <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_file_renamed</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS file_renamed ( &quot;</span> \
+                                    <span class="s2">&quot;repo_id int(20), &quot;</span> \
+                                    <span class="s2">&quot;current_file_id int(20), &quot;</span> \
+                                    <span class="s2">&quot;previous_file_id int(20), &quot;</span> \
+                                    <span class="s2">&quot;file_modification_id int(20), &quot;</span> \
+                                    <span class="s2">&quot;PRIMARY KEY cpc (current_file_id, previous_file_id, file_modification_id) &quot;</span> \
+                                    <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_file_modification</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS file_modification ( &quot;</span> \
+                                         <span class="s2">&quot;id int(20) AUTO_INCREMENT PRIMARY KEY, &quot;</span> \
+                                         <span class="s2">&quot;commit_id int(20), &quot;</span> \
+                                         <span class="s2">&quot;file_id int(20), &quot;</span> \
+                                         <span class="s2">&quot;status varchar(10), &quot;</span> \
+                                         <span class="s2">&quot;additions numeric(10), &quot;</span> \
+                                         <span class="s2">&quot;deletions numeric(10), &quot;</span> \
+                                         <span class="s2">&quot;changes numeric(10), &quot;</span> \
+                                         <span class="s2">&quot;patch longblob, &quot;</span> \
+                                         <span class="s2">&quot;CONSTRAINT cf UNIQUE (commit_id, file_id) &quot;</span> \
+                                         <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_line_detail</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS line_detail( &quot;</span> \
+                                   <span class="s2">&quot;file_modification_id int(20),&quot;</span> \
+                                   <span class="s2">&quot;type varchar(25), &quot;</span> \
+                                   <span class="s2">&quot;line_number numeric(20), &quot;</span> \
+                                   <span class="s2">&quot;is_commented numeric(1), &quot;</span> \
+                                   <span class="s2">&quot;is_partially_commented numeric(1), &quot;</span> \
+                                   <span class="s2">&quot;is_empty numeric(1), &quot;</span> \
+                                   <span class="s2">&quot;content longblob, &quot;</span> \
+                                   <span class="s2">&quot;PRIMARY KEY fityli (file_modification_id, type, line_number) &quot;</span> \
+                                   <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="c1"># adding it here because &quot;file_dependency&quot; depends on &quot;file&quot; table creation.</span>
+        <span class="c1"># @todo: find a way to move the following table creation to separate section</span>
+        <span class="c1"># make &quot;extract_dependency_relations&quot; API interface completely independent.</span>
+        <span class="n">create_table_file_dependency</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE file_dependency ( &quot;</span> \
+                                       <span class="s2">&quot;repo_id int(20), &quot;</span> \
+                                       <span class="s2">&quot;ref_id int(20), &quot;</span> \
+                                       <span class="s2">&quot;source_file_id int(20), &quot;</span> \
+                                       <span class="s2">&quot;target_file_id int(20), &quot;</span> \
+                                       <span class="s2">&quot;CONSTRAINT dep UNIQUE (repo_id, ref_id, source_file_id, target_file_id) &quot;</span> \
+                                       <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_repository</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_reference</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_commit</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_commit_parent</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_commits2reference</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_file</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_file_renamed</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_file_modification</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_line_detail</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_file_dependency</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_init_issue_tracker_tables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># initializes tables used to model issue tracker data</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="n">create_table_issue_tracker</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS issue_tracker ( &quot;</span> \
+                                     <span class="s2">&quot;id int(20) AUTO_INCREMENT PRIMARY KEY, &quot;</span> \
+                                     <span class="s2">&quot;repo_id int(20), &quot;</span> \
+                                     <span class="s2">&quot;name varchar(512), &quot;</span> \
+                                     <span class="s2">&quot;type varchar(512), &quot;</span> \
+                                     <span class="s2">&quot;CONSTRAINT name UNIQUE (name)&quot;</span> \
+                                     <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_issue</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS issue ( &quot;</span> \
+                             <span class="s2">&quot;id int(20) AUTO_INCREMENT PRIMARY KEY, &quot;</span> \
+                             <span class="s2">&quot;own_id varchar(20), &quot;</span> \
+                             <span class="s2">&quot;issue_tracker_id int(20), &quot;</span> \
+                             <span class="s2">&quot;summary varchar(512), &quot;</span> \
+                             <span class="s2">&quot;component varchar(256), &quot;</span> \
+                             <span class="s2">&quot;version varchar(256), &quot;</span> \
+                             <span class="s2">&quot;hardware varchar(256), &quot;</span> \
+                             <span class="s2">&quot;priority varchar(256), &quot;</span> \
+                             <span class="s2">&quot;severity varchar(256), &quot;</span> \
+                             <span class="s2">&quot;reference_id int(20), &quot;</span> \
+                             <span class="s2">&quot;reporter_id int(20), &quot;</span> \
+                             <span class="s2">&quot;created_at timestamp NULL DEFAULT NULL, &quot;</span> \
+                             <span class="s2">&quot;last_change_at timestamp NULL DEFAULT NULL, &quot;</span> \
+                             <span class="s2">&quot;CONSTRAINT ioi UNIQUE (issue_tracker_id, own_id), &quot;</span> \
+                             <span class="s2">&quot;INDEX u (reporter_id), &quot;</span> \
+                             <span class="s2">&quot;INDEX r (reference_id) &quot;</span> \
+                             <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_issue_assignee</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS issue_assignee ( &quot;</span> \
+                                      <span class="s2">&quot;issue_id int(20), &quot;</span> \
+                                      <span class="s2">&quot;assignee_id int(20), &quot;</span> \
+                                      <span class="s2">&quot;PRIMARY KEY il (issue_id, assignee_id) &quot;</span> \
+                                      <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_issue_subscriber</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS issue_subscriber ( &quot;</span> \
+                                        <span class="s2">&quot;issue_id int(20), &quot;</span> \
+                                        <span class="s2">&quot;subscriber_id int(20), &quot;</span> \
+                                        <span class="s2">&quot;PRIMARY KEY il (issue_id, subscriber_id) &quot;</span> \
+                                        <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_issue_event</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS issue_event ( &quot;</span> \
+                                   <span class="s2">&quot;id int(20) AUTO_INCREMENT PRIMARY KEY, &quot;</span> \
+                                   <span class="s2">&quot;issue_id int(20), &quot;</span> \
+                                   <span class="s2">&quot;event_type_id int(20), &quot;</span> \
+                                   <span class="s2">&quot;detail varchar(256), &quot;</span> \
+                                   <span class="s2">&quot;creator_id int(20), &quot;</span> \
+                                   <span class="s2">&quot;created_at timestamp NULL DEFAULT NULL, &quot;</span> \
+                                   <span class="s2">&quot;target_user_id int(20), &quot;</span> \
+                                   <span class="s2">&quot;CONSTRAINT iecc UNIQUE (issue_id, event_type_id, creator_id, created_at, detail) &quot;</span> \
+                                   <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_issue_event_type</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS issue_event_type ( &quot;</span> \
+                                        <span class="s2">&quot;id int(20) AUTO_INCREMENT PRIMARY KEY, &quot;</span> \
+                                        <span class="s2">&quot;name varchar(256), &quot;</span> \
+                                        <span class="s2">&quot;CONSTRAINT name UNIQUE (name) &quot;</span> \
+                                        <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_issue_labelled</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS issue_labelled ( &quot;</span> \
+                                      <span class="s2">&quot;issue_id int(20), &quot;</span> \
+                                      <span class="s2">&quot;label_id int(20), &quot;</span> \
+                                      <span class="s2">&quot;PRIMARY KEY il (issue_id, label_id) &quot;</span> \
+                                      <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_issue_commit_dependency</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS issue_commit_dependency ( &quot;</span> \
+                                         <span class="s2">&quot;issue_id int(20), &quot;</span> \
+                                         <span class="s2">&quot;commit_id int(20), &quot;</span> \
+                                         <span class="s2">&quot;PRIMARY KEY ict (issue_id, commit_id) &quot;</span> \
+                                         <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_issue_dependency</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS issue_dependency ( &quot;</span> \
+                                        <span class="s2">&quot;issue_source_id int(20), &quot;</span> \
+                                        <span class="s2">&quot;issue_target_id int(20), &quot;</span> \
+                                        <span class="s2">&quot;type_id int(20), &quot;</span> \
+                                        <span class="s2">&quot;PRIMARY KEY st (issue_source_id, issue_target_id, type_id) &quot;</span> \
+                                        <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_issue_dependency_type</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS issue_dependency_type (&quot;</span> \
+                                       <span class="s2">&quot;id int(20) AUTO_INCREMENT PRIMARY KEY, &quot;</span> \
+                                       <span class="s2">&quot;name varchar(256), &quot;</span> \
+                                       <span class="s2">&quot;CONSTRAINT name UNIQUE (name) &quot;</span> \
+                                       <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">insert_issue_dependency_type</span> <span class="o">=</span> <span class="s2">&quot;INSERT IGNORE INTO issue_dependency_type VALUES (NULL, &#39;block&#39;), &quot;</span> \
+                                       <span class="s2">&quot;(NULL, &#39;depends&#39;), &quot;</span> \
+                                       <span class="s2">&quot;(NULL, &#39;related&#39;), &quot;</span> \
+                                       <span class="s2">&quot;(NULL, &#39;duplicated&#39;);&quot;</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_issue_tracker</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_issue</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_issue_assignee</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_issue_subscriber</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_issue_event</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_issue_event_type</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_issue_labelled</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_issue_commit_dependency</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_issue_dependency</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_issue_dependency_type</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert_issue_dependency_type</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_init_forum_tables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># initializes tables used to model forum data</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="n">create_table_forum</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS forum ( &quot;</span> \
+                             <span class="s2">&quot;id int(20) AUTO_INCREMENT PRIMARY KEY, &quot;</span> \
+                             <span class="s2">&quot;project_id int(20), &quot;</span> \
+                             <span class="s2">&quot;name varchar(512), &quot;</span> \
+                             <span class="s2">&quot;type varchar(512), &quot;</span> \
+                             <span class="s2">&quot;CONSTRAINT name UNIQUE (name)&quot;</span> \
+                             <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_topic</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS topic ( &quot;</span> \
+                             <span class="s2">&quot;id int(20) AUTO_INCREMENT PRIMARY KEY, &quot;</span> \
+                             <span class="s2">&quot;own_id varchar(20), &quot;</span> \
+                             <span class="s2">&quot;forum_id int(20), &quot;</span> \
+                             <span class="s2">&quot;name varchar(256), &quot;</span> \
+                             <span class="s2">&quot;votes int(10), &quot;</span> \
+                             <span class="s2">&quot;views int(10), &quot;</span> \
+                             <span class="s2">&quot;created_at timestamp NULL DEFAULT NULL, &quot;</span> \
+                             <span class="s2">&quot;last_change_at timestamp NULL DEFAULT NULL, &quot;</span> \
+                             <span class="s2">&quot;CONSTRAINT name UNIQUE (forum_id, own_id)&quot;</span> \
+                             <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_topic_labelled</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS topic_labelled ( &quot;</span> \
+                                      <span class="s2">&quot;topic_id int(20), &quot;</span> \
+                                      <span class="s2">&quot;label_id int(20), &quot;</span> \
+                                      <span class="s2">&quot;PRIMARY KEY il (topic_id, label_id) &quot;</span> \
+                                      <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_forum</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_topic</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_topic_labelled</span><span class="p">)</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_init_instant_messaging_tables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># initializes tables used to model instant messaging data</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cnx</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="n">create_table_instant_messaging</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS instant_messaging ( &quot;</span> \
+                                         <span class="s2">&quot;id int(20) AUTO_INCREMENT PRIMARY KEY, &quot;</span> \
+                                         <span class="s2">&quot;project_id int(20), &quot;</span> \
+                                         <span class="s2">&quot;name varchar(512), &quot;</span> \
+                                         <span class="s2">&quot;type varchar(512), &quot;</span> \
+                                         <span class="s2">&quot;CONSTRAINT name UNIQUE (name)&quot;</span> \
+                                         <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">create_table_channel</span> <span class="o">=</span> <span class="s2">&quot;CREATE TABLE IF NOT EXISTS channel ( &quot;</span> \
+                               <span class="s2">&quot;id int(20) AUTO_INCREMENT PRIMARY KEY, &quot;</span> \
+                               <span class="s2">&quot;own_id varchar(20), &quot;</span> \
+                               <span class="s2">&quot;instant_messaging_id int(20), &quot;</span> \
+                               <span class="s2">&quot;name varchar(256), &quot;</span> \
+                               <span class="s2">&quot;description varchar(512), &quot;</span> \
+                               <span class="s2">&quot;created_at timestamp NULL DEFAULT NULL, &quot;</span> \
+                               <span class="s2">&quot;last_change_at timestamp NULL DEFAULT NULL, &quot;</span> \
+                               <span class="s2">&quot;CONSTRAINT name UNIQUE (instant_messaging_id, own_id)&quot;</span> \
+                               <span class="s2">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;&quot;</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_instant_messaging</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">create_table_channel</span><span class="p">)</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Valerio Cosentino.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

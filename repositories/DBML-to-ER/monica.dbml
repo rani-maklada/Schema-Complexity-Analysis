@@ -1,0 +1,1269 @@
+Table "accounts" {
+  "id" INT [pk, not null, increment]
+  "has_access_to_paid_version_for_free" TINYINT [not null]
+  "api_key" VARCHAR(255) [not null]
+  "number_of_invitations_sent" INT
+  "default_time_reminder_is_sent" VARCHAR(255) [not null]
+  "default_gender_id" INT
+  "stripe_id" VARCHAR(255)
+  "card_brand" VARCHAR(255)
+  "card_last_four" VARCHAR(255)
+  "trial_ends_at" TIMESTAMP
+  "legacy_free_plan_unlimited_contacts" TINYINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "activities" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "activity_type_id" INT
+  "summary" VARCHAR(255) [not null]
+  "description" LONGTEXT
+  "happened_at" DATE [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "activity_contact" {
+  "activity_id" INT [not null]
+  "contact_id" INT [not null]
+  "account_id" INT [not null]
+}
+
+Table "activity_statistics" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "contact_id" INT [not null]
+  "year" INT [not null]
+  "count" INT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "activity_type_categories" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "name" VARCHAR(255)
+  "translation_key" VARCHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "activity_types" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "activity_type_category_id" INT [not null]
+  "name" VARCHAR(255)
+  "translation_key" VARCHAR(255)
+  "location_type" VARCHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "address_contact_field_label" {
+  "contact_field_label_id" BIGINT [not null]
+  "address_id" INT [not null]
+  "account_id" INT [not null]
+}
+
+Table "addresses" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "place_id" INT
+  "contact_id" INT [not null]
+  "name" VARCHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "api_usage" {
+  "id" INT [pk, not null, increment]
+  "url" VARCHAR(255) [not null]
+  "method" VARCHAR(255) [not null]
+  "client_ip" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "audit_logs" {
+  "id" BIGINT [pk, not null, increment]
+  "account_id" INT [not null]
+  "author_id" INT
+  "about_contact_id" INT
+  "author_name" VARCHAR(255) [not null]
+  "action" VARCHAR(255) [not null]
+  "objects" TEXT [not null]
+  "audited_at" DATETIME [not null]
+  "should_appear_on_dashboard" TINYINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "cache" {
+  "key" VARCHAR(255) [not null]
+  "value" TEXT [not null]
+  "expiration" INT [not null]
+}
+
+Table "calls" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "contact_id" INT [not null]
+  "called_at" DATETIME [not null]
+  "content" MEDIUMTEXT
+  "contact_called" TINYINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "companies" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "name" VARCHAR(255) [not null]
+  "website" VARCHAR(255)
+  "number_of_employees" INT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "contact_field_contact_field_label" {
+  "contact_field_label_id" BIGINT [not null]
+  "contact_field_id" INT [not null]
+  "account_id" INT [not null]
+}
+
+Table "contact_field_labels" {
+  "id" BIGINT [pk, not null, increment]
+  "account_id" INT [not null]
+  "label_i18n" VARCHAR(255)
+  "label" VARCHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "contact_field_types" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "name" VARCHAR(255) [not null]
+  "fontawesome_icon" VARCHAR(255)
+  "protocol" VARCHAR(255)
+  "delible" TINYINT [not null]
+  "type" VARCHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "contact_fields" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "contact_id" INT [not null]
+  "contact_field_type_id" INT [not null]
+  "data" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "contact_photo" {
+  "contact_id" INT [not null]
+  "photo_id" INT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "contact_tag" {
+  "contact_id" INT [not null]
+  "tag_id" INT [not null]
+  "account_id" INT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "contacts" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "first_name" VARCHAR(255) [not null]
+  "middle_name" VARCHAR(255)
+  "last_name" VARCHAR(255)
+  "nickname" VARCHAR(255)
+  "gender_id" INT
+  "description" VARCHAR(255)
+  "uuid" CHAR(255)
+  "is_starred" TINYINT [not null]
+  "is_partial" TINYINT [not null]
+  "is_active" TINYINT [not null]
+  "is_dead" TINYINT [not null]
+  "deceased_special_date_id" INT
+  "deceased_reminder_id" INT
+  "last_talked_to" DATE
+  "stay_in_touch_frequency" INT
+  "stay_in_touch_trigger_date" DATETIME
+  "birthday_special_date_id" INT
+  "birthday_reminder_id" INT
+  "first_met_through_contact_id" INT
+  "first_met_special_date_id" INT
+  "first_met_reminder_id" INT
+  "first_met_where" VARCHAR(255)
+  "first_met_additional_info" LONGTEXT
+  "job" VARCHAR(255)
+  "company" VARCHAR(255)
+  "food_preferences" LONGTEXT
+  "avatar_source" VARCHAR(255) [not null]
+  "avatar_gravatar_url" VARCHAR(255)
+  "avatar_adorable_uuid" CHAR(255)
+  "avatar_adorable_url" VARCHAR(255)
+  "avatar_default_url" VARCHAR(255)
+  "avatar_photo_id" INT
+  "has_avatar" TINYINT [not null]
+  "avatar_external_url" VARCHAR(255)
+  "avatar_file_name" VARCHAR(255)
+  "avatar_location" VARCHAR(255) [not null]
+  "gravatar_url" VARCHAR(255)
+  "last_consulted_at" TIMESTAMP
+  "number_of_views" INT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "default_avatar_color" VARCHAR(255) [not null]
+  "has_avatar_bool" TINYINT [not null]
+}
+
+Table "conversations" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "contact_id" INT [not null]
+  "contact_field_type_id" INT [not null]
+  "happened_at" DATETIME [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "crons" {
+  "id" INT [pk, not null, increment]
+  "command" VARCHAR(255) [not null]
+  "last_run" TIMESTAMP [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "currencies" {
+  "id" INT [pk, not null, increment]
+  "iso" VARCHAR(255) [not null]
+  "name" VARCHAR(255) [not null]
+  "symbol" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "days" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "date" DATE [not null]
+  "rate" INT [not null]
+  "comment" MEDIUMTEXT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "debts" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "contact_id" INT [not null]
+  "in_debt" VARCHAR(255) [not null]
+  "status" VARCHAR(255) [not null]
+  "amount" DECIMAL(8,2) [not null]
+  "reason" LONGTEXT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "default_activity_type_categories" {
+  "id" INT [pk, not null, increment]
+  "translation_key" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "default_activity_types" {
+  "id" INT [pk, not null, increment]
+  "default_activity_type_category_id" INT [not null]
+  "translation_key" VARCHAR(255) [not null]
+  "location_type" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "default_contact_field_types" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "fontawesome_icon" VARCHAR(255)
+  "protocol" VARCHAR(255)
+  "migrated" TINYINT [not null]
+  "delible" TINYINT [not null]
+  "type" VARCHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "default_contact_modules" {
+  "id" INT [pk, not null, increment]
+  "key" VARCHAR(255) [not null]
+  "translation_key" VARCHAR(255) [not null]
+  "delible" TINYINT [not null]
+  "active" TINYINT [not null]
+  "migrated" TINYINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "default_life_event_categories" {
+  "id" INT [pk, not null, increment]
+  "translation_key" VARCHAR(255) [not null]
+  "migrated" TINYINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "default_life_event_types" {
+  "id" INT [pk, not null, increment]
+  "default_life_event_category_id" INT [not null]
+  "translation_key" VARCHAR(255) [not null]
+  "specific_information_structure" TEXT
+  "migrated" TINYINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "default_relationship_type_groups" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "delible" TINYINT [not null]
+  "migrated" TINYINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "default_relationship_types" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "name_reverse_relationship" VARCHAR(255) [not null]
+  "relationship_type_group_id" INT [not null]
+  "delible" TINYINT [not null]
+  "migrated" TINYINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "documents" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "contact_id" INT [not null]
+  "original_filename" VARCHAR(255) [not null]
+  "new_filename" VARCHAR(255) [not null]
+  "filesize" INT
+  "type" VARCHAR(255)
+  "mime_type" VARCHAR(255)
+  "number_of_downloads" INT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "emotion_activity" {
+  "account_id" INT [not null]
+  "activity_id" INT [not null]
+  "emotion_id" INT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "emotion_call" {
+  "account_id" INT [not null]
+  "call_id" INT [not null]
+  "emotion_id" INT [not null]
+  "contact_id" INT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "emotions" {
+  "id" INT [pk, not null, increment]
+  "emotion_primary_id" INT [not null]
+  "emotion_secondary_id" INT [not null]
+  "name" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "emotions_primary" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "emotions_secondary" {
+  "id" INT [pk, not null, increment]
+  "emotion_primary_id" INT [not null]
+  "name" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "entries" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "title" VARCHAR(255)
+  "post" LONGTEXT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "failed_jobs" {
+  "id" INT [pk, not null, increment]
+  "connection" TEXT [not null]
+  "queue" TEXT [not null]
+  "payload" LONGTEXT [not null]
+  "exception" LONGTEXT [not null]
+  "failed_at" TIMESTAMP [not null]
+}
+
+Table "genders" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "name" VARCHAR(255) [not null]
+  "type" CHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "gift_photo" {
+  "photo_id" INT [not null]
+  "gift_id" INT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "gifts" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "contact_id" INT [not null]
+  "is_for" INT
+  "name" VARCHAR(255) [not null]
+  "comment" LONGTEXT
+  "url" LONGTEXT
+  "value" VARCHAR(255)
+  "status" VARCHAR(255) [not null]
+  "date" DATETIME
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "import_job_reports" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "user_id" INT [not null]
+  "import_job_id" INT [not null]
+  "contact_information" MEDIUMTEXT [not null]
+  "skipped" TINYINT [not null]
+  "skip_reason" VARCHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "import_jobs" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "user_id" INT [not null]
+  "type" VARCHAR(255) [not null]
+  "contacts_found" INT
+  "contacts_skipped" INT
+  "contacts_imported" INT
+  "filename" VARCHAR(255)
+  "started_at" DATE
+  "ended_at" DATE
+  "failed" TINYINT [not null]
+  "failed_reason" MEDIUMTEXT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "instances" {
+  "id" INT [pk, not null, increment]
+  "uuid" VARCHAR(255) [not null]
+  "current_version" VARCHAR(255) [not null]
+  "latest_version" VARCHAR(255)
+  "latest_release_notes" MEDIUMTEXT
+  "number_of_versions_since_current_version" INT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "invitations" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "invited_by_user_id" INT [not null]
+  "email" VARCHAR(255) [not null]
+  "invitation_key" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "jobs" {
+  "id" BIGINT [pk, not null, increment]
+  "queue" VARCHAR(255) [not null]
+  "payload" LONGTEXT [not null]
+  "attempts" TINYINT [not null]
+  "reserved_at" INT
+  "available_at" INT [not null]
+  "created_at" INT [not null]
+}
+
+Table "journal_entries" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "date" DATETIME [not null]
+  "journalable_id" INT [not null]
+  "journalable_type" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "life_event_categories" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "name" VARCHAR(255) [not null]
+  "default_life_event_category_key" VARCHAR(255)
+  "core_monica_data" TINYINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "life_event_types" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "life_event_category_id" INT [not null]
+  "name" VARCHAR(255) [not null]
+  "default_life_event_type_key" VARCHAR(255)
+  "core_monica_data" TINYINT [not null]
+  "specific_information_structure" TEXT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "life_events" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "contact_id" INT [not null]
+  "life_event_type_id" INT [not null]
+  "reminder_id" INT
+  "name" VARCHAR(255)
+  "note" MEDIUMTEXT
+  "happened_at" DATETIME [not null]
+  "happened_at_month_unknown" TINYINT [not null]
+  "happened_at_day_unknown" TINYINT [not null]
+  "specific_information" TEXT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "messages" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "contact_id" INT [not null]
+  "conversation_id" INT [not null]
+  "content" LONGTEXT [not null]
+  "written_at" DATETIME [not null]
+  "written_by_me" TINYINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "metadata_love_relationships" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "relationship_id" INT [not null]
+  "is_active" TINYINT [not null]
+  "notes" MEDIUMTEXT
+  "meet_date" DATETIME
+  "official_date" DATETIME
+  "breakup_date" DATETIME
+  "breakup_reason" MEDIUMTEXT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "modules" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "key" VARCHAR(255) [not null]
+  "translation_key" VARCHAR(255) [not null]
+  "active" TINYINT [not null]
+  "delible" TINYINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "notes" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "contact_id" INT [not null]
+  "body" MEDIUMTEXT [not null]
+  "is_favorited" TINYINT [not null]
+  "favorited_at" DATE
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "oauth_access_tokens" {
+  "id" VARCHAR(255) [not null]
+  "user_id" BIGINT
+  "client_id" BIGINT [not null]
+  "name" VARCHAR(255)
+  "scopes" TEXT
+  "revoked" TINYINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "expires_at" DATETIME
+}
+
+Table "oauth_auth_codes" {
+  "id" VARCHAR(255) [not null]
+  "user_id" BIGINT [not null]
+  "client_id" BIGINT [not null]
+  "scopes" TEXT
+  "revoked" TINYINT [not null]
+  "expires_at" DATETIME
+}
+
+Table "oauth_clients" {
+  "id" BIGINT [pk, not null, increment]
+  "user_id" BIGINT
+  "name" VARCHAR(255) [not null]
+  "secret" VARCHAR(255)
+  "redirect" TEXT [not null]
+  "personal_access_client" TINYINT [not null]
+  "password_client" TINYINT [not null]
+  "revoked" TINYINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "oauth_personal_access_clients" {
+  "id" BIGINT [pk, not null, increment]
+  "client_id" BIGINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "oauth_refresh_tokens" {
+  "id" VARCHAR(255) [not null]
+  "access_token_id" VARCHAR(255) [not null]
+  "revoked" TINYINT [not null]
+  "expires_at" DATETIME
+}
+
+Table "occupations" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "contact_id" INT [not null]
+  "company_id" INT [not null]
+  "title" VARCHAR(255) [not null]
+  "description" VARCHAR(255)
+  "salary" INT
+  "salary_unit" VARCHAR(255)
+  "currently_works_here" TINYINT
+  "start_date" DATE
+  "end_date" DATE
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "password_resets" {
+  "email" VARCHAR(255) [not null]
+  "token" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP [not null]
+}
+
+Table "pet_categories" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "is_common" TINYINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "pets" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "contact_id" INT [not null]
+  "pet_category_id" INT [not null]
+  "name" VARCHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "photos" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "original_filename" VARCHAR(255) [not null]
+  "new_filename" VARCHAR(255) [not null]
+  "filesize" INT
+  "mime_type" VARCHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "places" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "street" VARCHAR(255)
+  "city" VARCHAR(255)
+  "province" VARCHAR(255)
+  "postal_code" VARCHAR(255)
+  "country" CHAR(255)
+  "latitude" DOUBLE
+  "longitude" DOUBLE
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "recovery_codes" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "user_id" INT [not null]
+  "recovery" VARCHAR(255) [not null]
+  "used" TINYINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "relationship_type_groups" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "name" VARCHAR(255) [not null]
+  "delible" TINYINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "relationship_types" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "name" VARCHAR(255) [not null]
+  "name_reverse_relationship" VARCHAR(255) [not null]
+  "relationship_type_group_id" INT [not null]
+  "delible" TINYINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "relationships" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "relationship_type_id" INT [not null]
+  "contact_is" INT [not null]
+  "of_contact" INT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "reminder_outbox" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "reminder_id" INT [not null]
+  "user_id" INT [not null]
+  "planned_date" DATE [not null]
+  "nature" VARCHAR(255) [not null]
+  "notification_number_days_before" INT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "reminder_rules" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "number_of_days_before" INT [not null]
+  "active" TINYINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "reminder_sent" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "reminder_id" INT
+  "user_id" INT [not null]
+  "planned_date" DATE [not null]
+  "sent_date" DATETIME [not null]
+  "nature" VARCHAR(255) [not null]
+  "frequency_type" VARCHAR(255)
+  "frequency_number" INT
+  "html_content" LONGTEXT
+  "text_content" LONGTEXT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "reminders" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "contact_id" INT [not null]
+  "initial_date" DATE [not null]
+  "title" MEDIUMTEXT
+  "description" LONGTEXT
+  "frequency_type" VARCHAR(255) [not null]
+  "frequency_number" INT
+  "delible" TINYINT [not null]
+  "inactive" TINYINT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "sessions" {
+  "id" VARCHAR(255) [not null]
+  "user_id" INT
+  "ip_address" VARCHAR(255)
+  "user_agent" TEXT
+  "payload" TEXT [not null]
+  "last_activity" INT [not null]
+}
+
+Table "special_dates" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "contact_id" INT [not null]
+  "uuid" CHAR(255)
+  "is_age_based" TINYINT [not null]
+  "is_year_unknown" TINYINT [not null]
+  "date" DATE [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "statistics" {
+  "id" INT [pk, not null, increment]
+  "number_of_users" INT [not null]
+  "number_of_contacts" INT [not null]
+  "number_of_notes" INT [not null]
+  "number_of_oauth_access_tokens" INT [not null]
+  "number_of_oauth_clients" INT [not null]
+  "number_of_offsprings" INT [not null]
+  "number_of_progenitors" INT [not null]
+  "number_of_relationships" INT [not null]
+  "number_of_subscriptions" INT [not null]
+  "number_of_reminders" INT [not null]
+  "number_of_tasks" INT [not null]
+  "number_of_kids" INT [not null]
+  "number_of_activities" INT [not null]
+  "number_of_addresses" INT [not null]
+  "number_of_api_calls" INT [not null]
+  "number_of_calls" INT [not null]
+  "number_of_contact_fields" INT [not null]
+  "number_of_contact_field_types" INT [not null]
+  "number_of_debts" INT [not null]
+  "number_of_entries" INT [not null]
+  "number_of_gifts" INT [not null]
+  "number_of_invitations_sent" INT
+  "number_of_accounts_with_more_than_one_user" INT
+  "number_of_tags" INT
+  "number_of_import_jobs" INT
+  "number_of_conversations" INT
+  "number_of_messages" INT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "subscriptions" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "name" VARCHAR(255) [not null]
+  "stripe_id" VARCHAR(255) [not null]
+  "stripe_status" VARCHAR(255) [not null]
+  "stripe_plan" VARCHAR(255) [not null]
+  "quantity" INT [not null]
+  "trial_ends_at" TIMESTAMP
+  "ends_at" TIMESTAMP
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "synctoken" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "user_id" INT [not null]
+  "name" VARCHAR(255) [not null]
+  "timestamp" TIMESTAMP [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "tags" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "name" VARCHAR(255) [not null]
+  "name_slug" VARCHAR(255) [not null]
+  "description" MEDIUMTEXT
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "tasks" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "contact_id" INT
+  "uuid" CHAR(255)
+  "title" VARCHAR(255) [not null]
+  "description" LONGTEXT
+  "completed" TINYINT [not null]
+  "completed_at" DATETIME
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "term_user" {
+  "account_id" INT [not null]
+  "user_id" INT [not null]
+  "term_id" INT [not null]
+  "ip_address" VARCHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "terms" {
+  "id" INT [pk, not null, increment]
+  "term_version" VARCHAR(255) [not null]
+  "term_content" MEDIUMTEXT [not null]
+  "privacy_version" VARCHAR(255) [not null]
+  "privacy_content" MEDIUMTEXT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "u2f_key" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "user_id" INT [not null]
+  "keyHandle" VARCHAR(255) [not null]
+  "publicKey" VARCHAR(255) [not null]
+  "certificate" TEXT [not null]
+  "counter" INT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "users" {
+  "id" INT [pk, not null, increment]
+  "first_name" VARCHAR(255) [not null]
+  "last_name" VARCHAR(255) [not null]
+  "email" VARCHAR(255) [not null]
+  "me_contact_id" INT
+  "admin" TINYINT [not null]
+  "email_verified_at" TIMESTAMP
+  "password" VARCHAR(255) [not null]
+  "remember_token" VARCHAR(255)
+  "google2fa_secret" VARCHAR(255)
+  "account_id" INT [not null]
+  "timezone" VARCHAR(255)
+  "currency_id" INT
+  "locale" VARCHAR(255) [not null]
+  "metric" VARCHAR(255) [not null]
+  "fluid_container" VARCHAR(255) [not null]
+  "contacts_sort_order" VARCHAR(255) [not null]
+  "name_order" VARCHAR(255) [not null]
+  "invited_by_user_id" INT
+  "dashboard_active_tab" VARCHAR(255) [not null]
+  "gifts_active_tab" VARCHAR(255) [not null]
+  "profile_active_tab" VARCHAR(255) [not null]
+  "profile_new_life_event_badge_seen" TINYINT [not null]
+  "temperature_scale" VARCHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "weather" {
+  "id" INT [pk, not null, increment]
+  "account_id" INT [not null]
+  "place_id" INT [not null]
+  "weather_json" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "webauthn_keys" {
+  "id" INT [pk, not null, increment]
+  "user_id" INT [not null]
+  "name" VARCHAR(255) [not null]
+  "credentialId" VARCHAR(255) [not null]
+  "type" VARCHAR(255) [not null]
+  "transports" TEXT [not null]
+  "attestationType" VARCHAR(255) [not null]
+  "trustPath" TEXT [not null]
+  "aaguid" TEXT [not null]
+  "credentialPublicKey" TEXT [not null]
+  "counter" INT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Ref:"accounts"."id" < "import_jobs"."account_id"
+
+Ref:"accounts"."id" < "invitations"."account_id"
+
+Ref:"accounts"."id" < "journal_entries"."account_id"
+
+Ref:"accounts"."id" < "life_event_categories"."account_id"
+
+Ref:"accounts"."id" < "life_event_types"."account_id"
+
+Ref:"accounts"."id" < "life_events"."account_id"
+
+Ref:"accounts"."id" < "messages"."account_id"
+
+Ref:"accounts"."id" < "metadata_love_relationships"."account_id"
+
+Ref:"accounts"."id" < "modules"."account_id"
+
+Ref:"accounts"."id" < "notes"."account_id"
+
+Ref:"accounts"."id" < "occupations"."account_id"
+
+Ref:"accounts"."id" < "pets"."account_id"
+
+Ref:"accounts"."id" < "photos"."account_id"
+
+Ref:"accounts"."id" < "places"."account_id"
+
+Ref:"accounts"."id" < "recovery_codes"."account_id"
+
+Ref:"accounts"."id" < "relationship_type_groups"."account_id"
+
+Ref:"accounts"."id" < "relationship_types"."account_id"
+
+Ref:"accounts"."id" < "relationships"."account_id"
+
+Ref:"accounts"."id" < "reminder_outbox"."account_id"
+
+Ref:"accounts"."id" < "reminder_rules"."account_id"
+
+Ref:"accounts"."id" < "reminder_sent"."account_id"
+
+Ref:"accounts"."id" < "reminders"."account_id"
+
+Ref:"accounts"."id" < "special_dates"."account_id"
+
+Ref:"accounts"."id" < "subscriptions"."account_id"
+
+Ref:"accounts"."id" < "synctoken"."account_id"
+
+Ref:"accounts"."id" < "tags"."account_id"
+
+Ref:"accounts"."id" < "tasks"."account_id"
+
+Ref:"accounts"."id" < "term_user"."account_id"
+
+Ref:"accounts"."id" < "users"."account_id"
+
+Ref:"activities"."id" < "activity_contact"."activity_id"
+
+Ref:"activities"."id" < "emotion_activity"."activity_id"
+
+Ref:"accounts"."id" < "activities"."account_id"
+
+Ref:"accounts"."id" < "activity_contact"."account_id"
+
+Ref:"accounts"."id" < "activity_statistics"."account_id"
+
+Ref:"activity_type_categories"."id" < "activity_types"."activity_type_category_id"
+
+Ref:"accounts"."id" < "activity_type_categories"."account_id"
+
+Ref:"activity_types"."id" < "activities"."activity_type_id"
+
+Ref:"accounts"."id" < "activity_types"."account_id"
+
+Ref:"accounts"."id" < "address_contact_field_label"."account_id"
+
+Ref:"addresses"."id" < "address_contact_field_label"."address_id"
+
+Ref:"accounts"."id" < "addresses"."account_id"
+
+Ref:"accounts"."id" < "audit_logs"."account_id"
+
+Ref:"calls"."id" < "emotion_call"."call_id"
+
+Ref:"accounts"."id" < "calls"."account_id"
+
+Ref:"companies"."id" < "occupations"."company_id"
+
+Ref:"accounts"."id" < "companies"."account_id"
+
+Ref:"accounts"."id" < "contact_field_contact_field_label"."account_id"
+
+Ref:"contact_field_labels"."id" < "address_contact_field_label"."contact_field_label_id"
+
+Ref:"contact_field_labels"."id" < "contact_field_contact_field_label"."contact_field_label_id"
+
+Ref:"accounts"."id" < "contact_field_labels"."account_id"
+
+Ref:"contact_field_types"."id" < "contact_fields"."contact_field_type_id"
+
+Ref:"contact_field_types"."id" < "conversations"."contact_field_type_id"
+
+Ref:"accounts"."id" < "contact_field_types"."account_id"
+
+Ref:"contact_fields"."id" < "contact_field_contact_field_label"."contact_field_id"
+
+Ref:"accounts"."id" < "contact_fields"."account_id"
+
+Ref:"accounts"."id" < "contact_tag"."account_id"
+
+Ref:"contacts"."id" < "activity_contact"."contact_id"
+
+Ref:"contacts"."id" < "activity_statistics"."contact_id"
+
+Ref:"contacts"."id" < "addresses"."contact_id"
+
+Ref:"contacts"."id" < "calls"."contact_id"
+
+Ref:"contacts"."id" < "contact_fields"."contact_id"
+
+Ref:"contacts"."id" < "contact_photo"."contact_id"
+
+Ref:"contacts"."id" < "contact_tag"."contact_id"
+
+Ref:"contacts"."id" < "conversations"."contact_id"
+
+Ref:"contacts"."id" < "documents"."contact_id"
+
+Ref:"contacts"."id" < "emotion_call"."contact_id"
+
+Ref:"contacts"."id" < "gifts"."contact_id"
+
+Ref:"contacts"."id" < "life_events"."contact_id"
+
+Ref:"contacts"."id" < "messages"."contact_id"
+
+Ref:"contacts"."id" < "notes"."contact_id"
+
+Ref:"contacts"."id" < "occupations"."contact_id"
+
+Ref:"contacts"."id" < "pets"."contact_id"
+
+Ref:"contacts"."id" < "reminders"."contact_id"
+
+Ref:"contacts"."id" < "special_dates"."contact_id"
+
+Ref:"contacts"."id" < "tasks"."contact_id"
+
+Ref:"accounts"."id" < "contacts"."account_id"
+
+Ref:"conversations"."id" < "messages"."conversation_id"
+
+Ref:"accounts"."id" < "conversations"."account_id"
+
+Ref:"currencies"."id" < "users"."currency_id"
+
+Ref:"accounts"."id" < "days"."account_id"
+
+Ref:"accounts"."id" < "debts"."account_id"
+
+Ref:"contacts"."id" < "debts"."contact_id"
+
+Ref:"default_activity_type_categories"."id" < "default_activity_types"."default_activity_type_category_id"
+
+Ref:"default_life_event_categories"."id" < "default_life_event_types"."default_life_event_category_id"
+
+Ref:"accounts"."id" < "documents"."account_id"
+
+Ref:"accounts"."id" < "emotion_activity"."account_id"
+
+Ref:"accounts"."id" < "emotion_call"."account_id"
+
+Ref:"emotions"."id" < "emotion_activity"."emotion_id"
+
+Ref:"emotions"."id" < "emotion_call"."emotion_id"
+
+Ref:"emotions_primary"."id" < "emotions_secondary"."emotion_primary_id"
+
+Ref:"accounts"."id" < "entries"."account_id"
+
+Ref:"genders"."id" < "contacts"."gender_id"
+
+Ref:"accounts"."id" < "genders"."account_id"
+
+Ref:"gifts"."id" < "gift_photo"."gift_id"
+
+Ref:"accounts"."id" < "gifts"."account_id"
+
+Ref:"contacts"."id" < "gifts"."is_for"
+
+Ref:"accounts"."id" < "import_job_reports"."account_id"
+
+Ref:"import_jobs"."id" < "import_job_reports"."import_job_id"
+
+Ref:"life_event_categories"."id" < "life_event_types"."life_event_category_id"
+
+Ref:"life_event_types"."id" < "life_events"."life_event_type_id"
+
+Ref:"pet_categories"."id" < "pets"."pet_category_id"
+
+Ref:"photos"."id" < "contact_photo"."photo_id"
+
+Ref:"photos"."id" < "gift_photo"."photo_id"
+
+Ref:"places"."id" < "addresses"."place_id"
+
+Ref:"places"."id" < "weather"."place_id"
+
+Ref:"relationship_type_groups"."id" < "default_relationship_types"."relationship_type_group_id"
+
+Ref:"relationship_type_groups"."id" < "relationship_types"."relationship_type_group_id"
+
+Ref:"relationship_types"."id" < "relationships"."relationship_type_id"
+
+Ref:"relationships"."id" < "metadata_love_relationships"."relationship_id"
+
+Ref:"contacts"."id" < "relationships"."contact_is"
+
+Ref:"contacts"."id" < "relationships"."of_contact"
+
+Ref:"reminders"."id" < "life_events"."reminder_id"
+
+Ref:"reminders"."id" < "reminder_outbox"."reminder_id"
+
+Ref:"reminders"."id" < "reminder_sent"."reminder_id"
+
+Ref:"tags"."id" < "contact_tag"."tag_id"
+
+Ref:"terms"."id" < "term_user"."term_id"
+
+Ref:"users"."id" < "import_job_reports"."user_id"
+
+Ref:"users"."id" < "import_jobs"."user_id"
+
+Ref:"users"."id" < "oauth_access_tokens"."user_id"
+
+Ref:"users"."id" < "oauth_auth_codes"."user_id"
+
+Ref:"users"."id" < "oauth_clients"."user_id"
+
+Ref:"users"."id" < "recovery_codes"."user_id"
+
+Ref:"users"."id" < "reminder_outbox"."user_id"
+
+Ref:"users"."id" < "reminder_sent"."user_id"
+
+Ref:"users"."id" < "sessions"."user_id"
+
+Ref:"users"."id" < "synctoken"."user_id"
+
+Ref:"users"."id" < "term_user"."user_id"
+
+Ref:"users"."id" < "u2f_key"."user_id"
+
+Ref:"users"."id" < "webauthn_keys"."user_id"
+
+Ref:"contacts"."id" < "users"."me_contact_id"
+
+Ref:"users"."id" < "users"."invited_by_user_id"
+
+Ref:"accounts"."id" < "weather"."account_id"

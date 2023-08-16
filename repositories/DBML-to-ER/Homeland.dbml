@@ -1,0 +1,292 @@
+Table "users" {
+  "id" INT [not null]
+  "login" VARCHAR(255) [not null]
+  "name" VARCHAR(255)
+  "email" VARCHAR(255) [not null]
+  "email_md5" VARCHAR(255) [not null]
+  "email_public" TINYINT(1) [not null]
+  "location" VARCHAR(255)
+  "location_id" INT
+  "bio" VARCHAR(255)
+  "website" VARCHAR(255)
+  "company" VARCHAR(255)
+  "github" VARCHAR(255)
+  "twitter" VARCHAR(255)
+  "avatar" VARCHAR(255)
+  "state" INT [not null]
+  "tagline" VARCHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "encrypted_password" VARCHAR(255) [not null]
+  "reset_password_token" VARCHAR(255)
+  "reset_password_sent_at" TIMESTAMP
+  "remember_created_at" TIMESTAMP
+  "sign_in_count" INT [not null]
+  "current_sign_in_at" TIMESTAMP
+  "last_sign_in_at" TIMESTAMP
+  "current_sign_in_ip" VARCHAR(255)
+  "last_sign_in_ip" VARCHAR(255)
+  "password_salt" VARCHAR(255) [not null]
+  "persistence_token" VARCHAR(255) [not null]
+}
+
+Table "user_ssos" {
+  "id" INT [not null]
+  "user_id" INT [not null]
+  "uid" VARCHAR(255) [not null]
+  "username" VARCHAR(255)
+  "email" VARCHAR(255)
+  "name" VARCHAR(255)
+  "avatar_url" VARCHAR(255)
+  "last_payload" TEXT [not null]
+  "created_at" TIMESTAMP [not null]
+  "updated_at" TIMESTAMP [not null]
+}
+
+Table "topics" {
+  "id" INT [not null]
+  "user_id" INT [not null]
+  "node_id" INT [not null]
+  "title" VARCHAR(255) [not null]
+  "body" TEXT [not null]
+  "last_reply_id" INT
+  "last_reply_user_id" INT
+  "last_reply_user_login" VARCHAR(255)
+  "node_name" VARCHAR(255)
+  "who_deleted" VARCHAR(255)
+  "last_active_mark" INT
+  "lock_node" TINYINT(1) [not null]
+  "suggested_at" TIMESTAMP
+  "grade" INT
+  "replied_at" TIMESTAMP
+  "replies_count" INT [not null]
+  "likes_count" INT
+  "mentioned_user_ids" INT
+  "deleted_at" TIMESTAMP
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "closed_at" TIMESTAMP
+  "team_id" INT
+}
+
+Table "team_users" {
+  "id" INT [not null]
+  "team_id" INT [not null]
+  "user_id" INT [not null]
+  "role" INT
+  "status" INT
+  "created_at" TIMESTAMP [not null]
+  "updated_at" TIMESTAMP [not null]
+}
+
+Table "settings" {
+  "id" INT [not null]
+  "var" VARCHAR(255) [not null]
+  "value" TEXT
+  "thing_id" INT
+  "thing_type" VARCHAR(255)
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "sections" {
+  "id" INT [not null]
+  "name" VARCHAR(255) [not null]
+  "sort" INT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "replies" {
+  "id" INT [not null]
+  "user_id" INT [not null]
+  "topic_id" INT [not null]
+  "body" TEXT [not null]
+  "state" INT [not null]
+  "likes_count" INT
+  "mentioned_user_ids" INT
+  "deleted_at" TIMESTAMP
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "action" VARCHAR(255)
+  "target_type" VARCHAR(255)
+  "target_id" VARCHAR(255)
+  "reply_to_id" INT
+}
+
+Table "photos" {
+  "id" INT [not null]
+  "user_id" INT
+  "image" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "pages" {
+  "id" INT [pk, not null, increment]
+  "slug" VARCHAR(255) [not null]
+  "title" VARCHAR(255) [not null]
+  "body" TEXT [not null]
+  "locked" TINYINT(1) [not null]
+  "version" INT [not null]
+  "editor_ids" INT [not null]
+  "word_count" INT [not null]
+  "changes_count" INT [not null]
+  "comments_count" INT [not null]
+  "deleted_at" TIMESTAMP
+  "created_at" TIMESTAMP [not null]
+  "updated_at" TIMESTAMP [not null]
+}
+
+Table "page_versions" {
+  "id" INT [not null]
+  "user_id" INT [not null]
+  "page_id" INT [not null]
+  "version" INT [not null]
+  "slug" VARCHAR(255) [not null]
+  "title" VARCHAR(255) [not null]
+  "desc" TEXT [not null]
+  "body" TEXT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "oauth_applications" {
+  "id" INT [not null]
+  "name" VARCHAR(255) [not null]
+  "uid" VARCHAR(255) [not null]
+  "secret" VARCHAR(255) [not null]
+  "redirect_uri" TEXT [not null]
+  "scopes" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+  "owner_id" INT
+  "owner_type" VARCHAR(255)
+  "level" INT [not null]
+  "confidential" TINYINT(1) [not null]
+}
+
+Table "oauth_access_tokens" {
+  "id" INT [not null]
+  "resource_owner_id" INT
+  "application_id" INT
+  "token" VARCHAR(255) [not null]
+  "refresh_token" VARCHAR(255)
+  "expires_in" BIGINT
+  "revoked_at" TIMESTAMP
+  "created_at" TIMESTAMP [not null]
+  "scopes" VARCHAR(255)
+}
+
+Table "oauth_access_grants" {
+  "id" INT [not null]
+  "resource_owner_id" INT [not null]
+  "application_id" INT [not null]
+  "token" VARCHAR(255) [not null]
+  "expires_in" BIGINT
+  "redirect_uri" TEXT [not null]
+  "created_at" TIMESTAMP [not null]
+  "revoked_at" TIMESTAMP
+  "scopes" VARCHAR(255)
+}
+
+Table "notifications" {
+  "id" INT [not null]
+  "user_id" INT [not null]
+  "actor_id" INT
+  "notify_type" VARCHAR(255) [not null]
+  "target_type" VARCHAR(255)
+  "target_id" INT
+  "second_target_type" VARCHAR(255)
+  "second_target_id" INT
+  "third_target_type" VARCHAR(255)
+  "third_target_id" INT
+  "read_at" TIMESTAMP
+  "created_at" TIMESTAMP [not null]
+  "updated_at" TIMESTAMP [not null]
+}
+
+Table "notes" {
+  "id" INT [not null]
+  "title" VARCHAR(255) [not null]
+  "body" TEXT [not null]
+  "user_id" INT [not null]
+  "word_count" INT [not null]
+  "changes_count" INT [not null]
+  "publish" TINYINT(1) [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "nodes" {
+  "id" INT [pk, not null, increment]
+  "name" VARCHAR(255) [not null]
+  "summary" VARCHAR(255)
+  "section_id" INT [not null]
+  "sort" INT [not null]
+  "topics_count" INT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "locations" {
+  "id" INT [not null]
+  "name" VARCHAR(255) [not null]
+  "users_count" INT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "exception_tracks" {
+  "id" INT [not null]
+  "title" VARCHAR(255)
+  "body" TEXT
+  "created_at" TIMESTAMP [not null]
+  "updated_at" TIMESTAMP [not null]
+}
+
+Table "devices" {
+  "id" INT [pk, not null, increment]
+  "platform" INT [not null]
+  "user_id" INT [not null]
+  "token" VARCHAR(255) [not null]
+  "last_actived_at" TIMESTAMP
+  "created_at" TIMESTAMP [not null]
+  "updated_at" TIMESTAMP [not null]
+}
+
+Table "comments" {
+  "id" INT [not null]
+  "body" TEXT [not null]
+  "user_id" INT [not null]
+  "commentable_type" VARCHAR(255)
+  "commentable_id" INT
+  "deleted_at" TIMESTAMP
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "authorizations" {
+  "id" INT [not null]
+  "provider" VARCHAR(255) [not null]
+  "uid" VARCHAR(255) [not null]
+  "user_id" INT [not null]
+  "created_at" TIMESTAMP
+  "updated_at" TIMESTAMP
+}
+
+Table "actions" {
+  "id" INT [not null]
+  "action_type" VARCHAR(255) [not null]
+  "action_option" VARCHAR(255)
+  "target_type" VARCHAR(255)
+  "target_id" INT
+  "user_type" VARCHAR(255)
+  "user_id" INT
+  "created_at" TIMESTAMP [not null]
+  "updated_at" TIMESTAMP [not null]
+}
+
+Ref:"pages"."id" < "page_versions"."page_id"
+
+Ref:"nodes"."id" < "topics"."node_id"

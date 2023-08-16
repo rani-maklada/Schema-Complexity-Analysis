@@ -1,0 +1,6 @@
+to activate run:
+myGitanaEnv\Scripts\activate
+
+to deactivate run:
+deactivate
+

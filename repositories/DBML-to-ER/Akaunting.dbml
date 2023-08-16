@@ -1,0 +1,911 @@
+Table "accounts" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "number" NVARCHAR(255) [not null]
+  "currency_code" NVARCHAR(255) [not null]
+  "opening_balance" FLOAT [not null]
+  "bank_name" NVARCHAR(255)
+  "bank_phone" NVARCHAR(255)
+  "bank_address" NVARCHAR(255)
+  "enabled" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "bill_histories" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "bill_id" INT [not null]
+  "status" NVARCHAR(255) [not null]
+  "notify" TINYINT [not null]
+  "description" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  company_id [name: "bill_histories_company_id_index"]
+}
+}
+
+Table "bill_item_taxes" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "bill_id" INT [not null]
+  "bill_item_id" INT [not null]
+  "tax_id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "amount" FLOAT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  company_id [name: "bill_item_taxes_company_id_index"]
+}
+}
+
+Table "bill_items" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "bill_id" INT [not null]
+  "item_id" INT
+  "name" NVARCHAR(255) [not null]
+  "sku" NVARCHAR(255)
+  "quantity" FLOAT [not null]
+  "price" FLOAT [not null]
+  "total" FLOAT [not null]
+  "tax" FLOAT [not null]
+  "discount_rate" FLOAT [not null]
+  "discount_type" NVARCHAR(255) [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  company_id [name: "bill_items_company_id_index"]
+}
+}
+
+Table "bill_totals" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "bill_id" INT [not null]
+  "code" NVARCHAR(255)
+  "name" NVARCHAR(255) [not null]
+  "amount" FLOAT [not null]
+  "sort_order" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  company_id [name: "bill_totals_company_id_index"]
+}
+}
+
+Table "bills" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "bill_number" NVARCHAR(255) [not null]
+  "order_number" NVARCHAR(255)
+  "status" NVARCHAR(255) [not null]
+  "billed_at" DATETIME [not null]
+  "due_at" DATETIME [not null]
+  "amount" FLOAT [not null]
+  "currency_code" NVARCHAR(255) [not null]
+  "currency_rate" FLOAT [not null]
+  "category_id" INT [not null]
+  "contact_id" INT [not null]
+  "contact_name" NVARCHAR(255) [not null]
+  "contact_email" NVARCHAR(255)
+  "contact_tax_number" NVARCHAR(255)
+  "contact_phone" NVARCHAR(255)
+  "contact_address" NVARCHAR(255)
+  "notes" NVARCHAR(255)
+  "parent_id" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  (company_id, bill_number, deleted_at) [unique, name: "bills_company_id_bill_number_deleted_at_unique"]
+  id [pk]
+  company_id [name: "bills_company_id_index"]
+}
+}
+
+Table "categories" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "type" NVARCHAR(255) [not null]
+  "color" NVARCHAR(255) [not null]
+  "enabled" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  company_id [name: "categories_company_id_index"]
+}
+}
+
+Table "companies" {
+  "id" INT [not null]
+  "domain" NVARCHAR(255)
+  "enabled" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "contacts" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "type" NVARCHAR(255) [not null]
+  "name" NVARCHAR(255) [not null]
+  "email" NVARCHAR(255)
+  "user_id" INT
+  "tax_number" NVARCHAR(255)
+  "phone" NVARCHAR(255)
+  "address" NVARCHAR(255)
+  "website" NVARCHAR(255)
+  "currency_code" NVARCHAR(255) [not null]
+  "enabled" TINYINT [not null]
+  "reference" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  (company_id, type) [name: "contacts_company_id_type_index"]
+  (company_id, type, email, deleted_at) [unique, name: "contacts_company_id_type_email_deleted_at_unique"]
+  id [pk]
+  company_id [name: "contacts_company_id_index"]
+}
+}
+
+Table "currencies" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "code" NVARCHAR(255) [not null]
+  "rate" FLOAT [not null]
+  "precision" NVARCHAR(255)
+  "symbol" NVARCHAR(255)
+  "symbol_first" INT [not null]
+  "decimal_mark" NVARCHAR(255)
+  "thousands_separator" NVARCHAR(255)
+  "enabled" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  (company_id, code, deleted_at) [unique, name: "currencies_company_id_code_deleted_at_unique"]
+  id [pk]
+  company_id [name: "currencies_company_id_index"]
+}
+}
+
+Table "dashboards" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "enabled" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  company_id [name: "dashboards_company_id_index"]
+}
+}
+
+Table "email_templates" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "alias" NVARCHAR(255) [not null]
+  "class" NVARCHAR(255) [not null]
+  "name" NVARCHAR(255) [not null]
+  "subject" NVARCHAR(255) [not null]
+  "body" NVARCHAR(255) [not null]
+  "params" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  (company_id, alias, deleted_at) [unique, name: "email_templates_company_id_alias_deleted_at_unique"]
+  id [pk]
+  company_id [name: "email_templates_company_id_index"]
+}
+}
+
+Table "failed_jobs" {
+  "id" BIGINT [not null]
+  "connection" NVARCHAR(255) [not null]
+  "queue" NVARCHAR(255) [not null]
+  "payload" NVARCHAR(255) [not null]
+  "exception" NVARCHAR(255) [not null]
+  "failed_at" DATETIME [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "firewall_ips" {
+  "id" INT [not null]
+  "ip" NVARCHAR(255) [not null]
+  "log_id" INT
+  "blocked" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  (ip, deleted_at) [unique, name: "firewall_ips_ip_deleted_at_unique"]
+  id [pk]
+  ip [name: "firewall_ips_ip_index"]
+}
+}
+
+Table "firewall_logs" {
+  "id" INT [not null]
+  "ip" NVARCHAR(255) [not null]
+  "level" NVARCHAR(255) [not null]
+  "middleware" NVARCHAR(255) [not null]
+  "user_id" INT
+  "url" NVARCHAR(255)
+  "referrer" NVARCHAR(255)
+  "request" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  ip [name: "firewall_logs_ip_index"]
+}
+}
+
+Table "invoice_histories" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "invoice_id" INT [not null]
+  "status" NVARCHAR(255) [not null]
+  "notify" TINYINT [not null]
+  "description" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  company_id [name: "invoice_histories_company_id_index"]
+}
+}
+
+Table "invoice_item_taxes" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "invoice_id" INT [not null]
+  "invoice_item_id" INT [not null]
+  "tax_id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "amount" FLOAT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  company_id [name: "invoice_item_taxes_company_id_index"]
+}
+}
+
+Table "invoice_items" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "invoice_id" INT [not null]
+  "item_id" INT
+  "name" NVARCHAR(255) [not null]
+  "sku" NVARCHAR(255)
+  "quantity" FLOAT [not null]
+  "price" FLOAT [not null]
+  "total" FLOAT [not null]
+  "tax" FLOAT [not null]
+  "discount_rate" FLOAT [not null]
+  "discount_type" NVARCHAR(255) [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  company_id [name: "invoice_items_company_id_index"]
+}
+}
+
+Table "invoice_totals" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "invoice_id" INT [not null]
+  "code" NVARCHAR(255)
+  "name" NVARCHAR(255) [not null]
+  "amount" FLOAT [not null]
+  "sort_order" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  company_id [name: "invoice_totals_company_id_index"]
+}
+}
+
+Table "invoices" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "invoice_number" NVARCHAR(255) [not null]
+  "order_number" NVARCHAR(255)
+  "status" NVARCHAR(255) [not null]
+  "invoiced_at" DATETIME [not null]
+  "due_at" DATETIME [not null]
+  "amount" FLOAT [not null]
+  "currency_code" NVARCHAR(255) [not null]
+  "currency_rate" FLOAT [not null]
+  "category_id" INT [not null]
+  "contact_id" INT [not null]
+  "contact_name" NVARCHAR(255) [not null]
+  "contact_email" NVARCHAR(255)
+  "contact_tax_number" NVARCHAR(255)
+  "contact_phone" NVARCHAR(255)
+  "contact_address" NVARCHAR(255)
+  "notes" NVARCHAR(255)
+  "footer" NVARCHAR(255)
+  "parent_id" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  (company_id, invoice_number, deleted_at) [unique, name: "invoices_company_id_invoice_number_deleted_at_unique"]
+  id [pk]
+  company_id [name: "invoices_company_id_index"]
+}
+}
+
+Table "items" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "sku" NVARCHAR(255)
+  "description" NVARCHAR(255)
+  "sale_price" FLOAT [not null]
+  "purchase_price" FLOAT [not null]
+  "quantity" INT [not null]
+  "category_id" INT
+  "tax_id" INT
+  "enabled" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  (company_id, sku, deleted_at) [unique, name: "items_company_id_sku_deleted_at_unique"]
+  id [pk]
+  company_id [name: "items_company_id_index"]
+}
+}
+
+Table "jobs" {
+  "id" BIGINT [not null]
+  "queue" NVARCHAR(255) [not null]
+  "payload" NVARCHAR(255) [not null]
+  "attempts" TINYINT [not null]
+  "reserved_at" INT
+  "available_at" INT [not null]
+  "created_at" INT [not null]
+
+Indexes {
+  (queue, reserved_at) [name: "jobs_queue_reserved_at_index"]
+  id [pk]
+}
+}
+
+Table "media" {
+  "id" INT [not null]
+  "disk" NVARCHAR(255) [not null]
+  "directory" NVARCHAR(255) [not null]
+  "filename" NVARCHAR(255) [not null]
+  "extension" NVARCHAR(255) [not null]
+  "mime_type" NVARCHAR(255) [not null]
+  "aggregate_type" NVARCHAR(255) [not null]
+  "size" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  (disk, directory) [name: "media_disk_directory_index"]
+  (disk, directory, filename, extension, deleted_at) [unique, name: "media_disk_directory_filename_extension_deleted_at_unique"]
+  id [pk]
+  aggregate_type [name: "media_aggregate_type_index"]
+}
+}
+
+Table "mediables" {
+  "media_id" INT [not null]
+  "mediable_type" NVARCHAR(255) [not null]
+  "mediable_id" INT [not null]
+  "tag" NVARCHAR(255) [not null]
+  "order" INT [not null]
+
+Indexes {
+  (media_id, mediable_type, mediable_id, tag) [pk]
+  tag [name: "mediables_tag_index"]
+  order [name: "mediables_order_index"]
+}
+}
+
+Table "module_histories" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "module_id" INT [not null]
+  "category" NVARCHAR(255) [not null]
+  "version" NVARCHAR(255) [not null]
+  "description" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  (company_id, module_id) [name: "module_histories_company_id_module_id_index"]
+  id [pk]
+}
+}
+
+Table "modules" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "alias" NVARCHAR(255) [not null]
+  "enabled" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  (company_id, alias, deleted_at) [unique, name: "modules_company_id_alias_deleted_at_unique"]
+  id [pk]
+  company_id [name: "modules_company_id_index"]
+}
+}
+
+Table "notifications" {
+  "id" NCHAR(255) [not null]
+  "type" NVARCHAR(255) [not null]
+  "notifiable_type" NVARCHAR(255) [not null]
+  "notifiable_id" BIGINT [not null]
+  "data" NVARCHAR(255) [not null]
+  "read_at" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "password_resets" {
+  "email" NVARCHAR(255) [not null]
+  "token" NVARCHAR(255) [not null]
+  "created_at" DATETIME
+
+Indexes {
+  email [name: "password_resets_email_index"]
+}
+}
+
+Table "permissions" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "display_name" NVARCHAR(255) [not null]
+  "description" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  name [unique, name: "permissions_name_unique"]
+}
+}
+
+Table "reconciliations" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "account_id" INT [not null]
+  "started_at" DATETIME [not null]
+  "ended_at" DATETIME [not null]
+  "closing_balance" FLOAT [not null]
+  "reconciled" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  company_id [name: "reconciliations_company_id_index"]
+}
+}
+
+Table "recurring" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "recurable_type" NVARCHAR(255) [not null]
+  "recurable_id" BIGINT [not null]
+  "frequency" NVARCHAR(255) [not null]
+  "interval" INT [not null]
+  "started_at" DATETIME [not null]
+  "count" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  company_id [name: "recurring_company_id_index"]
+}
+}
+
+Table "reports" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "class" NVARCHAR(255) [not null]
+  "name" NVARCHAR(255) [not null]
+  "description" NVARCHAR(255) [not null]
+  "settings" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  company_id [name: "reports_company_id_index"]
+}
+}
+
+Table "role_permissions" {
+  "role_id" INT [not null]
+  "permission_id" INT [not null]
+
+Indexes {
+  (role_id, permission_id) [pk]
+}
+}
+
+Table "roles" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "display_name" NVARCHAR(255) [not null]
+  "description" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  name [unique, name: "roles_name_unique"]
+}
+}
+
+Table "sessions" {
+  "id" NVARCHAR(255) [not null]
+  "user_id" INT
+  "ip_address" NVARCHAR(255)
+  "user_agent" NVARCHAR(255)
+  "payload" NVARCHAR(255) [not null]
+  "last_activity" INT [not null]
+}
+
+Table "settings" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "key" NVARCHAR(255) [not null]
+  "value" NVARCHAR(255)
+
+Indexes {
+  (company_id, key) [unique, name: "settings_company_id_key_unique"]
+  id [pk]
+  company_id [name: "settings_company_id_index"]
+}
+}
+
+Table "taxes" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "rate" FLOAT [not null]
+  "type" NVARCHAR(255) [not null]
+  "enabled" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  company_id [name: "taxes_company_id_index"]
+}
+}
+
+Table "transactions" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "type" NVARCHAR(255) [not null]
+  "paid_at" DATETIME [not null]
+  "amount" FLOAT [not null]
+  "currency_code" NVARCHAR(255) [not null]
+  "currency_rate" FLOAT [not null]
+  "account_id" INT [not null]
+  "document_id" INT
+  "contact_id" INT
+  "category_id" INT [not null]
+  "description" NVARCHAR(255)
+  "payment_method" NVARCHAR(255) [not null]
+  "reference" NVARCHAR(255)
+  "parent_id" INT [not null]
+  "reconciled" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  (company_id, type) [name: "transactions_company_id_type_index"]
+  id [pk]
+}
+}
+
+Table "transfers" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "expense_transaction_id" INT [not null]
+  "income_transaction_id" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  company_id [name: "transfers_company_id_index"]
+}
+}
+
+Table "user_companies" {
+  "user_id" INT [not null]
+  "company_id" INT [not null]
+  "user_type" NVARCHAR(255) [not null]
+
+Indexes {
+  (user_id, company_id, user_type) [pk]
+}
+}
+
+Table "user_dashboards" {
+  "user_id" INT [not null]
+  "dashboard_id" INT [not null]
+  "user_type" NVARCHAR(255) [not null]
+
+Indexes {
+  (user_id, dashboard_id, user_type) [pk]
+}
+}
+
+Table "user_permissions" {
+  "user_id" INT [not null]
+  "permission_id" INT [not null]
+  "user_type" NVARCHAR(255) [not null]
+
+Indexes {
+  (user_id, permission_id, user_type) [pk]
+}
+}
+
+Table "user_roles" {
+  "user_id" INT [not null]
+  "role_id" INT [not null]
+  "user_type" NVARCHAR(255) [not null]
+
+Indexes {
+  (user_id, role_id, user_type) [pk]
+}
+}
+
+Table "users" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "email" NVARCHAR(255) [not null]
+  "password" NVARCHAR(255) [not null]
+  "remember_token" NVARCHAR(255)
+  "last_logged_in_at" DATETIME
+  "locale" NVARCHAR(255) [not null]
+  "landing_page" NVARCHAR(255)
+  "enabled" TINYINT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  (email, deleted_at) [unique, name: "users_email_deleted_at_unique"]
+  id [pk]
+}
+}
+
+Table "widgets" {
+  "id" INT [not null]
+  "company_id" INT [not null]
+  "dashboard_id" INT [not null]
+  "class" NVARCHAR(255) [not null]
+  "name" NVARCHAR(255) [not null]
+  "sort" INT [not null]
+  "settings" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  (company_id, dashboard_id) [name: "widgets_company_id_dashboard_id_index"]
+  id [pk]
+}
+}
+
+Ref "reconciliations_account_id_foreign":"accounts"."id" < "reconciliations"."account_id"
+
+Ref "transactions_account_id_foreign":"accounts"."id" < "transactions"."account_id"
+
+Ref "bill_item_taxes_bill_item_id_foreign":"bill_items"."id" < "bill_item_taxes"."bill_item_id"
+
+Ref "bill_histories_bill_id_foreign":"bills"."id" < "bill_histories"."bill_id"
+
+Ref "bill_item_taxes_bill_id_foreign":"bills"."id" < "bill_item_taxes"."bill_id"
+
+Ref "bill_items_bill_id_foreign":"bills"."id" < "bill_items"."bill_id"
+
+Ref "bill_totals_bill_id_foreign":"bills"."id" < "bill_totals"."bill_id"
+
+Ref "bills_category_id_foreign":"categories"."id" < "bills"."category_id"
+
+Ref "invoices_category_id_foreign":"categories"."id" < "invoices"."category_id"
+
+Ref "items_category_id_foreign":"categories"."id" < "items"."category_id"
+
+Ref "transactions_category_id_foreign":"categories"."id" < "transactions"."category_id"
+
+Ref "accounts_company_id_foreign":"companies"."id" < "accounts"."company_id"
+
+Ref "bill_histories_company_id_foreign":"companies"."id" < "bill_histories"."company_id"
+
+Ref "bill_item_taxes_company_id_foreign":"companies"."id" < "bill_item_taxes"."company_id"
+
+Ref "bill_items_company_id_foreign":"companies"."id" < "bill_items"."company_id"
+
+Ref "bill_totals_company_id_foreign":"companies"."id" < "bill_totals"."company_id"
+
+Ref "bills_company_id_foreign":"companies"."id" < "bills"."company_id"
+
+Ref "categories_company_id_foreign":"companies"."id" < "categories"."company_id"
+
+Ref "contacts_company_id_foreign":"companies"."id" < "contacts"."company_id"
+
+Ref "currencies_company_id_foreign":"companies"."id" < "currencies"."company_id"
+
+Ref "dashboards_company_id_foreign":"companies"."id" < "dashboards"."company_id"
+
+Ref "email_templates_company_id_foreign":"companies"."id" < "email_templates"."company_id"
+
+Ref "invoice_histories_company_id_foreign":"companies"."id" < "invoice_histories"."company_id"
+
+Ref "invoice_item_taxes_company_id_foreign":"companies"."id" < "invoice_item_taxes"."company_id"
+
+Ref "invoice_items_company_id_foreign":"companies"."id" < "invoice_items"."company_id"
+
+Ref "invoice_totals_company_id_foreign":"companies"."id" < "invoice_totals"."company_id"
+
+Ref "invoices_company_id_foreign":"companies"."id" < "invoices"."company_id"
+
+Ref "items_company_id_foreign":"companies"."id" < "items"."company_id"
+
+Ref "module_histories_company_id_foreign":"companies"."id" < "module_histories"."company_id"
+
+Ref "modules_company_id_foreign":"companies"."id" < "modules"."company_id"
+
+Ref "reconciliations_company_id_foreign":"companies"."id" < "reconciliations"."company_id"
+
+Ref "recurring_company_id_foreign":"companies"."id" < "recurring"."company_id"
+
+Ref "reports_company_id_foreign":"companies"."id" < "reports"."company_id"
+
+Ref "settings_company_id_foreign":"companies"."id" < "settings"."company_id"
+
+Ref "taxes_company_id_foreign":"companies"."id" < "taxes"."company_id"
+
+Ref "transactions_company_id_foreign":"companies"."id" < "transactions"."company_id"
+
+Ref "transfers_company_id_foreign":"companies"."id" < "transfers"."company_id"
+
+Ref "user_companies_company_id_foreign":"companies"."id" < "user_companies"."company_id"
+
+Ref "widgets_company_id_foreign":"companies"."id" < "widgets"."company_id"
+
+Ref "bills_contact_id_foreign":"contacts"."id" < "bills"."contact_id"
+
+Ref "invoices_contact_id_foreign":"contacts"."id" < "invoices"."contact_id"
+
+Ref "transactions_contact_id_foreign":"contacts"."id" < "transactions"."contact_id"
+
+Ref "user_dashboards_dashboard_id_foreign":"dashboards"."id" < "user_dashboards"."dashboard_id"
+
+Ref "widgets_dashboard_id_foreign":"dashboards"."id" < "widgets"."dashboard_id"
+
+Ref "invoice_item_taxes_invoice_item_id_foreign":"invoice_items"."id" < "invoice_item_taxes"."invoice_item_id"
+
+Ref "invoice_histories_invoice_id_foreign":"invoices"."id" < "invoice_histories"."invoice_id"
+
+Ref "invoice_item_taxes_invoice_id_foreign":"invoices"."id" < "invoice_item_taxes"."invoice_id"
+
+Ref "invoice_items_invoice_id_foreign":"invoices"."id" < "invoice_items"."invoice_id"
+
+Ref "invoice_totals_invoice_id_foreign":"invoices"."id" < "invoice_totals"."invoice_id"
+
+Ref "bill_items_item_id_foreign":"items"."id" < "bill_items"."item_id"
+
+Ref "invoice_items_item_id_foreign":"items"."id" < "invoice_items"."item_id"
+
+Ref "mediables_media_id_foreign":"media"."id" < "mediables"."media_id"
+
+Ref "module_histories_module_id_foreign":"modules"."id" < "module_histories"."module_id"
+
+Ref "role_permissions_permission_id_foreign":"permissions"."id" < "role_permissions"."permission_id"
+
+Ref "user_permissions_permission_id_foreign":"permissions"."id" < "user_permissions"."permission_id"
+
+Ref "role_permissions_role_id_foreign":"roles"."id" < "role_permissions"."role_id"
+
+Ref "user_roles_role_id_foreign":"roles"."id" < "user_roles"."role_id"
+
+Ref "bill_item_taxes_tax_id_foreign":"taxes"."id" < "bill_item_taxes"."tax_id"
+
+Ref "invoice_item_taxes_tax_id_foreign":"taxes"."id" < "invoice_item_taxes"."tax_id"
+
+Ref "items_tax_id_foreign":"taxes"."id" < "items"."tax_id"
+
+Ref "contacts_user_id_foreign":"users"."id" < "contacts"."user_id"
+
+Ref "firewall_logs_user_id_foreign":"users"."id" < "firewall_logs"."user_id"
+
+Ref "sessions_user_id_foreign":"users"."id" < "sessions"."user_id"
+
+Ref "user_companies_user_id_foreign":"users"."id" < "user_companies"."user_id"
+
+Ref "user_dashboards_user_id_foreign":"users"."id" < "user_dashboards"."user_id"
+
+Ref "user_permissions_user_id_foreign":"users"."id" < "user_permissions"."user_id"
+
+Ref "user_roles_user_id_foreign":"users"."id" < "user_roles"."user_id"

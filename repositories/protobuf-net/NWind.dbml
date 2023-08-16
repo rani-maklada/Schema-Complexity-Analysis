@@ -1,0 +1,25 @@
+Table dbo.Order Details {
+  OrderID Int32 [primary key]
+  ProductID Int32 [primary key]
+  UnitPrice Decimal
+  Quantity Int16
+  Discount Single
+}
+
+Table dbo.Orders {
+  OrderID Int32 [primary key]
+  CustomerID String
+  EmployeeID Int32
+  OrderDate DateTime
+  RequiredDate DateTime
+  ShippedDate DateTime
+  ShipVia Int32
+  Freight Decimal
+  ShipName String
+  ShipAddress String
+  ShipCity String
+  ShipRegion String
+  ShipPostalCode String
+  ShipCountry String
+}
+

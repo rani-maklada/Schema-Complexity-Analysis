@@ -1,0 +1,18 @@
+Table Category {
+  ID Int32 [primary key]
+  ParentID Int32
+  Name String
+  IsFolder Boolean
+}
+
+Table Task {
+  ID Int32 [primary key]
+  CategoryID Int32
+  Title String
+  Description String
+  DueDate DateTime
+  CompletedDate DateTime
+  Reminder DateTime
+  Completed Boolean
+}
+

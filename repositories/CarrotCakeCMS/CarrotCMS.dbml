@@ -1,0 +1,476 @@
+Table dbo.aspnet_Users {
+  ApplicationId Guid
+  UserId Guid [primary key]
+  UserName String
+  LoweredUserName String
+  MobileAlias String
+  IsAnonymous Boolean
+  LastActivityDate DateTime
+}
+
+Table dbo.aspnet_Membership {
+  ApplicationId Guid
+  UserId Guid [primary key]
+  Password String
+  PasswordFormat Int32
+  PasswordSalt String
+  MobilePIN String
+  Email String
+  LoweredEmail String
+  PasswordQuestion String
+  PasswordAnswer String
+  IsApproved Boolean
+  IsLockedOut Boolean
+  CreateDate DateTime
+  LastLoginDate DateTime
+  LastPasswordChangedDate DateTime
+  LastLockoutDate DateTime
+  FailedPasswordAttemptCount Int32
+  FailedPasswordAttemptWindowStart DateTime
+  FailedPasswordAnswerAttemptCount Int32
+  FailedPasswordAnswerAttemptWindowStart DateTime
+  Comment String
+}
+
+Table dbo.carrot_UserSiteMapping {
+  UserSiteMappingID Guid [primary key]
+  UserId Guid
+  SiteID Guid
+}
+
+Table dbo.carrot_ContentTag {
+  ContentTagID Guid [primary key]
+  SiteID Guid
+  TagText String
+  TagSlug String
+  IsPublic Boolean
+}
+
+Table dbo.carrot_ContentCategory {
+  ContentCategoryID Guid [primary key]
+  SiteID Guid
+  CategoryText String
+  CategorySlug String
+  IsPublic Boolean
+}
+
+Table dbo.carrot_CategoryContentMapping {
+  CategoryContentMappingID Guid [primary key]
+  ContentCategoryID Guid
+  Root_ContentID Guid
+}
+
+Table dbo.carrot_TagContentMapping {
+  TagContentMappingID Guid [primary key]
+  ContentTagID Guid
+  Root_ContentID Guid
+}
+
+Table dbo.vw_carrot_TagCounted {
+  ContentTagID Guid
+  SiteID Guid
+  TagText String
+  IsPublic Boolean
+  TagSlug String
+  UseCount Int32
+}
+
+Table dbo.vw_carrot_CategoryCounted {
+  ContentCategoryID Guid
+  SiteID Guid
+  CategoryText String
+  IsPublic Boolean
+  CategorySlug String
+  UseCount Int32
+}
+
+Table dbo.aspnet_Roles {
+  ApplicationId Guid
+  RoleId Guid [primary key]
+  RoleName String
+  LoweredRoleName String
+  Description String
+}
+
+Table dbo.carrot_ContentType {
+  ContentTypeID Guid [primary key]
+  ContentTypeValue String
+}
+
+Table dbo.carrot_WidgetData {
+  WidgetDataID Guid [primary key]
+  Root_WidgetID Guid
+  IsLatestVersion Boolean
+  EditDate DateTime
+  ControlProperties String
+}
+
+Table dbo.carrot_Widget {
+  Root_WidgetID Guid [primary key]
+  Root_ContentID Guid
+  WidgetOrder Int32
+  PlaceholderName String
+  ControlPath String
+  WidgetActive Boolean
+  RetireDate DateTime
+  GoLiveDate DateTime
+}
+
+Table dbo.carrot_ContentComment {
+  ContentCommentID Guid [primary key]
+  Root_ContentID Guid
+  CreateDate DateTime
+  CommenterIP String
+  CommenterName String
+  CommenterEmail String
+  PostComment String
+  IsApproved Boolean
+  IsSpam Boolean
+  CommenterURL String
+}
+
+Table dbo.carrot_SerialCache {
+  SerialCacheID Guid [primary key]
+  SiteID Guid
+  ItemID Guid
+  EditUserId Guid
+  KeyType String
+  SerializedData String
+  EditDate DateTime
+}
+
+Table dbo.vw_carrot_Widget {
+  Root_WidgetID Guid
+  Root_ContentID Guid
+  WidgetOrder Int32
+  PlaceholderName String
+  ControlPath String
+  RetireDate DateTime
+  GoLiveDate DateTime
+  IsRetired Boolean
+  IsUnReleased Boolean
+  WidgetActive Boolean
+  WidgetDataID Guid
+  IsLatestVersion Boolean
+  EditDate DateTime
+  ControlProperties String
+  SiteID Guid
+}
+
+Table  {
+  ContentCount Int32
+  SiteID Guid
+  DateMonth DateTime
+  DateSlug String
+}
+
+Table dbo.vw_carrot_Comment {
+  ContentCommentID Guid
+  CreateDate DateTime
+  CommenterIP String
+  CommenterName String
+  CommenterEmail String
+  CommenterURL String
+  PostComment String
+  IsApproved Boolean
+  IsSpam Boolean
+  Root_ContentID Guid
+  SiteID Guid
+  FileName String
+  PageHead String
+  TitleBar String
+  NavMenuText String
+  ContentTypeID Guid
+  IsRetired Boolean
+  IsUnReleased Boolean
+  RetireDate DateTime
+  GoLiveDate DateTime
+}
+
+Table dbo.carrot_TrackbackQueue {
+  TrackbackQueueID Guid [primary key]
+  Root_ContentID Guid
+  TrackBackURL String
+  TrackBackResponse String
+  ModifiedDate DateTime
+  CreateDate DateTime
+  TrackedBack Boolean
+}
+
+Table dbo.vw_carrot_TrackbackQueue {
+  TrackbackQueueID Guid
+  TrackBackURL String
+  TrackBackResponse String
+  CreateDate DateTime
+  ModifiedDate DateTime
+  TrackedBack Boolean
+  Root_ContentID Guid
+  PageActive Boolean
+  SiteID Guid
+}
+
+Table dbo.vw_carrot_ContentChild {
+  SiteID Guid
+  Root_ContentID Guid
+  FileName String
+  RetireDate DateTime
+  GoLiveDate DateTime
+  IsRetired Boolean
+  IsUnReleased Boolean
+  Parent_ContentID Guid
+  ParentFileName String
+  ParentRetireDate DateTime
+  ParentGoLiveDate DateTime
+  IsParentRetired Boolean
+  IsParentUnReleased Boolean
+}
+
+Table dbo.carrot_RootContent {
+  Root_ContentID Guid [primary key]
+  SiteID Guid
+  Heartbeat_UserId Guid
+  EditHeartbeat DateTime
+  FileName String
+  PageActive Boolean
+  CreateDate DateTime
+  ContentTypeID Guid
+  PageSlug String
+  PageThumbnail String
+  GoLiveDate DateTime
+  RetireDate DateTime
+  GoLiveDateLocal DateTime
+  ShowInSiteNav Boolean
+  CreateUserId Guid
+  ShowInSiteMap Boolean
+  BlockIndex Boolean
+}
+
+Table dbo.carrot_TextWidget {
+  TextWidgetID Guid [primary key]
+  SiteID Guid
+  TextWidgetAssembly String
+  ProcessBody Boolean
+  ProcessPlainText Boolean
+  ProcessHTMLText Boolean
+  ProcessComment Boolean
+  ProcessSnippet Boolean
+}
+
+Table dbo.carrot_RootContentSnippet {
+  Root_ContentSnippetID Guid [primary key]
+  SiteID Guid
+  ContentSnippetName String
+  ContentSnippetSlug String
+  Heartbeat_UserId Guid
+  EditHeartbeat DateTime
+  CreateUserId Guid
+  CreateDate DateTime
+  GoLiveDate DateTime
+  RetireDate DateTime
+  ContentSnippetActive Boolean
+}
+
+Table dbo.carrot_ContentSnippet {
+  ContentSnippetID Guid [primary key]
+  Root_ContentSnippetID Guid
+  IsLatestVersion Boolean
+  EditUserId Guid
+  EditDate DateTime
+  ContentBody String
+}
+
+Table dbo.vw_carrot_ContentSnippet {
+  Root_ContentSnippetID Guid
+  SiteID Guid
+  ContentSnippetName String
+  ContentSnippetSlug String
+  CreateUserId Guid
+  CreateDate DateTime
+  ContentSnippetActive Boolean
+  ContentSnippetID Guid
+  IsLatestVersion Boolean
+  EditUserId Guid
+  EditDate DateTime
+  ContentBody String
+  Heartbeat_UserId Guid
+  EditHeartbeat DateTime
+  GoLiveDate DateTime
+  RetireDate DateTime
+  IsRetired Boolean
+  IsUnReleased Boolean
+  VersionCount Int32
+}
+
+Table dbo.carrot_Sites {
+  SiteID Guid [primary key]
+  MetaKeyword String
+  MetaDescription String
+  SiteName String
+  MainURL String
+  BlockIndex Boolean
+  SiteTagline String
+  SiteTitlebarPattern String
+  Blog_Root_ContentID Guid
+  Blog_FolderPath String
+  Blog_CategoryPath String
+  Blog_TagPath String
+  Blog_DatePattern String
+  TimeZone String
+  SendTrackbacks Boolean
+  AcceptTrackbacks Boolean
+  Blog_DatePath String
+  Blog_EditorPath String
+}
+
+Table dbo.carrot_UserData {
+  UserId Guid [primary key]
+  UserNickName String
+  FirstName String
+  LastName String
+  UserBio String
+}
+
+Table dbo.vw_carrot_UserData {
+  UserId Guid
+  UserNickName String
+  FirstName String
+  LastName String
+  LoweredEmail String
+  IsApproved Boolean
+  IsLockedOut Boolean
+  CreateDate DateTime
+  LastLoginDate DateTime
+  UserName String
+  LastActivityDate DateTime
+  UserBio String
+}
+
+Table dbo.vw_carrot_EditorURL {
+  SiteID Guid
+  UserId Guid
+  UserName String
+  LoweredEmail String
+  EditDate DateTime
+  UseCount Int32
+  PublicUseCount Int32
+  UserUrl String
+}
+
+Table dbo.vw_carrot_TagURL {
+  SiteID Guid
+  ContentTagID Guid
+  TagText String
+  IsPublic Boolean
+  EditDate DateTime
+  UseCount Int32
+  PublicUseCount Int32
+  TagUrl String
+}
+
+Table dbo.vw_carrot_CategoryURL {
+  SiteID Guid
+  ContentCategoryID Guid
+  CategoryText String
+  IsPublic Boolean
+  EditDate DateTime
+  UseCount Int32
+  PublicUseCount Int32
+  CategoryUrl String
+}
+
+Table dbo.carrot_Content {
+  ContentID Guid [primary key]
+  Root_ContentID Guid
+  Parent_ContentID Guid
+  IsLatestVersion Boolean
+  TitleBar String
+  NavMenuText String
+  PageHead String
+  PageText String
+  LeftPageText String
+  RightPageText String
+  NavOrder Int32
+  EditUserId Guid
+  EditDate DateTime
+  TemplateFile String
+  MetaKeyword String
+  MetaDescription String
+  CreditUserId Guid
+}
+
+Table dbo.vw_carrot_EditHistory {
+  SiteID Guid
+  ContentID Guid
+  Root_ContentID Guid
+  IsLatestVersion Boolean
+  TitleBar String
+  NavMenuText String
+  PageHead String
+  EditUserId Guid
+  CreditUserId Guid
+  EditDate DateTime
+  CreateDate DateTime
+  FileName String
+  ContentTypeID Guid
+  ContentTypeValue String
+  PageActive Boolean
+  GoLiveDate DateTime
+  RetireDate DateTime
+  EditUserName String
+  EditEmail String
+  IsLockedOut Boolean
+  UserCreateDate DateTime
+  LastLoginDate DateTime
+  LastPasswordChangedDate DateTime
+  LastLockoutDate DateTime
+  CreateUserId Guid
+  CreateUserName String
+  CreateEmail String
+}
+
+Table dbo.vw_carrot_Content {
+  Root_ContentID Guid
+  SiteID Guid
+  Heartbeat_UserId Guid
+  EditHeartbeat DateTime
+  FileName String
+  PageActive Boolean
+  ShowInSiteNav Boolean
+  ShowInSiteMap Boolean
+  BlockIndex Boolean
+  CreateUserId Guid
+  CreateDate DateTime
+  ContentID Guid
+  Parent_ContentID Guid
+  IsLatestVersion Boolean
+  TitleBar String
+  NavMenuText String
+  PageHead String
+  PageText String
+  LeftPageText String
+  RightPageText String
+  NavOrder Int32
+  EditUserId Guid
+  CreditUserId Guid
+  EditDate DateTime
+  TemplateFile String
+  MetaKeyword String
+  MetaDescription String
+  VersionCount Int32
+  ContentTypeID Guid
+  ContentTypeValue String
+  PageSlug String
+  PageThumbnail String
+  TimeZone String
+  RetireDate DateTime
+  GoLiveDate DateTime
+  GoLiveDateLocal DateTime
+  IsRetired Boolean
+  IsUnReleased Boolean
+}
+
+Table dbo.aspnet_UsersInRoles {
+  UserId Guid [primary key]
+  RoleId Guid [primary key]
+}
+

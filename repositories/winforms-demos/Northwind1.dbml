@@ -1,0 +1,185 @@
+Table Categories {
+  CategoryID Int32
+  CategoryName String
+  Description String
+  Picture Binary
+}
+
+Table Category Sales for 1995 {
+  CategoryName String
+  CategorySales Decimal
+}
+
+Table Current Product List {
+  ProductID Int32
+  ProductName String
+}
+
+Table Customers {
+  CustomerID String
+  CompanyName String
+  ContactName String
+  ContactTitle String
+  Address String
+  City String
+  Region String
+  PostalCode String
+  Country String
+  Phone String
+  Fax String
+}
+
+Table Employees {
+  EmployeeID Int32
+  LastName String
+  FirstName String
+  Title String
+  TitleOfCourtesy String
+  BirthDate DateTime
+  HireDate DateTime
+  Address String
+  City String
+  Region String
+  PostalCode String
+  Country String
+  HomePhone String
+  Extension String
+  Photo Binary
+  SmallPhoto Binary
+  Notes String
+  ReportsTo Int32
+}
+
+Table Invoices {
+  ShipName String
+  ShipAddress String
+  ShipCity String
+  ShipRegion String
+  ShipPostalCode String
+  ShipCountry String
+  CustomerID String
+  Customers.CompanyName String
+  Address String
+  City String
+  Region String
+  PostalCode String
+  Country String
+  Salesperson String
+  OrderID Int32
+  OrderDate DateTime
+  RequiredDate DateTime
+  ShippedDate DateTime
+  Shippers.CompanyName String
+  ProductID Int32
+  ProductName String
+  UnitPrice Decimal
+  Quantity Int16
+  Discount Single
+  ExtendedPrice Decimal
+  Freight Decimal
+}
+
+Table Order Details {
+  OrderID Int32
+  ProductID Int32
+  UnitPrice Decimal
+  Quantity Int16
+  Discount Single
+}
+
+Table Order Details Extended {
+  OrderID Int32
+  ProductID Int32
+  ProductName String
+  UnitPrice Decimal
+  Quantity Int16
+  Discount Single
+  ExtendedPrice Decimal
+}
+
+Table Order Subtotals {
+  OrderID Int32
+  Subtotal Decimal
+}
+
+Table Orders {
+  OrderID Int32
+  CustomerID String
+  EmployeeID Int32
+  OrderDate DateTime
+  RequiredDate DateTime
+  ShippedDate DateTime
+  ShipVia Int32
+  Freight Decimal
+  ShipName String
+  ShipAddress String
+  ShipCity String
+  ShipRegion String
+  ShipPostalCode String
+  ShipCountry String
+}
+
+Table Product Sales for 1995 {
+  CategoryName String
+  ProductName String
+  ProductSales Decimal
+}
+
+Table Products {
+  ProductID Int32
+  ProductName String
+  SupplierID Int32
+  CategoryID Int32
+  QuantityPerUnit String
+  UnitPrice Decimal
+  UnitsInStock Int16
+  UnitsOnOrder Int16
+  ReorderLevel Int16
+  Discontinued Boolean
+}
+
+Table Products Above Average Price {
+  ProductName String
+  UnitPrice Decimal
+}
+
+Table Quarterly Orders {
+  CustomerID String
+  CompanyName String
+  City String
+  Country String
+}
+
+Table Sales by Category {
+  CategoryID Int32
+  CategoryName String
+  ProductName String
+  ProductSales Decimal
+}
+
+Table Shippers {
+  ShipperID Int32
+  CompanyName String
+  Phone String
+}
+
+Table Suppliers {
+  SupplierID Int32
+  CompanyName String
+  ContactName String
+  ContactTitle String
+  Address String
+  City String
+  Region String
+  PostalCode String
+  Country String
+  Phone String
+  Fax String
+  HomePage String
+}
+
+Table Ten Most Expensive Products {
+  TenMostExpensiveProducts String
+  UnitPrice Decimal
+}
+

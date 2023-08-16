@@ -1,0 +1,14 @@
+Table dbo.Folders {
+  Id Int32 [primary key]
+  Name String
+  ParentId Int32
+  Path String
+}
+
+Table dbo.Images {
+  Id Int32 [primary key]
+  Name String
+  Image Binary
+  FolderId Int32
+}
+

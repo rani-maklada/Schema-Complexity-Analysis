@@ -1,0 +1,71 @@
+Table dbo.Resource {
+  Id Guid [primary key]
+  Name String
+  Description String
+  Type String
+}
+
+Table dbo.ResourceResourceGroup {
+  ResourceId Guid [primary key]
+  ResourceGroupId Guid [primary key]
+}
+
+Table dbo.ClientLog {
+  Timestamp DateTime [primary key]
+  ResourceId Guid [primary key]
+  Message String
+}
+
+Table dbo.ClientError {
+  Id Guid [primary key]
+  Timestamp DateTime
+  Exception String
+  UserComment String
+  ConfigDump String
+  ClientId Guid
+  UserId Guid
+}
+
+Table dbo.UserGroup {
+  Id Guid [primary key]
+  Type String
+}
+
+Table dbo.ClientType {
+  Id Guid [primary key]
+  Name String
+}
+
+Table dbo.OperatingSystem {
+  Id Guid [primary key]
+  Name String
+}
+
+Table dbo.Country {
+  Id Guid [primary key]
+  Name String
+}
+
+Table dbo.ClientConfiguration {
+  Id Guid [primary key]
+  Hash String
+  Description String
+}
+
+Table dbo.Plugin {
+  Id Guid [primary key]
+  Name String
+  StrongName String
+  Version String
+}
+
+Table dbo.ResourcePlugin {
+  ResourceId Guid [primary key]
+  PluginId Guid [primary key]
+}
+
+Table dbo.UserGroupUserGroup {
+  UserGroupId Guid [primary key]
+  UserGroupUserGroupId Guid [primary key]
+}
+

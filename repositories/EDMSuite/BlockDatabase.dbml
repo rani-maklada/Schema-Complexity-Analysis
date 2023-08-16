@@ -1,0 +1,22 @@
+Table dbo.DBBlocks {
+  blockID Int32 [primary key]
+  cluster String
+  clusterIndex Int32
+  include Boolean
+  eState Boolean
+  bState Boolean
+  rfState Boolean
+  ePlus Double
+  eMinus Double
+  blockTime DateTime
+  configBytes Binary
+}
+
+Table dbo.DBTOFChannelSets {
+  tcsID Int32 [primary key]
+  blockID Int32
+  detector String
+  FileID Guid
+  tcsData Binary
+}
+

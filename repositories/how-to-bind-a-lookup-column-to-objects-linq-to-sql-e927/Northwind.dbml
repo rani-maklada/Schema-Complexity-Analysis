@@ -1,0 +1,20 @@
+Table dbo.Products {
+  ProductID Int32 [primary key]
+  ProductName String
+  SupplierID Int32
+  CategoryID Int32
+  QuantityPerUnit String
+  UnitPrice Decimal
+  UnitsInStock Int16
+  UnitsOnOrder Int16
+  ReorderLevel Int16
+  Discontinued Boolean
+}
+
+Table dbo.Categories {
+  CategoryID Int32 [primary key]
+  CategoryName String
+  Description String
+  Picture Binary
+}
+

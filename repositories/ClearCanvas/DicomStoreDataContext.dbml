@@ -1,0 +1,97 @@
+Table Study {
+  Oid Int64 [primary key]
+  Version Binary
+  SpecificCharacterSet String
+  StudyId String
+  StudyTimeTicks Int64
+  StudyTimeRaw String
+  StudyDate DateTime
+  StudyDateRaw String
+  AccessionNumber String
+  StudyInstanceUid String
+  StudyDescription String
+  ModalitiesInStudy String
+  SopClassesInStudy String
+  NumberOfStudyRelatedSeries Int32
+  NumberOfStudyRelatedInstances Int32
+  ProcedureCodeSequenceCodingSchemeDesignator String
+  ProcedureCodeSequenceCodeValue String
+  PatientsName String
+  ReferringPhysiciansName String
+  PatientId String
+  PatientsSex String
+  PatientsBirthDate DateTime
+  PatientsBirthDateRaw String
+  PatientsBirthTimeTicks Int64
+  PatientsBirthTimeRaw String
+  PatientSpeciesDescription String
+  PatientSpeciesCodeSequenceCodingSchemeDesignator String
+  PatientSpeciesCodeSequenceCodeValue String
+  PatientSpeciesCodeSequenceCodeMeaning String
+  PatientBreedDescription String
+  PatientBreedCodeSequenceCodingSchemeDesignator String
+  PatientBreedCodeSequenceCodeValue String
+  PatientBreedCodeSequenceCodeMeaning String
+  ResponsiblePerson String
+  ResponsiblePersonRole String
+  ResponsibleOrganization String
+  SourceAETitlesInStudy String
+  StationNamesInStudy String
+  InstitutionNamesInStudy String
+  StoreTime DateTime
+  DeleteTime DateTime
+  Deleted Boolean
+  Reindex Boolean
+}
+
+Table WorkItem {
+  Oid Int64 [primary key]
+  Version Binary
+  ProcessTime DateTime
+  ScheduledTime DateTime
+  ExpirationTime DateTime
+  DeleteTime DateTime
+  RequestedTime DateTime
+  Status WorkItemStatusEnum
+  Type String
+  Priority WorkItemPriorityEnum
+  StudyInstanceUid String
+  SerializedProgress String
+  SerializedRequest String
+  FailureCount Int32
+}
+
+Table WorkItemUid {
+  Oid Int64 [primary key]
+  Version Binary
+  WorkItemOid Int64
+  SeriesInstanceUid String
+  SopInstanceUid String
+  Complete Boolean
+  FailureCount Byte
+  File String
+  Failed Boolean
+}
+
+Table Device {
+  Oid Int64 [primary key]
+  Version Binary
+  Name String
+  Description String
+  Location String
+  AETitle String
+  HostName String
+  Port Int32
+  StreamingHeaderPort Int32
+  StreamingImagePort Int32
+  IsPriorsServer Boolean
+  ExtensionData String
+}
+
+Table Configuration {
+  Oid Int64 [primary key]
+  Version Binary
+  Name String
+  Value String
+}
+

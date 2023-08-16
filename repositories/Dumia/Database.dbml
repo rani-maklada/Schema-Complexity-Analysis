@@ -1,0 +1,19 @@
+Table dbo.Inventory {
+  ProductID Int32 [primary key]
+  Quantity Int32
+}
+
+Table dbo.Product {
+  ProductID Int32 [primary key]
+  Code String
+  Name String
+  ImageUrl String
+  Price Decimal
+}
+
+Table dbo.VersionInfo {
+  Version Int64
+  AppliedOn DateTime
+  Description String
+}
+

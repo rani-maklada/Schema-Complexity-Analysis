@@ -1,0 +1,25 @@
+Table dbo.Cashflows {
+  Ticker String [primary key]
+  Date DateTime [primary key]
+  Period Char [primary key]
+  Net Income/Starting Line Decimal
+  Depreciation/Depletion Decimal
+  Amortization Decimal
+  Deferred Taxes Decimal
+  Non-Cash Items Decimal
+  Changes in Working Capital Decimal
+  Cash from Operating Activities Decimal
+  Capital Expenditures Decimal
+  Other Investing Cash Flow Items, Total Decimal
+  Cash from Investing Activities Decimal
+  Financing Cash Flow Items Decimal
+  Total Cash Dividends Paid Decimal
+  Issuance (Retirement) of Stock, Net Decimal
+  Issuance (Retirement) of Debt, Net Decimal
+  Cash from Financing Activities Decimal
+  Foreign Exchange Effects Decimal
+  Net Change in Cash Decimal
+  Cash Interest Paid, Supplemental Decimal
+  Cash Taxes Paid, Supplemental Decimal
+}
+

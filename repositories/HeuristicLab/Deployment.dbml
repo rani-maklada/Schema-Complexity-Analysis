@@ -1,0 +1,30 @@
+Table dbo.Dependencies {
+  PluginId Int64 [primary key]
+  DependencyId Int64 [primary key]
+}
+
+Table dbo.ProductPlugin {
+  ProductId Int64 [primary key]
+  PluginId Int64 [primary key]
+}
+
+Table dbo.Plugin {
+  Id Int64 [primary key]
+  Name String
+  Version String
+  ContactName String
+  ContactEmail String
+  License String
+}
+
+Table dbo.PluginPackage {
+  PluginId Int64 [primary key]
+  Data Binary
+}
+
+Table dbo.Product {
+  Id Int64 [primary key]
+  Name String
+  Version String
+}
+

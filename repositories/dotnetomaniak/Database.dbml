@@ -1,0 +1,153 @@
+Table dbo.Category {
+  Id Guid [primary key]
+  UniqueName String
+  Name String
+  CreatedAt DateTime
+  Description String
+  IsActive Boolean
+}
+
+Table dbo.UserTag {
+  UserId Guid [primary key]
+  TagId Guid [primary key]
+}
+
+Table dbo.CommentSubscribtion {
+  StoryId Guid [primary key]
+  UserId Guid [primary key]
+}
+
+Table dbo.KnownSource {
+  Url String [primary key]
+  Grade KnownSourceGrade
+}
+
+Table dbo.Story {
+  Id Guid [primary key]
+  UniqueName String
+  Title String
+  HtmlDescription String
+  TextDescription String
+  Url String
+  UrlHash String
+  CategoryId Guid
+  UserId Guid
+  IPAddress String
+  CreatedAt DateTime
+  LastActivityAt DateTime
+  ApprovedAt DateTime
+  PublishedAt DateTime
+  Rank Int32
+  LastProcessedAt DateTime
+}
+
+Table dbo.StoryComment {
+  Id Guid [primary key]
+  HtmlBody String
+  TextBody String
+  CreatedAt DateTime
+  StoryId Guid
+  UserId Guid
+  IPAddress String
+  IsOffended Boolean
+}
+
+Table dbo.StoryMarkAsSpam {
+  StoryId Guid [primary key]
+  UserId Guid [primary key]
+  IPAddress String
+  Timestamp DateTime
+}
+
+Table dbo.StoryTag {
+  StoryId Guid [primary key]
+  TagId Guid [primary key]
+}
+
+Table dbo.StoryView {
+  Id Int64 [primary key]
+  StoryId Guid
+  Timestamp DateTime
+  IPAddress String
+}
+
+Table dbo.StoryVote {
+  StoryId Guid [primary key]
+  UserId Guid [primary key]
+  IPAddress String
+  Timestamp DateTime
+}
+
+Table dbo.Tag {
+  Id Guid [primary key]
+  UniqueName String
+  Name String
+  CreatedAt DateTime
+}
+
+Table dbo.User {
+  Id Guid [primary key]
+  UserName String
+  Password String
+  Email String
+  IsActive Boolean
+  IsLockedOut Boolean
+  Role Roles
+  LastActivityAt DateTime
+  CreatedAt DateTime
+  FbId String
+}
+
+Table dbo.UserScore {
+  Id Int64 [primary key]
+  UserId Guid
+  Timestamp DateTime
+  ActionType UserAction
+  Score Decimal
+}
+
+Table dbo.UserAchievement {
+  DateAchieved DateTime
+  AchievementId Guid [primary key]
+  UserId Guid [primary key]
+  Displayed Boolean
+}
+
+Table dbo.Achievement {
+  Name String
+  Id Guid [primary key]
+  Description String
+  Type Int32
+}
+
+Table dbo.Recommendation {
+  Id Guid [primary key]
+  RecommendationLink String
+  RecommendationTitle String
+  ImageLink String
+  ImageTitle String
+  CreatedAt DateTime
+  StartTime DateTime
+  EndTime DateTime
+  Position Int32
+  Email String
+  NotificationIsSent Boolean
+  IsBanner Boolean
+}
+
+Table dbo.CommingEvent {
+  Id Guid [primary key]
+  EventLink String
+  EventName String
+  EventDate DateTime
+  EventPlace String
+  EventLead String
+  CreatedAt DateTime
+  Email String
+  IsApproved Boolean
+  IsOnline Boolean
+  GoogleEventId String
+  EventEndDate DateTime
+  EventCity String
+}
+

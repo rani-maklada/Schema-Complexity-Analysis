@@ -1,0 +1,7 @@
+Table dbo.User_Password {
+  UserName String [primary key]
+  Password String
+  PasswordHint String
+  Modifiers String
+}
+

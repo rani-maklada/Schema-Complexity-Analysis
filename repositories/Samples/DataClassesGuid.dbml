@@ -1,0 +1,12 @@
+Table dbo.guid_Products {
+  Id Guid [primary key]
+  Name String
+  Price Single
+}
+
+Table dbo.guid_ReleatedProducts {
+  Id Guid [primary key]
+  ProductIdFirst Guid
+  ProductIdSecond Guid
+}
+

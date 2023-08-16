@@ -1,0 +1,54 @@
+Table dbo.aspnet_Applications {
+  ApplicationName String
+  LoweredApplicationName String
+  ApplicationId Guid [primary key]
+  Description String
+}
+
+Table dbo.aspnet_Membership {
+  ApplicationId Guid
+  UserId Guid [primary key]
+  Password String
+  PasswordFormat Int32
+  PasswordSalt String
+  MobilePIN String
+  Email String
+  LoweredEmail String
+  PasswordQuestion String
+  PasswordAnswer String
+  IsApproved Boolean
+  IsLockedOut Boolean
+  CreateDate DateTime
+  LastLoginDate DateTime
+  LastPasswordChangedDate DateTime
+  LastLockoutDate DateTime
+  FailedPasswordAttemptCount Int32
+  FailedPasswordAttemptWindowStart DateTime
+  FailedPasswordAnswerAttemptCount Int32
+  FailedPasswordAnswerAttemptWindowStart DateTime
+  Comment String
+}
+
+Table dbo.aspnet_Roles {
+  ApplicationId Guid
+  RoleId Guid [primary key]
+  RoleName String
+  LoweredRoleName String
+  Description String
+}
+
+Table dbo.aspnet_Users {
+  ApplicationId Guid
+  UserId Guid [primary key]
+  UserName String
+  LoweredUserName String
+  MobileAlias String
+  IsAnonymous Boolean
+  LastActivityDate DateTime
+}
+
+Table dbo.aspnet_UsersInRoles {
+  UserId Guid [primary key]
+  RoleId Guid [primary key]
+}
+

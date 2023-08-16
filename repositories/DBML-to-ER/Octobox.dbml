@@ -1,0 +1,234 @@
+Table "app_installation_permissions" {
+  "id" BIGINT [not null]
+  "app_installation_id" INT
+  "user_id" INT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "app_installations" {
+  "id" BIGINT [not null]
+  "github_id" INT
+  "app_id" INT
+  "account_login" NVARCHAR(255)
+  "account_id" INT
+  "account_type" NVARCHAR(255)
+  "target_type" NVARCHAR(255)
+  "target_id" INT
+  "permission_pull_requests" NVARCHAR(255)
+  "permission_issues" NVARCHAR(255)
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "permission_statuses" NVARCHAR(255)
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "comments" {
+  "id" BIGINT [not null]
+  "subject_id" INT
+  "github_id" BIGINT
+  "author" NVARCHAR(255)
+  "author_association" NVARCHAR(255)
+  "body" NVARCHAR(255)
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "review_state" NVARCHAR(255)
+  "url" NVARCHAR(255)
+
+Indexes {
+  id [pk]
+  subject_id [name: "comments_subject_id_index"]
+}
+}
+
+Table "labels" {
+  "id" BIGINT [not null]
+  "name" NVARCHAR(255)
+  "color" NVARCHAR(255)
+  "subject_id" BIGINT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "github_id" INT
+
+Indexes {
+  id [pk]
+  name [name: "labels_name_index"]
+  subject_id [name: "labels_subject_id_index"]
+}
+}
+
+Table "notifications" {
+  "id" INT [not null]
+  "user_id" INT
+  "github_id" INT
+  "repository_id" INT
+  "repository_full_name" NVARCHAR(255)
+  "subject_title" NVARCHAR(255)
+  "subject_url" NVARCHAR(255)
+  "subject_type" NVARCHAR(255)
+  "reason" NVARCHAR(255)
+  "unread" TINYINT
+  "last_read_at" NVARCHAR(255)
+  "url" NVARCHAR(255)
+  "archived" TINYINT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "starred" TINYINT
+  "repository_owner_name" NVARCHAR(255)
+  "latest_comment_url" NVARCHAR(255)
+  "muted_at" DATETIME
+
+Indexes {
+  (user_id, github_id) [unique, name: "notifications_user_id_github_id_unique"]
+  (user_id, archived, updated_at) [name: "notifications_user_id_archived_updated_at_index"]
+  id [pk]
+  repository_full_name [name: "notifications_repository_full_name_index"]
+  subject_url [name: "notifications_subject_url_index"]
+  muted_at [name: "notifications_muted_at_index"]
+}
+}
+
+Table "pinned_searches" {
+  "id" BIGINT [not null]
+  "user_id" BIGINT
+  "query" NVARCHAR(255)
+  "name" NVARCHAR(255)
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+
+Indexes {
+  id [pk]
+  user_id [name: "pinned_searches_user_id_index"]
+}
+}
+
+Table "repositories" {
+  "id" BIGINT [not null]
+  "full_name" NVARCHAR(255) [not null]
+  "github_id" INT
+  "private" TINYINT
+  "owner" NVARCHAR(255)
+  "last_synced_at" DATETIME
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "app_installation_id" INT
+
+Indexes {
+  id [pk]
+  full_name [unique, name: "repositories_full_name_unique"]
+  github_id [name: "repositories_github_id_index"]
+}
+}
+
+Table "subjects" {
+  "id" BIGINT [not null]
+  "url" NVARCHAR(255)
+  "state" NVARCHAR(255)
+  "author" NVARCHAR(255)
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "html_url" NVARCHAR(255)
+  "assignees" NVARCHAR(255)
+  "github_id" INT
+  "repository_full_name" NVARCHAR(255)
+  "locked" TINYINT
+  "sha" NVARCHAR(255)
+  "status" NVARCHAR(255)
+  "body" NVARCHAR(255)
+  "comment_count" INT
+  "draft" TINYINT
+
+Indexes {
+  id [pk]
+  url [name: "subjects_url_index"]
+  repository_full_name [name: "subjects_repository_full_name_index"]
+}
+}
+
+Table "subscription_plans" {
+  "id" BIGINT [not null]
+  "github_id" INT
+  "name" NVARCHAR(255)
+  "description" NVARCHAR(255)
+  "monthly_price_in_cents" INT
+  "yearly_price_in_cents" INT
+  "price_model" NVARCHAR(255)
+  "has_free_trial" TINYINT
+  "unit_name" NVARCHAR(255)
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "number" INT
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "subscription_purchases" {
+  "id" BIGINT [not null]
+  "subscription_plan_id" INT
+  "account_id" INT
+  "billing_cycle" NVARCHAR(255)
+  "unit_count" INT
+  "on_free_trial" TINYINT
+  "free_trial_ends_on" DATETIME
+  "next_billing_date" DATETIME
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "oc_transactionid" INT
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "users" {
+  "id" INT [not null]
+  "github_id" INT [not null]
+  "github_login" NVARCHAR(255) [not null]
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "last_synced_at" DATETIME
+  "refresh_interval" INT
+  "api_token" NVARCHAR(255)
+  "sync_job_id" NVARCHAR(255)
+  "encrypted_access_token" NVARCHAR(255)
+  "encrypted_access_token_iv" NVARCHAR(255)
+  "encrypted_personal_access_token" NVARCHAR(255)
+  "encrypted_personal_access_token_iv" NVARCHAR(255)
+  "encrypted_app_token" NVARCHAR(255)
+  "encrypted_app_token_iv" NVARCHAR(255)
+  "theme" NVARCHAR(255)
+  "display_comments" TINYINT
+
+Indexes {
+  id [pk]
+  github_id [unique, name: "users_github_id_unique"]
+  api_token [unique, name: "users_api_token_unique"]
+}
+}
+
+Ref "app_installation_permissions_app_installation_id_foreign":"app_installations"."id" < "app_installation_permissions"."app_installation_id"
+
+Ref "repositories_app_installation_id_foreign":"app_installations"."id" < "repositories"."app_installation_id"
+
+Ref "labels_subject_id_foreign":"subjects"."id" < "labels"."subject_id"
+
+Ref "notifications_repository_id_foreign":"repositories"."id" < "notifications"."repository_id"
+
+Ref "comments_subject_id_foreign":"subjects"."id" < "comments"."subject_id"
+
+Ref "subscription_purchases_subscription_plan_id_foreign":"subscription_plans"."id" < "subscription_purchases"."subscription_plan_id"
+
+Ref "app_installation_permissions_user_id_foreign":"users"."id" < "app_installation_permissions"."user_id"
+
+Ref "notifications_user_id_foreign":"users"."id" < "notifications"."user_id"
+
+Ref "pinned_searches_user_id_foreign":"users"."id" < "pinned_searches"."user_id"

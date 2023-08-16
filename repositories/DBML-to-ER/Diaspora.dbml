@@ -1,0 +1,890 @@
+Table "account_deletions" {
+  "id" INT [not null]
+  "person_id" INT
+  "completed_at" DATETIME
+
+Indexes {
+  id [pk]
+  person_id [unique, name: "account_deletions_person_id_unique"]
+}
+}
+
+Table "account_migrations" {
+  "id" BIGINT [not null]
+  "old_person_id" INT [not null]
+  "new_person_id" INT [not null]
+  "completed_at" DATETIME
+
+Indexes {
+  (old_person_id, new_person_id) [unique, name: "account_migrations_old_person_id_new_person_id_unique"]
+  id [pk]
+  old_person_id [unique, name: "account_migrations_old_person_id_unique"]
+  new_person_id [name: "account_migrations_new_person_id_index"]
+}
+}
+
+Table "aspect_memberships" {
+  "id" INT [not null]
+  "aspect_id" INT [not null]
+  "contact_id" INT [not null]
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+
+Indexes {
+  (aspect_id, contact_id) [unique, name: "aspect_memberships_aspect_id_contact_id_unique"]
+  id [pk]
+  aspect_id [name: "aspect_memberships_aspect_id_index"]
+  contact_id [name: "aspect_memberships_contact_id_index"]
+}
+}
+
+Table "aspect_visibilities" {
+  "id" INT [not null]
+  "shareable_id" INT [not null]
+  "aspect_id" INT [not null]
+  "shareable_type" NVARCHAR(255) [not null]
+
+Indexes {
+  (shareable_id, aspect_id, shareable_type) [unique, name: "aspect_visibilities_shareable_id_aspect_id_shareable_type_unique"]
+  (shareable_id, shareable_type) [name: "aspect_visibilities_shareable_id_shareable_type_index"]
+  id [pk]
+  aspect_id [name: "aspect_visibilities_aspect_id_index"]
+}
+}
+
+Table "aspects" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "user_id" INT [not null]
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "order_id" INT
+  "post_default" TINYINT
+
+Indexes {
+  (name, user_id) [unique, name: "aspects_name_user_id_unique"]
+  id [pk]
+  user_id [name: "aspects_user_id_index"]
+}
+}
+
+Table "authorizations" {
+  "id" INT [not null]
+  "user_id" INT
+  "o_auth_application_id" INT
+  "refresh_token" NVARCHAR(255)
+  "code" NVARCHAR(255)
+  "redirect_uri" NVARCHAR(255)
+  "nonce" NVARCHAR(255)
+  "scopes" NVARCHAR(255)
+  "code_used" TINYINT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+
+Indexes {
+  id [pk]
+  user_id [name: "authorizations_user_id_index"]
+  o_auth_application_id [name: "authorizations_o_auth_application_id_index"]
+}
+}
+
+Table "blocks" {
+  "id" INT [not null]
+  "user_id" INT
+  "person_id" INT
+
+Indexes {
+  (user_id, person_id) [unique, name: "blocks_user_id_person_id_unique"]
+  id [pk]
+}
+}
+
+Table "comment_signatures" {
+  "comment_id" INT [not null]
+  "author_signature" NVARCHAR(255) [not null]
+  "signature_order_id" INT [not null]
+  "additional_data" NVARCHAR(255)
+
+Indexes {
+  comment_id [unique, name: "comment_signatures_comment_id_unique"]
+  signature_order_id [name: "comment_signatures_signature_order_id_index"]
+}
+}
+
+Table "comments" {
+  "id" INT [not null]
+  "text" NVARCHAR(255) [not null]
+  "commentable_id" INT [not null]
+  "author_id" INT [not null]
+  "guid" NVARCHAR(255) [not null]
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "likes_count" INT [not null]
+  "commentable_type" NVARCHAR(255) [not null]
+
+Indexes {
+  (commentable_id, commentable_type) [name: "comments_commentable_id_commentable_type_index"]
+  id [pk]
+  author_id [name: "comments_author_id_index"]
+  guid [unique, name: "comments_guid_unique"]
+}
+}
+
+Table "contacts" {
+  "id" INT [not null]
+  "user_id" INT [not null]
+  "person_id" INT [not null]
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "sharing" TINYINT [not null]
+  "receiving" TINYINT [not null]
+
+Indexes {
+  (user_id, person_id) [unique, name: "contacts_user_id_person_id_unique"]
+  id [pk]
+  person_id [name: "contacts_person_id_index"]
+}
+}
+
+Table "conversation_visibilities" {
+  "id" INT [not null]
+  "conversation_id" INT [not null]
+  "person_id" INT [not null]
+  "unread" INT [not null]
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+
+Indexes {
+  (conversation_id, person_id) [unique, name: "conversation_visibilities_conversation_id_person_id_unique"]
+  id [pk]
+  conversation_id [name: "conversation_visibilities_conversation_id_index"]
+  person_id [name: "conversation_visibilities_person_id_index"]
+}
+}
+
+Table "conversations" {
+  "id" INT [not null]
+  "subject" NVARCHAR(255)
+  "guid" NVARCHAR(255) [not null]
+  "author_id" INT [not null]
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+
+Indexes {
+  id [pk]
+  guid [unique, name: "conversations_guid_unique"]
+  author_id [name: "conversations_author_id_index"]
+}
+}
+
+Table "invitation_codes" {
+  "id" INT [not null]
+  "token" NVARCHAR(255)
+  "user_id" INT
+  "count" INT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "like_signatures" {
+  "like_id" INT [not null]
+  "author_signature" NVARCHAR(255) [not null]
+  "signature_order_id" INT [not null]
+  "additional_data" NVARCHAR(255)
+
+Indexes {
+  like_id [unique, name: "like_signatures_like_id_unique"]
+  signature_order_id [name: "like_signatures_signature_order_id_index"]
+}
+}
+
+Table "likes" {
+  "id" INT [not null]
+  "positive" TINYINT
+  "target_id" INT
+  "author_id" INT
+  "guid" NVARCHAR(255)
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "target_type" NVARCHAR(255) [not null]
+
+Indexes {
+  (target_id, author_id, target_type) [unique, name: "likes_target_id_author_id_target_type_unique"]
+  id [pk]
+  target_id [name: "likes_target_id_index"]
+  author_id [name: "likes_author_id_index"]
+  guid [unique, name: "likes_guid_unique"]
+}
+}
+
+Table "locations" {
+  "id" INT [not null]
+  "address" NVARCHAR(255)
+  "lat" NVARCHAR(255)
+  "lng" NVARCHAR(255)
+  "status_message_id" INT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+
+Indexes {
+  id [pk]
+  status_message_id [name: "locations_status_message_id_index"]
+}
+}
+
+Table "mentions" {
+  "id" INT [not null]
+  "mentions_container_id" INT [not null]
+  "person_id" INT [not null]
+  "mentions_container_type" NVARCHAR(255) [not null]
+
+Indexes {
+  (mentions_container_id, person_id, mentions_container_type) [unique, name: "mentions_mentions_container_id_person_id_mentions_container_type_unique"]
+  (mentions_container_id, mentions_container_type) [name: "mentions_mentions_container_id_mentions_container_type_index"]
+  id [pk]
+  person_id [name: "mentions_person_id_index"]
+}
+}
+
+Table "messages" {
+  "id" INT [not null]
+  "conversation_id" INT [not null]
+  "author_id" INT [not null]
+  "guid" NVARCHAR(255) [not null]
+  "text" NVARCHAR(255) [not null]
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+
+Indexes {
+  id [pk]
+  conversation_id [name: "messages_conversation_id_index"]
+  author_id [name: "messages_author_id_index"]
+  guid [unique, name: "messages_guid_unique"]
+}
+}
+
+Table "notification_actors" {
+  "id" INT [not null]
+  "notification_id" INT
+  "person_id" INT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+
+Indexes {
+  (notification_id, person_id) [unique, name: "notification_actors_notification_id_person_id_unique"]
+  id [pk]
+  notification_id [name: "notification_actors_notification_id_index"]
+  person_id [name: "notification_actors_person_id_index"]
+}
+}
+
+Table "notifications" {
+  "id" INT [not null]
+  "target_type" NVARCHAR(255)
+  "target_id" INT
+  "recipient_id" INT [not null]
+  "unread" TINYINT [not null]
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "type" NVARCHAR(255)
+  "guid" NVARCHAR(255)
+
+Indexes {
+  (target_type, target_id) [name: "notifications_target_type_target_id_index"]
+  id [pk]
+  target_id [name: "notifications_target_id_index"]
+  recipient_id [name: "notifications_recipient_id_index"]
+  guid [unique, name: "notifications_guid_unique"]
+}
+}
+
+Table "o_auth_access_tokens" {
+  "id" INT [not null]
+  "authorization_id" INT
+  "token" NVARCHAR(255)
+  "expires_at" DATETIME
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+
+Indexes {
+  id [pk]
+  authorization_id [name: "o_auth_access_tokens_authorization_id_index"]
+  token [unique, name: "o_auth_access_tokens_token_unique"]
+}
+}
+
+Table "o_auth_applications" {
+  "id" INT [not null]
+  "user_id" INT
+  "client_id" NVARCHAR(255)
+  "client_secret" NVARCHAR(255)
+  "client_name" NVARCHAR(255)
+  "redirect_uris" NVARCHAR(255)
+  "response_types" NVARCHAR(255)
+  "grant_types" NVARCHAR(255)
+  "application_type" NVARCHAR(255)
+  "contacts" NVARCHAR(255)
+  "logo_uri" NVARCHAR(255)
+  "client_uri" NVARCHAR(255)
+  "policy_uri" NVARCHAR(255)
+  "tos_uri" NVARCHAR(255)
+  "sector_identifier_uri" NVARCHAR(255)
+  "token_endpoint_auth_method" NVARCHAR(255)
+  "jwks" NVARCHAR(255)
+  "jwks_uri" NVARCHAR(255)
+  "ppid" TINYINT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+
+Indexes {
+  id [pk]
+  user_id [name: "o_auth_applications_user_id_index"]
+  client_id [unique, name: "o_auth_applications_client_id_unique"]
+}
+}
+
+Table "o_embed_caches" {
+  "id" INT [not null]
+  "url" NVARCHAR(255) [not null]
+  "data" NVARCHAR(255) [not null]
+
+Indexes {
+  id [pk]
+  url [name: "o_embed_caches_url_index"]
+}
+}
+
+Table "open_graph_caches" {
+  "id" INT [not null]
+  "title" NVARCHAR(255)
+  "ob_type" NVARCHAR(255)
+  "image" NVARCHAR(255)
+  "url" NVARCHAR(255)
+  "description" NVARCHAR(255)
+  "video_url" NVARCHAR(255)
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "participations" {
+  "id" INT [not null]
+  "guid" NVARCHAR(255)
+  "target_id" INT
+  "target_type" NVARCHAR(255) [not null]
+  "author_id" INT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "count" INT [not null]
+
+Indexes {
+  (target_id, target_type, author_id) [unique, name: "participations_target_id_target_type_author_id_unique"]
+  id [pk]
+  guid [name: "participations_guid_index"]
+  author_id [name: "participations_author_id_index"]
+}
+}
+
+Table "people" {
+  "id" INT [not null]
+  "guid" NVARCHAR(255) [not null]
+  "diaspora_handle" NVARCHAR(255) [not null]
+  "serialized_public_key" NVARCHAR(255) [not null]
+  "owner_id" INT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "closed_account" TINYINT
+  "fetch_status" INT
+  "pod_id" INT
+
+Indexes {
+  id [pk]
+  guid [unique, name: "people_guid_unique"]
+  diaspora_handle [unique, name: "people_diaspora_handle_unique"]
+  owner_id [unique, name: "people_owner_id_unique"]
+  pod_id [name: "people_pod_id_index"]
+}
+}
+
+Table "photos" {
+  "id" INT [not null]
+  "author_id" INT [not null]
+  "public" TINYINT [not null]
+  "guid" NVARCHAR(255) [not null]
+  "pending" TINYINT [not null]
+  "text" NVARCHAR(255)
+  "remote_photo_path" NVARCHAR(255)
+  "remote_photo_name" NVARCHAR(255)
+  "random_string" NVARCHAR(255)
+  "processed_image" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "unprocessed_image" NVARCHAR(255)
+  "status_message_guid" NVARCHAR(255)
+  "height" INT
+  "width" INT
+
+Indexes {
+  id [pk]
+  author_id [name: "photos_author_id_index"]
+  guid [unique, name: "photos_guid_unique"]
+  status_message_guid [name: "photos_status_message_guid_index"]
+}
+}
+
+Table "pods" {
+  "id" INT [not null]
+  "host" NVARCHAR(255) [not null]
+  "ssl" TINYINT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "status" INT
+  "checked_at" DATETIME
+  "offline_since" DATETIME
+  "response_time" INT
+  "software" NVARCHAR(255)
+  "error" NVARCHAR(255)
+  "port" INT
+  "blocked" TINYINT
+  "scheduled_check" TINYINT [not null]
+
+Indexes {
+  (host, port) [unique, name: "pods_host_port_unique"]
+  id [pk]
+  status [name: "pods_status_index"]
+  checked_at [name: "pods_checked_at_index"]
+  offline_since [name: "pods_offline_since_index"]
+}
+}
+
+Table "poll_answers" {
+  "id" INT [not null]
+  "answer" NVARCHAR(255) [not null]
+  "poll_id" INT [not null]
+  "guid" NVARCHAR(255)
+  "vote_count" INT
+
+Indexes {
+  id [pk]
+  poll_id [name: "poll_answers_poll_id_index"]
+  guid [unique, name: "poll_answers_guid_unique"]
+}
+}
+
+Table "poll_participation_signatures" {
+  "poll_participation_id" INT [not null]
+  "author_signature" NVARCHAR(255) [not null]
+  "signature_order_id" INT [not null]
+  "additional_data" NVARCHAR(255)
+
+Indexes {
+  poll_participation_id [unique, name: "poll_participation_signatures_poll_participation_id_unique"]
+  signature_order_id [name: "poll_participation_signatures_signature_order_id_index"]
+}
+}
+
+Table "poll_participations" {
+  "id" INT [not null]
+  "poll_answer_id" INT [not null]
+  "author_id" INT [not null]
+  "poll_id" INT [not null]
+  "guid" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (author_id, poll_id) [unique, name: "poll_participations_author_id_poll_id_unique"]
+  id [pk]
+  guid [unique, name: "poll_participations_guid_unique"]
+}
+}
+
+Table "polls" {
+  "id" INT [not null]
+  "question" NVARCHAR(255) [not null]
+  "status_message_id" INT [not null]
+  "status" TINYINT
+  "guid" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  status_message_id [name: "polls_status_message_id_index"]
+  guid [unique, name: "polls_guid_unique"]
+}
+}
+
+Table "posts" {
+  "id" INT [not null]
+  "author_id" INT [not null]
+  "public" TINYINT [not null]
+  "guid" NVARCHAR(255) [not null]
+  "type" NVARCHAR(255) [not null]
+  "text" NVARCHAR(255)
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "provider_display_name" NVARCHAR(255)
+  "root_guid" NVARCHAR(255)
+  "likes_count" INT
+  "comments_count" INT
+  "o_embed_cache_id" INT
+  "reshares_count" INT
+  "interacted_at" DATETIME
+  "tweet_id" NVARCHAR(255)
+  "open_graph_cache_id" INT
+  "tumblr_ids" NVARCHAR(255)
+
+Indexes {
+  (author_id, root_guid) [unique, name: "posts_author_id_root_guid_unique"]
+  (id, type) [name: "posts_id_type_index"]
+  (id, created_at) [name: "posts_id_created_at_index"]
+  id [pk]
+  author_id [name: "posts_author_id_index"]
+  guid [unique, name: "posts_guid_unique"]
+  root_guid [name: "posts_root_guid_index"]
+}
+}
+
+Table "ppid" {
+  "id" INT [not null]
+  "o_auth_application_id" INT
+  "user_id" INT
+  "guid" NVARCHAR(255)
+  "identifier" NVARCHAR(255)
+
+Indexes {
+  id [pk]
+  o_auth_application_id [name: "ppid_o_auth_application_id_index"]
+  user_id [name: "ppid_user_id_index"]
+}
+}
+
+Table "profiles" {
+  "id" INT [not null]
+  "diaspora_handle" NVARCHAR(255)
+  "first_name" NVARCHAR(255)
+  "last_name" NVARCHAR(255)
+  "image_url" NVARCHAR(255)
+  "image_url_small" NVARCHAR(255)
+  "image_url_medium" NVARCHAR(255)
+  "birthday" DATE
+  "gender" NVARCHAR(255)
+  "bio" NVARCHAR(255)
+  "searchable" TINYINT [not null]
+  "person_id" INT [not null]
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "location" NVARCHAR(255)
+  "full_name" NVARCHAR(255)
+  "nsfw" TINYINT
+  "public_details" TINYINT
+
+Indexes {
+  (searchable, full_name) [name: "profiles_searchable_full_name_index"]
+  id [pk]
+  person_id [name: "profiles_person_id_index"]
+  full_name [name: "profiles_full_name_index"]
+}
+}
+
+Table "references" {
+  "id" BIGINT [not null]
+  "source_id" INT [not null]
+  "source_type" NVARCHAR(255) [not null]
+  "target_id" INT [not null]
+  "target_type" NVARCHAR(255) [not null]
+
+Indexes {
+  (source_id, source_type, target_id, target_type) [unique, name: "references_source_id_source_type_target_id_target_type_unique"]
+  (source_id, source_type) [name: "references_source_id_source_type_index"]
+  id [pk]
+}
+}
+
+Table "reports" {
+  "id" INT [not null]
+  "item_id" INT [not null]
+  "item_type" NVARCHAR(255) [not null]
+  "reviewed" TINYINT
+  "text" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "user_id" INT [not null]
+
+Indexes {
+  id [pk]
+  item_id [name: "reports_item_id_index"]
+}
+}
+
+Table "roles" {
+  "id" INT [not null]
+  "person_id" INT
+  "name" NVARCHAR(255)
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+
+Indexes {
+  (person_id, name) [unique, name: "roles_person_id_name_unique"]
+  id [pk]
+}
+}
+
+Table "services" {
+  "id" INT [not null]
+  "type" NVARCHAR(255) [not null]
+  "user_id" INT [not null]
+  "uid" NVARCHAR(255)
+  "access_token" NVARCHAR(255)
+  "access_secret" NVARCHAR(255)
+  "nickname" NVARCHAR(255)
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+
+Indexes {
+  (type, uid) [name: "services_type_uid_index"]
+  id [pk]
+  user_id [name: "services_user_id_index"]
+}
+}
+
+Table "share_visibilities" {
+  "id" INT [not null]
+  "shareable_id" INT [not null]
+  "hidden" TINYINT [not null]
+  "shareable_type" NVARCHAR(255) [not null]
+  "user_id" INT [not null]
+
+Indexes {
+  (shareable_id, shareable_type, user_id) [unique, name: "share_visibilities_shareable_id_shareable_type_user_id_unique"]
+  (shareable_id, hidden, shareable_type, user_id) [name: "share_visibilities_shareable_id_hidden_shareable_type_user_id_index"]
+  id [pk]
+  shareable_id [name: "share_visibilities_shareable_id_index"]
+  user_id [name: "share_visibilities_user_id_index"]
+}
+}
+
+Table "signature_orders" {
+  "id" INT [not null]
+  "order" NVARCHAR(255) [not null]
+
+Indexes {
+  id [pk]
+  order [unique, name: "signature_orders_order_unique"]
+}
+}
+
+Table "simple_captcha_data" {
+  "id" INT [not null]
+  "key" NVARCHAR(255)
+  "value" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  key [name: "simple_captcha_data_key_index"]
+}
+}
+
+Table "tag_followings" {
+  "id" INT [not null]
+  "tag_id" INT [not null]
+  "user_id" INT [not null]
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+
+Indexes {
+  (tag_id, user_id) [unique, name: "tag_followings_tag_id_user_id_unique"]
+  id [pk]
+  tag_id [name: "tag_followings_tag_id_index"]
+  user_id [name: "tag_followings_user_id_index"]
+}
+}
+
+Table "taggings" {
+  "id" INT [not null]
+  "tag_id" INT
+  "taggable_id" INT
+  "taggable_type" NVARCHAR(255)
+  "tagger_id" INT
+  "tagger_type" NVARCHAR(255)
+  "context" NVARCHAR(255)
+  "created_at" DATETIME
+
+Indexes {
+  (tag_id, taggable_id, taggable_type) [unique, name: "taggings_tag_id_taggable_id_taggable_type_unique"]
+  (taggable_id, taggable_type, context) [name: "taggings_taggable_id_taggable_type_context_index"]
+  id [pk]
+  tag_id [name: "taggings_tag_id_index"]
+  created_at [name: "taggings_created_at_index"]
+}
+}
+
+Table "tags" {
+  "id" INT [not null]
+  "name" NVARCHAR(255)
+  "taggings_count" INT
+
+Indexes {
+  id [pk]
+  name [unique, name: "tags_name_unique"]
+}
+}
+
+Table "user_preferences" {
+  "id" INT [not null]
+  "email_type" NVARCHAR(255)
+  "user_id" INT
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+
+Indexes {
+  (email_type, user_id) [name: "user_preferences_email_type_user_id_index"]
+  id [pk]
+}
+}
+
+Table "users" {
+  "id" INT [not null]
+  "username" NVARCHAR(255) [not null]
+  "serialized_private_key" NVARCHAR(255)
+  "getting_started" TINYINT [not null]
+  "disable_mail" TINYINT [not null]
+  "language" NVARCHAR(255)
+  "email" NVARCHAR(255) [not null]
+  "encrypted_password" NVARCHAR(255) [not null]
+  "reset_password_token" NVARCHAR(255)
+  "remember_created_at" DATETIME
+  "sign_in_count" INT
+  "current_sign_in_at" DATETIME
+  "last_sign_in_at" DATETIME
+  "current_sign_in_ip" NVARCHAR(255)
+  "last_sign_in_ip" NVARCHAR(255)
+  "created_at" DATETIME [not null]
+  "updated_at" DATETIME [not null]
+  "invited_by_id" INT
+  "authentication_token" NVARCHAR(255)
+  "unconfirmed_email" NVARCHAR(255)
+  "confirm_email_token" NVARCHAR(255)
+  "locked_at" DATETIME
+  "show_community_spotlight_in_stream" TINYINT [not null]
+  "auto_follow_back" TINYINT
+  "auto_follow_back_aspect_id" INT
+  "hidden_shareables" NVARCHAR(255)
+  "reset_password_sent_at" DATETIME
+  "last_seen" DATETIME
+  "remove_after" DATETIME
+  "export" NVARCHAR(255)
+  "exported_at" DATETIME
+  "exporting" TINYINT
+  "strip_exif" TINYINT
+  "exported_photos_file" NVARCHAR(255)
+  "exported_photos_at" DATETIME
+  "exporting_photos" TINYINT
+  "color_theme" NVARCHAR(255)
+  "post_default_public" TINYINT
+  "consumed_timestep" INT
+  "otp_required_for_login" TINYINT
+  "otp_backup_codes" NVARCHAR(255)
+  "plain_otp_secret" NVARCHAR(255)
+
+Indexes {
+  id [pk]
+  username [unique, name: "users_username_unique"]
+  email [unique, name: "users_email_unique"]
+  authentication_token [unique, name: "users_authentication_token_unique"]
+}
+}
+
+Ref "account_deletions_person_id_foreign":"people"."id" < "account_deletions"."person_id"
+
+Ref "account_migrations_old_person_id_foreign":"people"."id" < "account_migrations"."old_person_id"
+
+Ref "account_migrations_new_person_id_foreign":"people"."id" < "account_migrations"."new_person_id"
+
+Ref "aspect_memberships_aspect_id_foreign":"aspects"."id" < "aspect_memberships"."aspect_id"
+
+Ref "aspect_memberships_contact_id_foreign":"contacts"."id" < "aspect_memberships"."contact_id"
+
+Ref "aspect_visibilities_aspect_id_foreign":"aspects"."id" < "aspect_visibilities"."aspect_id"
+
+Ref "authorizations_user_id_foreign":"users"."id" < "authorizations"."user_id"
+
+Ref "authorizations_o_auth_application_id_foreign":"o_auth_applications"."id" < "authorizations"."o_auth_application_id"
+
+Ref "blocks_user_id_foreign":"users"."id" < "blocks"."user_id"
+
+Ref "comment_signatures_comment_id_foreign":"comments"."id" < "comment_signatures"."comment_id"
+
+Ref "comment_signatures_signature_order_id_foreign":"signature_orders"."id" < "comment_signatures"."signature_order_id"
+
+Ref "comments_author_id_foreign":"people"."id" < "comments"."author_id"
+
+Ref "contacts_person_id_foreign":"people"."id" < "contacts"."person_id"
+
+Ref "conversation_visibilities_conversation_id_foreign":"conversations"."id" < "conversation_visibilities"."conversation_id"
+
+Ref "conversation_visibilities_person_id_foreign":"people"."id" < "conversation_visibilities"."person_id"
+
+Ref "conversations_author_id_foreign":"people"."id" < "conversations"."author_id"
+
+Ref "like_signatures_like_id_foreign":"likes"."id" < "like_signatures"."like_id"
+
+Ref "like_signatures_signature_order_id_foreign":"signature_orders"."id" < "like_signatures"."signature_order_id"
+
+Ref "likes_author_id_foreign":"people"."id" < "likes"."author_id"
+
+Ref "mentions_person_id_foreign":"people"."id" < "mentions"."person_id"
+
+Ref "messages_conversation_id_foreign":"conversations"."id" < "messages"."conversation_id"
+
+Ref "messages_author_id_foreign":"people"."id" < "messages"."author_id"
+
+Ref "notification_actors_notification_id_foreign":"notifications"."id" < "notification_actors"."notification_id"
+
+Ref "o_auth_access_tokens_authorization_id_foreign":"authorizations"."id" < "o_auth_access_tokens"."authorization_id"
+
+Ref "o_auth_applications_user_id_foreign":"users"."id" < "o_auth_applications"."user_id"
+
+Ref "blocks_person_id_foreign":"people"."id" < "blocks"."person_id"
+
+Ref "people_pod_id_foreign":"pods"."id" < "people"."pod_id"
+
+Ref "photos_author_id_foreign":"people"."id" < "photos"."author_id"
+
+Ref "poll_answers_poll_id_foreign":"polls"."id" < "poll_answers"."poll_id"
+
+Ref "poll_participation_signatures_poll_participation_id_foreign":"poll_participations"."id" < "poll_participation_signatures"."poll_participation_id"
+
+Ref "poll_participation_signatures_signature_order_id_foreign":"signature_orders"."id" < "poll_participation_signatures"."signature_order_id"
+
+Ref "posts_author_id_foreign":"people"."id" < "posts"."author_id"
+
+Ref "ppid_o_auth_application_id_foreign":"o_auth_applications"."id" < "ppid"."o_auth_application_id"
+
+Ref "ppid_user_id_foreign":"users"."id" < "ppid"."user_id"
+
+Ref "profiles_person_id_foreign":"people"."id" < "profiles"."person_id"
+
+Ref "roles_person_id_foreign":"people"."id" < "roles"."person_id"
+
+Ref "services_user_id_foreign":"users"."id" < "services"."user_id"
+
+Ref "share_visibilities_user_id_foreign":"users"."id" < "share_visibilities"."user_id"
+
+Ref "tag_followings_user_id_foreign":"users"."id" < "tag_followings"."user_id"
+
+Ref "taggings_tagger_id_foreign":"users"."id" < "taggings"."tagger_id"
+
+Ref "tag_followings_tag_id_foreign":"tags"."id" < "tag_followings"."tag_id"
+
+Ref "taggings_tag_id_foreign":"tags"."id" < "taggings"."tag_id"
+
+Ref "user_preferences_user_id_foreign":"users"."id" < "user_preferences"."user_id"

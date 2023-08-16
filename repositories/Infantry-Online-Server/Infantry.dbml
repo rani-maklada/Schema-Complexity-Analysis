@@ -1,0 +1,232 @@
+Table dbo.player {
+  id Int64 [primary key]
+  alias Int64
+  zone Int64
+  squad Int64
+  stats Int64
+  permission Int16
+  lastAccess DateTime
+  inventory Binary
+  skills Binary
+  banner Byte[]
+}
+
+Table dbo.stats {
+  id Int64 [primary key]
+  zone Int64
+  cash Int32
+  experience Int32
+  experienceTotal Int32
+  kills Int32
+  deaths Int32
+  killPoints Int32
+  deathPoints Int32
+  assistPoints Int32
+  bonusPoints Int32
+  vehicleKills Int32
+  vehicleDeaths Int32
+  playSeconds Int32
+  zonestat1 Int32
+  zonestat2 Int32
+  zonestat3 Int32
+  zonestat4 Int32
+  zonestat5 Int32
+  zonestat6 Int32
+  zonestat7 Int32
+  zonestat8 Int32
+  zonestat9 Int32
+  zonestat10 Int32
+  zonestat11 Int32
+  zonestat12 Int32
+}
+
+Table dbo.account {
+  id Int64 [primary key]
+  name String
+  password String
+  ticket String
+  dateCreated DateTime
+  lastAccess DateTime
+  permission Int32
+  email String
+  IPAddress String
+}
+
+Table dbo.zone {
+  id Int64 [primary key]
+  password String
+  name String
+  description String
+  notice String
+  active Int16
+  ip String
+  port Int32
+  advanced Int16
+}
+
+Table dbo.alias {
+  id Int64 [primary key]
+  account Int64
+  name String
+  creation DateTime
+  IPAddress String
+  timeplayed Int64
+  lastAccess DateTime
+}
+
+Table dbo.squad {
+  id Int64 [primary key]
+  name String
+  password String
+  dateCreated DateTime
+  owner Int64
+  zone Int64
+}
+
+Table dbo.ban {
+  id Int64 [primary key]
+  type Int16
+  account Int64
+  IPAddress String
+  uid1 Int64
+  uid2 Int64
+  uid3 Int64
+  created DateTime
+  expires DateTime
+  zone Int64
+  reason String
+  name String
+}
+
+Table dbo.history {
+  id Int64 [primary key]
+  sender String
+  recipient String
+  zone String
+  arena String
+  command String
+  date DateTime
+}
+
+Table dbo.squadstats {
+  id Int64 [primary key]
+  kills Int32
+  deaths Int32
+  points Int32
+  wins Int32
+  losses Int32
+  rating Int32
+  season Int32
+  squad Int64
+}
+
+Table dbo.squadmatch {
+  id Int64 [primary key]
+  dateBegin DateTime
+  dateEnd DateTime
+  squad1 Int64
+  squad2 Int64
+  winner Int64
+  loser Int64
+}
+
+Table dbo.helpcall {
+  id Int64 [primary key]
+  sender String
+  arena String
+  zone String
+  date DateTime
+  reason String
+}
+
+Table dbo.statsDaily {
+  id Int64 [primary key]
+  zone Int64
+  experience Int32
+  experienceTotal Int32
+  kills Int32
+  deaths Int32
+  killPoints Int32
+  deathPoints Int32
+  assistPoints Int32
+  bonusPoints Int32
+  vehicleKills Int32
+  vehicleDeaths Int32
+  playSeconds Int32
+  date DateTime
+}
+
+Table dbo.statsWeekly {
+  id Int64 [primary key]
+  zone Int64
+  experience Int32
+  experienceTotal Int32
+  kills Int32
+  deaths Int32
+  killPoints Int32
+  deathPoints Int32
+  assistPoints Int32
+  bonusPoints Int32
+  vehicleKills Int32
+  vehicleDeaths Int32
+  playSeconds Int32
+  date DateTime
+}
+
+Table dbo.statsMonthly {
+  id Int64 [primary key]
+  zone Int64
+  experience Int32
+  experienceTotal Int32
+  kills Int32
+  deaths Int32
+  killPoints Int32
+  deathPoints Int32
+  assistPoints Int32
+  bonusPoints Int32
+  vehicleKills Int32
+  vehicleDeaths Int32
+  playSeconds Int32
+  date DateTime
+}
+
+Table dbo.statsYearly {
+  id Int64 [primary key]
+  zone Int64
+  experience Int32
+  experienceTotal Int32
+  kills Int32
+  deaths Int32
+  killPoints Int32
+  deathPoints Int32
+  assistPoints Int32
+  bonusPoints Int32
+  vehicleKills Int32
+  vehicleDeaths Int32
+  playSeconds Int32
+  date DateTime
+}
+
+Table dbo.animatedBanner {
+  id Int64 [primary key]
+  frames_per_second Int32
+  alias Int64
+  zone Int64
+}
+
+Table dbo.animatedBannerFrame {
+  id Int64 [primary key]
+  animated_banner_id Int64
+  banner_data Byte[]
+  cur_frame_num Int32
+}
+
+Table dbo.resetToken {
+  id Int64 [primary key]
+  account Int64
+  name String
+  token String
+  expireDate DateTime
+  tokenUsed Boolean
+}
+

@@ -1,0 +1,10 @@
+Table dbo.tblFAQ {
+  FaqID Guid [primary key]
+  Question String
+  Answer String
+  IsActive Boolean
+  SortOrder Int32
+  dtStamp DateTime
+  SiteID Guid
+}
+

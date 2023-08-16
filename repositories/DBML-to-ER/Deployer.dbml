@@ -1,0 +1,436 @@
+Table "cache" {
+  "key" NVARCHAR(255) [not null]
+  "value" NVARCHAR(255) [not null]
+  "expiration" INT [not null]
+
+Indexes {
+  key [unique, name: "cache_key_unique"]
+}
+}
+
+Table "channels" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "type" NVARCHAR(255) [not null]
+  "config" NVARCHAR(255) [not null]
+  "on_deployment_success" TINYINT [not null]
+  "on_deployment_failure" TINYINT [not null]
+  "on_link_down" TINYINT [not null]
+  "on_link_still_down" TINYINT [not null]
+  "on_link_recovered" TINYINT [not null]
+  "on_heartbeat_missing" TINYINT [not null]
+  "on_heartbeat_still_missing" TINYINT [not null]
+  "on_heartbeat_recovered" TINYINT [not null]
+  "project_id" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+
+Indexes {
+  id [pk]
+  project_id [name: "channels_project_id_index"]
+}
+}
+
+Table "check_urls" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "url" NVARCHAR(255) [not null]
+  "project_id" INT [not null]
+  "period" INT [not null]
+  "match" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+  "missed" INT [not null]
+  "last_seen" DATETIME
+  "status" INT [not null]
+  "last_log" NVARCHAR(255)
+
+Indexes {
+  id [pk]
+  project_id [name: "check_urls_project_id_index"]
+  period [name: "check_urls_period_index"]
+}
+}
+
+Table "command_server" {
+  "id" INT [not null]
+  "command_id" INT [not null]
+  "server_id" INT [not null]
+
+Indexes {
+  id [pk]
+  command_id [name: "command_server_command_id_index"]
+  server_id [name: "command_server_server_id_index"]
+}
+}
+
+Table "commands" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "user" NVARCHAR(255)
+  "script" NVARCHAR(255) [not null]
+  "order" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+  "optional" TINYINT [not null]
+  "default_on" TINYINT [not null]
+  "target_id" INT [not null]
+  "target_type" NVARCHAR(255) [not null]
+  "step" INT [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "config_files" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "path" NVARCHAR(255) [not null]
+  "content" NVARCHAR(255) [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+  "target_id" INT [not null]
+  "target_type" NVARCHAR(255) [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "deploy_steps" {
+  "id" INT [not null]
+  "deployment_id" INT [not null]
+  "stage" INT [not null]
+  "command_id" INT
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  deployment_id [name: "deploy_steps_deployment_id_index"]
+  command_id [name: "deploy_steps_command_id_index"]
+}
+}
+
+Table "deployments" {
+  "id" INT [not null]
+  "committer" NVARCHAR(255)
+  "committer_email" NVARCHAR(255)
+  "commit" NVARCHAR(255)
+  "project_id" INT [not null]
+  "user_id" INT
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+  "started_at" DATETIME
+  "finished_at" DATETIME
+  "reason" NVARCHAR(255)
+  "branch" NVARCHAR(255) [not null]
+  "is_webhook" TINYINT [not null]
+  "source" NVARCHAR(255)
+  "build_url" NVARCHAR(255)
+  "status" INT [not null]
+
+Indexes {
+  id [pk]
+  project_id [name: "deployments_project_id_index"]
+  user_id [name: "deployments_user_id_index"]
+}
+}
+
+Table "failed_jobs" {
+  "id" INT [not null]
+  "connection" NVARCHAR(255) [not null]
+  "queue" NVARCHAR(255) [not null]
+  "payload" NVARCHAR(255) [not null]
+  "exception" NVARCHAR(255) [not null]
+  "failed_at" DATETIME [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "groups" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+  "order" INT [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "heartbeats" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "hash" NVARCHAR(255) [not null]
+  "interval" INT [not null]
+  "project_id" INT [not null]
+  "missed" INT [not null]
+  "last_activity" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+  "status" INT [not null]
+
+Indexes {
+  id [pk]
+  hash [unique, name: "heartbeats_hash_unique"]
+  project_id [name: "heartbeats_project_id_index"]
+}
+}
+
+Table "jobs" {
+  "id" BIGINT [not null]
+  "queue" NVARCHAR(255) [not null]
+  "payload" NVARCHAR(255) [not null]
+  "attempts" TINYINT [not null]
+  "reserved_at" INT
+  "available_at" INT [not null]
+  "created_at" INT [not null]
+
+Indexes {
+  (queue, reserved_at) [name: "jobs_queue_reserved_at_index"]
+  id [pk]
+}
+}
+
+Table "migrations" {
+  "id" INT [not null]
+  "migration" NVARCHAR(255) [not null]
+  "batch" INT [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "notifications" {
+  "id" NCHAR(255) [not null]
+  "type" NVARCHAR(255) [not null]
+  "notifiable_id" INT [not null]
+  "notifiable_type" NVARCHAR(255) [not null]
+  "data" NVARCHAR(255) [not null]
+  "read_at" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  (notifiable_id, notifiable_type) [name: "notifications_notifiable_id_notifiable_type_index"]
+  id [pk]
+}
+}
+
+Table "password_resets" {
+  "email" NVARCHAR(255) [not null]
+  "token" NVARCHAR(255) [not null]
+  "created_at" DATETIME
+
+Indexes {
+  email [name: "password_resets_email_index"]
+  token [name: "password_resets_token_index"]
+}
+}
+
+Table "project_user" {
+  "id" INT [not null]
+  "project_id" INT [not null]
+  "user_id" INT [not null]
+  "role" NVARCHAR(255) [not null]
+
+Indexes {
+  (project_id, user_id) [unique, name: "project_user_project_id_user_id_unique"]
+  id [pk]
+  user_id [name: "project_user_user_id_index"]
+}
+}
+
+Table "projects" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "repository" NVARCHAR(255) [not null]
+  "hash" NVARCHAR(255) [not null]
+  "branch" NVARCHAR(255) [not null]
+  "private_key" NVARCHAR(255) [not null]
+  "public_key" NVARCHAR(255) [not null]
+  "group_id" INT [not null]
+  "builds_to_keep" INT [not null]
+  "url" NVARCHAR(255)
+  "build_url" NVARCHAR(255)
+  "last_run" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+  "last_mirrored" DATETIME
+  "allow_other_branch" TINYINT [not null]
+  "include_dev" TINYINT [not null]
+  "status" INT [not null]
+  "is_mirroring" TINYINT [not null]
+
+Indexes {
+  id [pk]
+  group_id [name: "projects_group_id_index"]
+}
+}
+
+Table "refs" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "is_tag" TINYINT [not null]
+  "project_id" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+  project_id [name: "refs_project_id_index"]
+}
+}
+
+Table "server_logs" {
+  "id" INT [not null]
+  "server_id" INT [not null]
+  "deploy_step_id" INT [not null]
+  "output" NVARCHAR(255)
+  "started_at" DATETIME
+  "finished_at" DATETIME
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "status" INT [not null]
+
+Indexes {
+  id [pk]
+  server_id [name: "server_logs_server_id_index"]
+  deploy_step_id [name: "server_logs_deploy_step_id_index"]
+}
+}
+
+Table "servers" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "ip_address" NVARCHAR(255) [not null]
+  "user" NVARCHAR(255) [not null]
+  "path" NVARCHAR(255) [not null]
+  "project_id" INT [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+  "deploy_code" TINYINT [not null]
+  "port" INT [not null]
+  "order" INT [not null]
+  "status" INT [not null]
+  "connect_log" NVARCHAR(255)
+
+Indexes {
+  id [pk]
+  project_id [name: "servers_project_id_index"]
+}
+}
+
+Table "shared_files" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "file" NVARCHAR(255) [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+  "target_id" INT [not null]
+  "target_type" NVARCHAR(255) [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "templates" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+
+Indexes {
+  id [pk]
+}
+}
+
+Table "users" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "email" NVARCHAR(255) [not null]
+  "password" NVARCHAR(255) [not null]
+  "is_admin" TINYINT [not null]
+  "remember_token" NVARCHAR(255)
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+  "email_token" NVARCHAR(255)
+  "avatar" NVARCHAR(255)
+  "language" NVARCHAR(255)
+  "skin" NVARCHAR(255)
+  "google2fa_secret" NVARCHAR(255)
+  "scheme" NVARCHAR(255)
+
+Indexes {
+  id [pk]
+  email [unique, name: "users_email_unique"]
+  email_token [name: "users_email_token_index"]
+}
+}
+
+Table "variables" {
+  "id" INT [not null]
+  "name" NVARCHAR(255) [not null]
+  "value" NVARCHAR(255) [not null]
+  "created_at" DATETIME
+  "updated_at" DATETIME
+  "deleted_at" DATETIME
+  "target_id" INT [not null]
+  "target_type" NVARCHAR(255) [not null]
+
+Indexes {
+  id [pk]
+}
+}
+
+Ref "channels_project_id_foreign":"projects"."id" < "channels"."project_id"
+
+Ref "check_urls_project_id_foreign":"projects"."id" < "check_urls"."project_id"
+
+Ref "command_server_command_id_foreign":"commands"."id" < "command_server"."command_id"
+
+Ref "command_server_server_id_foreign":"servers"."id" < "command_server"."server_id"
+
+Ref "deploy_steps_deployment_id_foreign":"deployments"."id" < "deploy_steps"."deployment_id"
+
+Ref "deploy_steps_command_id_foreign":"commands"."id" < "deploy_steps"."command_id"
+
+Ref "deployments_project_id_foreign":"projects"."id" < "deployments"."project_id"
+
+Ref "deployments_user_id_foreign":"users"."id" < "deployments"."user_id"
+
+Ref "heartbeats_project_id_foreign":"projects"."id" < "heartbeats"."project_id"
+
+Ref "notifications_notifiable_id_foreign":"users"."id" < "notifications"."notifiable_id"
+
+Ref "project_user_project_id_foreign":"projects"."id" < "project_user"."project_id"
+
+Ref "project_user_user_id_foreign":"users"."id" < "project_user"."user_id"
+
+Ref "projects_group_id_foreign":"groups"."id" < "projects"."group_id"
+
+Ref "refs_project_id_foreign":"projects"."id" < "refs"."project_id"
+
+Ref "server_logs_server_id_foreign":"servers"."id" < "server_logs"."server_id"
+
+Ref "server_logs_deploy_step_id_foreign":"deploy_steps"."id" < "server_logs"."deploy_step_id"
+
+Ref "servers_project_id_foreign":"projects"."id" < "servers"."project_id"
