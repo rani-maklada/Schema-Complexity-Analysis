@@ -23,19 +23,21 @@ def count_blue_rectangles(image_path):
     filtered_contours = [c for c in contours if cv2.contourArea(c) > min_contour_area]
     return len(filtered_contours)
 
-repositories_dir = 'repositories'
 
-for repo_name in os.listdir(repositories_dir):
-    repo_path = os.path.join(repositories_dir, repo_name)
-    if os.path.isdir(repo_path):
-        tables_count = sum([count_blue_rectangles(img_path) for img_path in load_images_from_folder(repo_path)])
-        
-        summary_path = os.path.join(repo_path, 'summary.txt')
-        if os.path.exists(summary_path):
-            with open(summary_path, 'a') as summary_file:  # 'a' mode for appending
-                summary_file.write(f'Number of Tables: {tables_count}\n')
-            print(f"Updated summary file with tables count for repository: {repo_name}")
-        else:
-            print(f"summary.txt not found for repository: {repo_name}")
+if __name__ == '__main__':
+    repositories_dir = 'repositories'
 
-print("Number of tables added to summaries for all repositories.")
+    for repo_name in os.listdir(repositories_dir):
+        repo_path = os.path.join(repositories_dir, repo_name)
+        if os.path.isdir(repo_path):
+            tables_count = sum([count_blue_rectangles(img_path) for img_path in load_images_from_folder(repo_path)])
+            
+            summary_path = os.path.join(repo_path, 'summary.txt')
+            if os.path.exists(summary_path):
+                with open(summary_path, 'a') as summary_file:  # 'a' mode for appending
+                    summary_file.write(f'Number of Tables: {tables_count}\n')
+                print(f"Updated summary file with tables count for repository: {repo_name}")
+            else:
+                print(f"summary.txt not found for repository: {repo_name}")
+
+    print("Number of tables added to summaries for all repositories.")
