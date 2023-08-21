@@ -1,304 +1,35 @@
-Repository: old-wpf-blog
-Number of Commits: 81
+Owner: DevExpress-Examples
+Repository: how-to-implement-crud-operations-using-dxgrid-and-linq-to-sql-classes-e3864
+Number of Commits: 26
 Number of Issues: 0
+Number of Tables: 2
 
-Repository: mp-onlinevideos2
-Number of Commits: 4622
-Number of Issues: 9
 
-Repository: how-to-bind-a-lookup-column-to-objects-linq-to-sql-e927
-Number of Commits: 8
-Number of Issues: 0
-
-Repository: fhcms
-Number of Commits: 157
-Number of Issues: 0
-
-Repository: DBMLDocs
-Number of Commits: 55
-Number of Issues: 4
-
-Repository: webix-netmvc-demo
-Number of Commits: 4
-Number of Issues: 0
-
-Repository: sms-maintenance
-Number of Commits: 273
-Number of Issues: 0
-
-Repository: Infantry-Online-Server
-Number of Commits: 520
-Number of Issues: 0
-
-Repository: dbt-workshop
-Number of Commits: 20
-Number of Issues: 1
-
-Repository: docs
-Number of Commits: 23702
-Number of Issues: 1177
-
-Repository: MSBuildExtensionPack
-Number of Commits: 950
-Number of Issues: 20
-
-Repository: openboxes
-Number of Commits: 10133
-Number of Issues: 225
-
-Repository: EDMSuite
-Number of Commits: 1285
-Number of Issues: 1
-
-Repository: extensions-for-asp-net-mvc-discontinued
-Number of Commits: 4
-Number of Issues: 1
-
-Repository: whisper-chain-be
-Number of Commits: 264
-Number of Issues: 1
-
-Repository: Colibri
-Number of Commits: 11
-Number of Issues: 8
-
-Repository: HiveWeb-scratch
-Number of Commits: 49
-Number of Issues: 5
-
-Repository: griffin-app-opensource
-Number of Commits: 5
-Number of Issues: 15
-
-Repository: nft-or-not-be
-Number of Commits: 239
-Number of Issues: 0
-
-Repository: dotnetomaniak
-Number of Commits: 576
-Number of Issues: 16
-
+Owner: DotNetOpenAuth
 Repository: DotNetOpenAuth.Samples
 Number of Commits: 43
 Number of Issues: 13
+Number of Tables: 5
 
-Repository: Dumia
-Number of Commits: 21
-Number of Issues: 1
 
-Repository: gafalag-api
-Number of Commits: 147
-Number of Issues: 0
-
-Repository: how-to-implement-crud-operations-using-xtragrid-and-linqservermodesource-e4498
-Number of Commits: 17
-Number of Issues: 0
-
-Repository: simplebank
-Number of Commits: 121
-Number of Issues: 6
-
-Repository: ChatGPT-Admin-Web
-Number of Commits: 686
-Number of Issues: 10
-
-Repository: ecto_erd
-Number of Commits: 56
-Number of Issues: 4
-
-Repository: Samples
-Number of Commits: 160
-Number of Issues: 95
-
-Repository: surfspots-guide-dev
-Number of Commits: 174
-Number of Issues: 4
-
-Repository: winforms-demos
-Number of Commits: 100
-Number of Issues: 1
-
-Repository: ClearCanvas
-Number of Commits: 1621
-Number of Issues: 170
-
-Repository: 101repo
-Number of Commits: 2336
-Number of Issues: 50
-
-Repository: SC502_2C2023_G5
-Number of Commits: 125
-Number of Issues: 5
-
-Repository: 6-3-5-Brainwriter
-Number of Commits: 256
-Number of Issues: 7
-
-Repository: xaml-sdk
-Number of Commits: 278
-Number of Issues: 4
-
-Repository: suomisf
-Number of Commits: 785
-Number of Issues: 16
-
-Repository: xsiteable
-Number of Commits: 271
-Number of Issues: 46
-
-Repository: Virtualization
-Number of Commits: 3
-Number of Issues: 2
-
-Repository: ElementsSamples
-Number of Commits: 163
-Number of Issues: 3
-
-Repository: MakeClassSchedule
-Number of Commits: 10
-Number of Issues: 0
-
-Repository: Christofel
-Number of Commits: 988
-Number of Issues: 15
-
-Repository: ov-class09-fp
-Number of Commits: 323
-Number of Issues: 4
-
-Repository: ARTIST
-Number of Commits: 423
-Number of Issues: 0
-
-Repository: engine
-Number of Commits: 292
-Number of Issues: 26
-
-Repository: rtmis
-Number of Commits: 2583
-Number of Issues: 20
-
-Repository: samples
-Number of Commits: 5035
-Number of Issues: 65
-
-Repository: realworld-kotlin-springboot-jdbc
-Number of Commits: 509
-Number of Issues: 22
-
-Repository: spark
-Number of Commits: 838
-Number of Issues: 8
-
-Repository: protobuf-net
-Number of Commits: 1354
-Number of Issues: 463
-
-Repository: CarrotCakeCMS-MVC
-Number of Commits: 296
-Number of Issues: 0
-
-Repository: visualstudio-docs
-Number of Commits: 50562
-Number of Issues: 69
-
-Repository: phaenonet-client
-Number of Commits: 523
-Number of Issues: 43
-
+Owner: ninianne98
 Repository: CarrotCakeCMS
 Number of Commits: 648
 Number of Issues: 0
+Number of Tables: 13
 
-Repository: DBML-to-ER
-Number of Commits: 3
-Number of Issues: 0
 
-Repository: synk
-Number of Commits: 937
-Number of Issues: 9
-
-Repository: vaahcms
-Number of Commits: 2926
-Number of Issues: 3
-
+Owner: softwaretechnik-berlin
 Repository: dbml-renderer
 Number of Commits: 157
 Number of Issues: 9
+Number of Tables: 81
 
-Repository: Identity-Wallet
-Number of Commits: 5992
-Number of Issues: 169
 
-Repository: classes
-Number of Commits: 317
-Number of Issues: 4
+Owner: webreinvent
+Repository: vaahcms
+Number of Commits: 2985
+Number of Issues: 3
+Number of Tables: 22
 
-Repository: FloorPlan
-Number of Commits: 151
-Number of Issues: 5
-
-Repository: Zero-K-Infrastructure
-Number of Commits: 9518
-Number of Issues: 372
-
-Repository: subgraph
-Number of Commits: 82
-Number of Issues: 1
-
-Repository: directus-schema-presets
-Number of Commits: 15
-Number of Issues: 0
-
-Repository: retired2021-helloapp
-Number of Commits: 353
-Number of Issues: 1
-
-Repository: mvcturbine
-Number of Commits: 245
-Number of Issues: 4
-
-Repository: AsyncRPG
-Number of Commits: 32
-Number of Issues: 0
-
-Repository: ceno11
-Number of Commits: 39
-Number of Issues: 21
-
-Repository: our-food
-Number of Commits: 46
-Number of Issues: 0
-
-Repository: SimpleCQRS
-Number of Commits: 211
-Number of Issues: 13
-
-Repository: FinanceAI
-Number of Commits: 2
-Number of Issues: 0
-
-Repository: examples5.ext.net
-Number of Commits: 319
-Number of Issues: 11
-
-Repository: WorkflowEngine.NET
-Number of Commits: 181
-Number of Issues: 67
-
-Repository: full-service
-Number of Commits: 701
-Number of Issues: 20
-
-Repository: HeuristicLab
-Number of Commits: 8914
-Number of Issues: 353
-
-Repository: CountryAPI
-Number of Commits: 65
-Number of Issues: 7
-
-Repository: waltz
-Number of Commits: 11000
-Number of Issues: 320
 

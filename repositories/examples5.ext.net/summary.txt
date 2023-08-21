@@ -1,3 +1,0 @@
-Number of Commits: 319
-Number of Issues: 11
-Number of Tables: 13

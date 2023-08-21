@@ -21,7 +21,7 @@ do
   github_url="https://github.com/$owner/$repo.git"
 
   # Clone the project into the target directory
-  git clone "$github_url" "$target_directory/$repo"
+  git clone "$github_url" "$target_directory/$owner/$repo"
 
   echo "Cloned project: $repo"
   echo "Full repo path: $owner/$repo"

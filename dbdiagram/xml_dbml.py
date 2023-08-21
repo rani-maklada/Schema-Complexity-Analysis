@@ -50,7 +50,7 @@ def convert_dbml(xml_content):
 
     return dbml_content
 
-def process_repository_directory(directory_path):
+def main(directory_path):
     for root, _, files in os.walk(directory_path):
         for file in files:
             if file.endswith('.dbml'):
@@ -75,4 +75,4 @@ def process_repository_directory(directory_path):
 
 if __name__ == "__main__":
     repository_dir = "repositories"
-    process_repository_directory(repository_dir)
+    main(repository_dir)

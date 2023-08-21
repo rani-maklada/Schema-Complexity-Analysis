@@ -98,7 +98,7 @@ def create_temp_sql_file(sql_output):
         print("Error creating temporary SQL file:", e)
         return None
 
-def process_repository_directory(directory_path):
+def main(directory_path):
     print(f"Processing repository directory: {directory_path}\n")
     for root, _, files in os.walk(directory_path):
         for file in files:
@@ -107,5 +107,5 @@ def process_repository_directory(directory_path):
                 automate_dbdiagram_and_upload(dbml_file_path)
 
 if __name__ == "__main__":
-    repository_dir = "repositories"
-    process_repository_directory(repository_dir)
+    repository_dir = "sample"
+    main(repository_dir)

@@ -223,7 +223,7 @@ class Gitana():
                             repo_name, git_repo_path, before_date, import_type, references, processes,
                             self._config, self._log_path)
         git2db.extract()
-        # git2db.extract_demo()
+
 
     def update_git_data(self, db_name, project_name, repo_name, git_repo_path, before_date=None, processes=5):
         """

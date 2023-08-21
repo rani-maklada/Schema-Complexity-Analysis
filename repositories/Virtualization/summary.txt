@@ -1,3 +1,0 @@
-Number of Commits: 3
-Number of Issues: 2
-Number of Tables: 1

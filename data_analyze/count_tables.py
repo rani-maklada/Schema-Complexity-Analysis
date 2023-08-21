@@ -24,20 +24,23 @@ def count_blue_rectangles(image_path):
     return len(filtered_contours)
 
 
-if __name__ == '__main__':
-    repositories_dir = 'repositories'
+def main(repositories_dir):
+    for owner_name in os.listdir(repositories_dir):
+        owner_path = os.path.join(repositories_dir, owner_name)  # Get the full path for owner
+        if os.path.isdir(owner_path):  # Ensure that owner_path is a directory before listing
+            for repo_name in os.listdir(owner_path):
+                repo_path = os.path.join(owner_path, repo_name)  # Corrected repo_path
+                if os.path.isdir(repo_path):
+                    tables_count = sum([count_blue_rectangles(img_path) for img_path in load_images_from_folder(repo_path)])
 
-    for repo_name in os.listdir(repositories_dir):
-        repo_path = os.path.join(repositories_dir, repo_name)
-        if os.path.isdir(repo_path):
-            tables_count = sum([count_blue_rectangles(img_path) for img_path in load_images_from_folder(repo_path)])
-            
-            summary_path = os.path.join(repo_path, 'summary.txt')
-            if os.path.exists(summary_path):
-                with open(summary_path, 'a') as summary_file:  # 'a' mode for appending
-                    summary_file.write(f'Number of Tables: {tables_count}\n')
-                print(f"Updated summary file with tables count for repository: {repo_name}")
-            else:
-                print(f"summary.txt not found for repository: {repo_name}")
-
+                    summary_path = os.path.join(repo_path, 'summary.txt')
+                    if os.path.exists(summary_path):
+                        with open(summary_path, 'a') as summary_file:  # 'a' mode for appending
+                            summary_file.write(f'Number of Tables: {tables_count}\n')
+                        print(f"Updated summary file with tables count for repository: {repo_name}")
+                    else:
+                        print(f"summary.txt not found for repository: {repo_name}")
     print("Number of tables added to summaries for all repositories.")
+    
+if __name__ == '__main__':
+    main()

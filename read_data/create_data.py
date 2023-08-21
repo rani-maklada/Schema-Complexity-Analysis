@@ -2,7 +2,7 @@ import pandas as pd
 
 errors = []
 
-def run_code():
+def main():
     # Processing the data with more checks
     with open('summary_all_repos.txt', 'r') as file:
         lines = file.readlines()
@@ -11,17 +11,17 @@ def run_code():
         while i < len(lines):
             try:
                 # Ensure the current line starts with "Repository:"
-                if lines[i].startswith("Repository:"):
-                    repo_name = lines[i].split(':')[-1].strip()
-                    
+                if lines[i].startswith("Owner:"):
+                    owner_name = lines[i].split(':')[-1].strip()
+                    repo_name = lines[i+1].split(':')[-1].strip()
                     # Try to extract the values for commits, issues, and tables
-                    num_commits = int(lines[i+1].split(':')[-1].strip())
-                    num_issues = int(lines[i+2].split(':')[-1].strip())
-                    num_tables = int(lines[i+3].split(':')[-1].strip())
-                    data.append((repo_name, num_commits, num_issues, num_tables))
+                    num_commits = int(lines[i+2].split(':')[-1].strip())
+                    num_issues = int(lines[i+3].split(':')[-1].strip())
+                    num_tables = int(lines[i+4].split(':')[-1].strip())
+                    data.append((owner_name,repo_name, num_commits, num_issues, num_tables))
                     
                     # Jump to the next repository data
-                    i += 6
+                    i += 7
                 else:
                     errors.append(f"Unexpected line format at line {i+1}: {lines[i]}")
                     i += 1  # Move to the next line to prevent infinite loops
@@ -30,7 +30,7 @@ def run_code():
                 i += 1  # Move to the next line to prevent infinite loops
 
     # Create a DataFrame from the data
-    df = pd.DataFrame(data, columns=['Repository', 'Number of Commits', 'Number of Issues', 'Number of Tables'])
+    df = pd.DataFrame(data, columns=['Owner','Repository', 'Number of Commits', 'Number of Issues', 'Number of Tables'])
 
     # Filter out the repositories with 0 tables (this step is optional based on your requirements)
     df = df[df['Number of Tables'] > 0]
@@ -46,4 +46,4 @@ def run_code():
             print(error)
 
 if __name__ == '__main__':
-    run_code()
+    main()

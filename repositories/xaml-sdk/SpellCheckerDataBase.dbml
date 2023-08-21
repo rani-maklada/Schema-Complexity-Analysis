@@ -1,5 +1,0 @@
-Table dbo.Word {
-  string String
-  id Int32 [primary key]
-}
-

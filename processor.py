@@ -3,11 +3,12 @@ from data_analyze.analyze_all import main as analyze_all
 from data_analyze.analyze_correlation import main as analyze_correlation
 from data_analyze.analyze_multi import main as analyze_multi
 
-def run_all():
+
+def main():
     create_data()
     analyze_all()
     analyze_correlation()
     analyze_multi()
     
 if __name__ == '__main__':
-    run_all()
+    main()

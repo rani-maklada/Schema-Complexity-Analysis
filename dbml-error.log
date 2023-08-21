@@ -781,3 +781,570 @@ SyntaxError: Expected Table Group, comment, end of input, enum, project, referen
     at exportHandler (c:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
 {"start":{"offset":0,"line":1,"column":1},"end":{"offset":1,"line":1,"column":2}}
 
+2023-08-16T06:59:16.047Z
+SyntaxError: You have a syntax error at "YUSample.dbml" line 5 column 16. Expected " ", comment, or newline but "," found.
+    at c:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:45:13
+    at Array.forEach (<anonymous>)
+    at generate (c:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (c:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+    at Object.dbml2sql (c:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\index.js:19:23)
+    at Object.<anonymous> (c:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\bin\dbml2sql.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1103:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1157:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+
+ROOT_ERROR:
+SyntaxError: Expected " ", comment, or newline but "," found.
+    at peg$buildStructuredError (c:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:1090:12)
+    at Object.peg$parse [as parse] (c:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:6903:11)
+    at Function.parseDBMLToJSON (c:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:43:37)
+    at Function.parse (c:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:67:32)
+    at Object._export [as export] (c:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\export\index.js:11:37)
+    at c:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:69
+    at c:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:42:23
+    at Array.forEach (<anonymous>)
+    at generate (c:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (c:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+{"start":{"offset":91,"line":5,"column":16},"end":{"offset":92,"line":5,"column":17}}
+
+2023-08-20T15:10:04.953Z
+SyntaxError: You have a syntax error at "Northwind.dbml" line 89 column 17. Expected " ", "[", "as", "{", comment, or whitespace but "D" found.
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:45:13
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+    at Object.dbml2sql (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\index.js:19:23)
+    at Object.<anonymous> (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\bin\dbml2sql.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1103:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1157:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+
+ROOT_ERROR:
+SyntaxError: Expected " ", "[", "as", "{", comment, or whitespace but "D" found.
+    at peg$buildStructuredError (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:1090:12)
+    at Object.peg$parse [as parse] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:6903:11)
+    at Function.parseDBMLToJSON (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:43:37)
+    at Function.parse (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:67:32)
+    at Object._export [as export] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\export\index.js:11:37)
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:69
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:42:23
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+{"start":{"offset":1676,"line":89,"column":17},"end":{"offset":1677,"line":89,"column":18}}
+
+2023-08-20T15:10:42.022Z
+SyntaxError: You have a syntax error at "Northwind.sdf.dbml" line 58 column 13. Expected " ", "[", "as", "{", comment, or whitespace but "D" found.
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:45:13
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+    at Object.dbml2sql (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\index.js:19:23)
+    at Object.<anonymous> (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\bin\dbml2sql.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1103:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1157:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+
+ROOT_ERROR:
+SyntaxError: Expected " ", "[", "as", "{", comment, or whitespace but "D" found.
+    at peg$buildStructuredError (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:1090:12)
+    at Object.peg$parse [as parse] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:6903:11)
+    at Function.parseDBMLToJSON (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:43:37)
+    at Function.parse (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:67:32)
+    at Object._export [as export] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\export\index.js:11:37)
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:69
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:42:23
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+{"start":{"offset":1071,"line":58,"column":13},"end":{"offset":1072,"line":58,"column":14}}
+
+2023-08-20T15:11:24.989Z
+SyntaxError: You have a syntax error at "Northwind1.dbml" line 8 column 16. Expected " ", "[", "as", "{", comment, or whitespace but "S" found.
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:45:13
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+    at Object.dbml2sql (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\index.js:19:23)
+    at Object.<anonymous> (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\bin\dbml2sql.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1103:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1157:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+
+ROOT_ERROR:
+SyntaxError: Expected " ", "[", "as", "{", comment, or whitespace but "S" found.
+    at peg$buildStructuredError (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:1090:12)
+    at Object.peg$parse [as parse] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:6903:11)
+    at Function.parseDBMLToJSON (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:43:37)
+    at Function.parse (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:67:32)
+    at Object._export [as export] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\export\index.js:11:37)
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:69
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:42:23
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+{"start":{"offset":123,"line":8,"column":16},"end":{"offset":124,"line":8,"column":17}}
+
+2023-08-20T15:12:04.519Z
+SyntaxError: You have a syntax error at "NWind.dbml" line 2 column 15. Expected " ", "[", PK, comment, newline, or unique but "I" found.
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:45:13
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+    at Object.dbml2sql (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\index.js:19:23)
+    at Object.<anonymous> (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\bin\dbml2sql.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1103:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1157:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+
+ROOT_ERROR:
+SyntaxError: Expected " ", "[", PK, comment, newline, or unique but "I" found.
+    at peg$buildStructuredError (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:1090:12)
+    at Object.peg$parse [as parse] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:6903:11)
+    at Function.parseDBMLToJSON (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:43:37)
+    at Function.parse (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:67:32)
+    at Object._export [as export] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\export\index.js:11:37)
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:69
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:42:23
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+{"start":{"offset":34,"line":2,"column":15},"end":{"offset":35,"line":2,"column":16}}
+
+2023-08-20T15:12:54.348Z
+SyntaxError: You have a syntax error at "PortfolioManagerDB.dbml" line 44 column 3. Expected "note", "note:", "}", comment, indexes, valid name, or whitespace but "%" found.
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:45:13
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+    at Object.dbml2sql (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\index.js:19:23)
+    at Object.<anonymous> (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\bin\dbml2sql.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1103:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1157:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+
+ROOT_ERROR:
+SyntaxError: Expected "note", "note:", "}", comment, indexes, valid name, or whitespace but "%" found.
+    at peg$buildStructuredError (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:1090:12)
+    at Object.peg$parse [as parse] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:6903:11)
+    at Function.parseDBMLToJSON (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:43:37)
+    at Function.parse (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:67:32)
+    at Object._export [as export] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\export\index.js:11:37)
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:69
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:42:23
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+{"start":{"offset":791,"line":44,"column":3},"end":{"offset":792,"line":44,"column":4}}
+
+2023-08-20T15:23:47.604Z
+SyntaxError: You have a syntax error at "Northwind.dbml" line 89 column 17. Expected " ", "[", "as", "{", comment, or whitespace but "D" found.
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:45:13
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+    at Object.dbml2sql (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\index.js:19:23)
+    at Object.<anonymous> (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\bin\dbml2sql.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1103:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1157:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+
+ROOT_ERROR:
+SyntaxError: Expected " ", "[", "as", "{", comment, or whitespace but "D" found.
+    at peg$buildStructuredError (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:1090:12)
+    at Object.peg$parse [as parse] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:6903:11)
+    at Function.parseDBMLToJSON (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:43:37)
+    at Function.parse (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:67:32)
+    at Object._export [as export] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\export\index.js:11:37)
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:69
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:42:23
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+{"start":{"offset":1676,"line":89,"column":17},"end":{"offset":1677,"line":89,"column":18}}
+
+2023-08-20T15:24:08.954Z
+SyntaxError: You have a syntax error at "Northwind.sdf.dbml" line 58 column 13. Expected " ", "[", "as", "{", comment, or whitespace but "D" found.
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:45:13
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+    at Object.dbml2sql (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\index.js:19:23)
+    at Object.<anonymous> (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\bin\dbml2sql.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1103:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1157:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+
+ROOT_ERROR:
+SyntaxError: Expected " ", "[", "as", "{", comment, or whitespace but "D" found.
+    at peg$buildStructuredError (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:1090:12)
+    at Object.peg$parse [as parse] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:6903:11)
+    at Function.parseDBMLToJSON (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:43:37)
+    at Function.parse (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:67:32)
+    at Object._export [as export] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\export\index.js:11:37)
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:69
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:42:23
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+{"start":{"offset":1071,"line":58,"column":13},"end":{"offset":1072,"line":58,"column":14}}
+
+2023-08-20T15:24:29.804Z
+SyntaxError: You have a syntax error at "Northwind1.dbml" line 8 column 16. Expected " ", "[", "as", "{", comment, or whitespace but "S" found.
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:45:13
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+    at Object.dbml2sql (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\index.js:19:23)
+    at Object.<anonymous> (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\bin\dbml2sql.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1103:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1157:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+
+ROOT_ERROR:
+SyntaxError: Expected " ", "[", "as", "{", comment, or whitespace but "S" found.
+    at peg$buildStructuredError (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:1090:12)
+    at Object.peg$parse [as parse] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:6903:11)
+    at Function.parseDBMLToJSON (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:43:37)
+    at Function.parse (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:67:32)
+    at Object._export [as export] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\export\index.js:11:37)
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:69
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:42:23
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+{"start":{"offset":123,"line":8,"column":16},"end":{"offset":124,"line":8,"column":17}}
+
+2023-08-20T15:24:51.074Z
+SyntaxError: You have a syntax error at "NWind.dbml" line 2 column 15. Expected " ", "[", PK, comment, newline, or unique but "I" found.
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:45:13
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+    at Object.dbml2sql (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\index.js:19:23)
+    at Object.<anonymous> (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\bin\dbml2sql.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1103:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1157:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+
+ROOT_ERROR:
+SyntaxError: Expected " ", "[", PK, comment, newline, or unique but "I" found.
+    at peg$buildStructuredError (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:1090:12)
+    at Object.peg$parse [as parse] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:6903:11)
+    at Function.parseDBMLToJSON (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:43:37)
+    at Function.parse (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:67:32)
+    at Object._export [as export] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\export\index.js:11:37)
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:69
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:42:23
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+{"start":{"offset":34,"line":2,"column":15},"end":{"offset":35,"line":2,"column":16}}
+
+2023-08-20T15:25:44.175Z
+SyntaxError: You have a syntax error at "PortfolioManagerDB.dbml" line 44 column 3. Expected "note", "note:", "}", comment, indexes, valid name, or whitespace but "%" found.
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:45:13
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+    at Object.dbml2sql (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\index.js:19:23)
+    at Object.<anonymous> (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\bin\dbml2sql.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1103:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1157:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+
+ROOT_ERROR:
+SyntaxError: Expected "note", "note:", "}", comment, indexes, valid name, or whitespace but "%" found.
+    at peg$buildStructuredError (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:1090:12)
+    at Object.peg$parse [as parse] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:6903:11)
+    at Function.parseDBMLToJSON (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:43:37)
+    at Function.parse (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:67:32)
+    at Object._export [as export] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\export\index.js:11:37)
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:69
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:42:23
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+{"start":{"offset":791,"line":44,"column":3},"end":{"offset":792,"line":44,"column":4}}
+
+2023-08-20T16:04:13.326Z
+SyntaxError: You have a syntax error at "DataClasses.dbml" line 31 column 8. Expected " ", schema name, or valid name but "{" found.
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:45:13
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+    at Object.dbml2sql (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\index.js:19:23)
+    at Object.<anonymous> (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\bin\dbml2sql.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1103:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1157:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+
+ROOT_ERROR:
+SyntaxError: Expected " ", schema name, or valid name but "{" found.
+    at peg$buildStructuredError (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:1090:12)
+    at Object.peg$parse [as parse] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:6903:11)
+    at Function.parseDBMLToJSON (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:43:37)
+    at Function.parse (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:67:32)
+    at Object._export [as export] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\export\index.js:11:37)
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:69
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:42:23
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+{"start":{"offset":590,"line":31,"column":8},"end":{"offset":591,"line":31,"column":9}}
+
+2023-08-20T16:05:20.152Z
+SyntaxError: You have a syntax error at "CarrotCMS.dbml" line 160 column 8. Expected " ", schema name, or valid name but "{" found.
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:45:13
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+    at Object.dbml2sql (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\index.js:19:23)
+    at Object.<anonymous> (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\bin\dbml2sql.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1103:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1157:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+
+ROOT_ERROR:
+SyntaxError: Expected " ", schema name, or valid name but "{" found.
+    at peg$buildStructuredError (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:1090:12)
+    at Object.peg$parse [as parse] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:6903:11)
+    at Function.parseDBMLToJSON (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:43:37)
+    at Function.parse (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:67:32)
+    at Object._export [as export] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\export\index.js:11:37)
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:69
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:42:23
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+{"start":{"offset":3319,"line":160,"column":8},"end":{"offset":3320,"line":160,"column":9}}
+
+2023-08-20T16:07:36.412Z
+SyntaxError: You have a syntax error at "advanced_dbml.dbml" line 17 column 7. Expected " " but ":" found.
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:45:13
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+    at Object.dbml2sql (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\index.js:19:23)
+    at Object.<anonymous> (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\bin\dbml2sql.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1103:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1157:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+
+ROOT_ERROR:
+SyntaxError: Expected " " but ":" found.
+    at peg$buildStructuredError (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:1090:12)
+    at Object.peg$parse [as parse] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:6903:11)
+    at Function.parseDBMLToJSON (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:43:37)
+    at Function.parse (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:67:32)
+    at Object._export [as export] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\export\index.js:11:37)
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:69
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:42:23
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+{"start":{"offset":320,"line":17,"column":7},"end":{"offset":321,"line":17,"column":8}}
+
+2023-08-20T16:08:00.773Z
+SyntaxError: You have a syntax error at "aliases.dbml" line 11 column 15. Can't find table "dates"."d"
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:45:13
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+    at Object.dbml2sql (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\index.js:19:23)
+    at Object.<anonymous> (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\bin\dbml2sql.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1103:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1157:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+
+ROOT_ERROR:
+Error: Can't find table "dates"."d"
+    at Endpoint.error (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\model_structure\element.js:55:13)
+    at new Endpoint (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\model_structure\endpoint.js:59:13)
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\model_structure\ref.js:71:31
+    at Array.forEach (<anonymous>)
+    at Ref.processEndpoints (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\model_structure\ref.js:70:20)
+    at new Ref (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\model_structure\ref.js:58:11)
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\model_structure\database.js:133:28
+    at Array.forEach (<anonymous>)
+    at Database.processSchemaElements (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\model_structure\database.js:107:16)
+    at new Database (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\model_structure\database.js:68:11)
+{"start":{"offset":161,"line":11,"column":15},"end":{"offset":178,"line":11,"column":32}}
+
+2023-08-20T16:13:29.983Z
+SyntaxError: You have a syntax error at "simple_order.dbml" line 2 column 39. Expected " ", comment, or newline but "\r" found.
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:45:13
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+    at Object.dbml2sql (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\index.js:19:23)
+    at Object.<anonymous> (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\bin\dbml2sql.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1103:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1157:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+
+ROOT_ERROR:
+SyntaxError: Expected " ", comment, or newline but "\r" found.
+    at peg$buildStructuredError (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:1090:12)
+    at Object.peg$parse [as parse] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:6903:11)
+    at Function.parseDBMLToJSON (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:43:37)
+    at Function.parse (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:67:32)
+    at Object._export [as export] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\export\index.js:11:37)
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:69
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:42:23
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+{"start":{"offset":63,"line":2,"column":39},"end":{"offset":64,"line":2,"column":40}}
+
+2023-08-20T23:30:36.308Z
+SyntaxError: You have a syntax error at "DataClasses.dbml" line 31 column 8. Expected " ", schema name, or valid name but "{" found.
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:45:13
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+    at Object.dbml2sql (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\index.js:19:23)
+    at Object.<anonymous> (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\bin\dbml2sql.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1103:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1157:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+
+ROOT_ERROR:
+SyntaxError: Expected " ", schema name, or valid name but "{" found.
+    at peg$buildStructuredError (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:1090:12)
+    at Object.peg$parse [as parse] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:6903:11)
+    at Function.parseDBMLToJSON (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:43:37)
+    at Function.parse (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:67:32)
+    at Object._export [as export] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\export\index.js:11:37)
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:69
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:42:23
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+{"start":{"offset":590,"line":31,"column":8},"end":{"offset":591,"line":31,"column":9}}
+
+2023-08-20T23:31:18.174Z
+SyntaxError: You have a syntax error at "CarrotCMS.dbml" line 160 column 8. Expected " ", schema name, or valid name but "{" found.
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:45:13
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+    at Object.dbml2sql (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\index.js:19:23)
+    at Object.<anonymous> (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\bin\dbml2sql.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1103:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1157:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+
+ROOT_ERROR:
+SyntaxError: Expected " ", schema name, or valid name but "{" found.
+    at peg$buildStructuredError (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:1090:12)
+    at Object.peg$parse [as parse] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:6903:11)
+    at Function.parseDBMLToJSON (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:43:37)
+    at Function.parse (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:67:32)
+    at Object._export [as export] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\export\index.js:11:37)
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:69
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:42:23
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+{"start":{"offset":3319,"line":160,"column":8},"end":{"offset":3320,"line":160,"column":9}}
+
+2023-08-20T23:41:53.556Z
+SyntaxError: You have a syntax error at "CarrotCMS.dbml" line 160 column 8. Expected " ", schema name, or valid name but "{" found.
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:45:13
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+    at Object.dbml2sql (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\index.js:19:23)
+    at Object.<anonymous> (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\bin\dbml2sql.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1103:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1157:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+
+ROOT_ERROR:
+SyntaxError: Expected " ", schema name, or valid name but "{" found.
+    at peg$buildStructuredError (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:1090:12)
+    at Object.peg$parse [as parse] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:6903:11)
+    at Function.parseDBMLToJSON (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:43:37)
+    at Function.parse (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:67:32)
+    at Object._export [as export] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\export\index.js:11:37)
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:69
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:42:23
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+{"start":{"offset":3357,"line":160,"column":8},"end":{"offset":3358,"line":160,"column":9}}
+
+2023-08-20T23:43:38.123Z
+SyntaxError: You have a syntax error at "advanced_dbml.dbml" line 14 column 9. Expected " ", schema name, or type but "'" found.
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:45:13
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+    at Object.dbml2sql (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\index.js:19:23)
+    at Object.<anonymous> (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\bin\dbml2sql.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1103:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1157:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+
+ROOT_ERROR:
+SyntaxError: Expected " ", schema name, or type but "'" found.
+    at peg$buildStructuredError (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:1090:12)
+    at Object.peg$parse [as parse] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:6903:11)
+    at Function.parseDBMLToJSON (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:43:37)
+    at Function.parse (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:67:32)
+    at Object._export [as export] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\export\index.js:11:37)
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:69
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:42:23
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+{"start":{"offset":265,"line":14,"column":9},"end":{"offset":266,"line":14,"column":10}}
+
+2023-08-20T23:48:01.942Z
+SyntaxError: You have a syntax error at "simple_order.dbml" line 2 column 39. Expected " ", comment, or newline but "\r" found.
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:45:13
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+    at Object.dbml2sql (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\index.js:19:23)
+    at Object.<anonymous> (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\bin\dbml2sql.js:4:19)
+    at Module._compile (node:internal/modules/cjs/loader:1103:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1157:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+
+ROOT_ERROR:
+SyntaxError: Expected " ", comment, or newline but "\r" found.
+    at peg$buildStructuredError (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:1090:12)
+    at Object.peg$parse [as parse] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\dbmlParser.js:6903:11)
+    at Function.parseDBMLToJSON (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:43:37)
+    at Function.parse (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\parse\Parser.js:67:32)
+    at Object._export [as export] (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\node_modules\@dbml\core\lib\export\index.js:11:37)
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:69
+    at C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:42:23
+    at Array.forEach (<anonymous>)
+    at generate (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\utils.js:39:14)
+    at exportHandler (C:\Users\rani\AppData\Roaming\npm\node_modules\@dbml\cli\lib\cli\export.js:25:27)
+{"start":{"offset":63,"line":2,"column":39},"end":{"offset":64,"line":2,"column":40}}
+
